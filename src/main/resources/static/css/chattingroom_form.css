@@ -1,0 +1,415 @@
+/* 채팅방 div */
+
+#main_container1{
+/*     padding-top: 100px; */
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+#main_container1 .inputlabel1 {
+	font-size: 15px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	color: #56b7ba;
+}
+
+#main_container1 .form_container1 {
+	width: 355px;
+}
+
+.form_container1 .form1 {
+	display: inline-block;
+	border: 1px solid white;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	background: white;
+	box-shadow: 10px 10px 60px #8bbbbd;
+	padding: 15px;
+
+}
+
+.form1 .chatheader {
+	display: flex;
+	justify-content: space-between;
+	overflow:auto;
+}
+
+.form1 .menu_btn {
+	cursor: pointer;
+}
+
+.menu_btn .menuiconimg {
+	width: 45px;
+	height: 45px;
+}
+
+.menu_btn .slideToggle {
+	width: 120px;
+	background-color: white;
+	z-index: 1;
+	position: absolute;
+	display: none;
+	transform: translateX(-100%);
+	border: 1px solid black;
+}
+
+.chatheader .slideToggle:hover {
+	outline: none;
+
+}
+
+.chatheader .chatroomuserlist {
+	height: 150px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.chatroomuserlist .chatuserlist {
+	width: 100px;
+	display: flex;
+  	justify-content: center;
+}
+
+.chatheader .userimg {
+	width: 40px;
+	hegiht: 40px;
+}
+
+.chatuserlist .username {
+	width: 60px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+}
+
+.chatheader .invitebtn {
+	width: 120px;
+	background: lightgray;
+	border: none;
+	padding: 5px;
+	font-weight: bold;
+	border-bottom: 1px solid black;
+}
+
+.chatheader .filelistbtn {
+	width: 120px;
+	background: lightgray;
+	border: none;
+	padding: 5px;
+	font-weight: bold;
+	border-bottom: 1px solid black;
+}
+
+.chatheader .filelistbtn:hover {
+	outline: none;
+	background: lightgray;
+}
+
+.chatheader .exitbtn {
+	width: 120px;
+	background: red;
+	border: none;
+	color: white;
+	padding: 5px;
+	font-weight: bold;
+	
+}
+
+.chatheader .downloadFile {
+	width: 500px;
+	height: 250px;
+}
+
+.downloadFile .filelist_table {
+	width: 480px;
+	font-size: 7px;
+}
+
+.filelist_table .filelist_table_header_close {
+	position: sticky;
+	top: 0px;
+	background-color: lightgray;
+	text-align: right;
+}
+
+.filelist_table .filelist_table_header {
+	position: sticky;
+	top: 23px;
+	background-color: lightgray;
+	padding: 5px;
+	font-weight: bold;
+}
+
+#filename_width {
+	width: 180px;
+	table-layout: fixed;
+	line-height: 40px;	
+}
+
+.filelist_table td {
+	text-align: center;
+	padding: 5px;
+	border-bottom: 1px solid black;
+	line-height: 20px;
+	text-align: middle;
+	margin: 50px;
+}
+
+.downloadFile .downloadbtn {
+	background: #e1e1e1;
+	color: #4a6363;
+	font-size: 2px;
+}
+
+.downloadFile .downloadbtn:hover {
+	outline: none;
+	background: #8bbbbd;
+}
+
+.downloadFile .filedeletebtn {
+	background: red;
+	color: white;
+	font-size: 2px;
+}
+
+.downloadFile .chatlistpage {
+	width: 480px;
+	text-align: center;
+}
+
+.chatheader .chatroom_name {
+	margin-top: 5px;
+	margin-left: 30px;
+}
+
+
+.chatform {
+	background-color: #CDF5FF;
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+	display: block;
+	width: 330px;
+	height: 400px;
+	margin-top : 10px;
+	border: none; 
+	overflow-y: auto;
+}
+
+.img_inner {
+    width:40px;
+    height:40px;
+    border-radius: 100px;	
+}
+
+.chatform .myLog {
+	margin-top: 10px;
+	margin-right: 25px;
+}
+
+.myLog .upfile {
+/* 	display: flex; */
+	flex-direction: row-reverse;
+	text-align: right;	
+}
+
+.myLog .downloadbtn {
+	border-radius: 10px;
+	width: 60px;
+	height: 20px;
+	background: #e1e1e1;
+	color: #4a6363;
+	font-size: 2px;
+}
+
+.myLog .downloadbtn:hover {
+	border-radius: 10px;
+	width: 60px;
+	height: 20px;
+	outline: none;
+	background: #8bbbbd;
+}
+
+.myLog .myprofile {
+	display: flex;
+	flex-direction: row-reverse;
+	text-align: right;
+}
+
+.myLog .myimg {
+	width: 50px;
+	height: 50px;
+	border-radius: 100px;
+}
+
+.myLog .myname {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.myLog .mymsg {
+	font-size: 13px;
+	word-break:break-all;
+	position:relative; 
+	margin-left: 200px;
+	max-width: 100px;
+	padding: 10px;
+  	background:pink; 
+  	border-radius: 10px;	
+}
+
+.mymsg:after { 
+	 border-top:0px solid transparent; 
+	 border-left: 20px solid transparent; 
+	 border-right: 5px solid transparent; 
+	 border-bottom: 10px solid pink; 
+	 content:""; 
+	 position:absolute;
+	 top:-10px;
+	 right:10px;  
+}
+
+.myLog .mytime {
+	font-size: 12px;
+	text-align: right;	
+}
+
+.chatform .yourLog {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.yourLog .downloadbtn {
+	border-radius: 10px;
+	width: 60px;
+	height: 20px;
+	background: #e1e1e1;
+	color: #4a6363;
+	font-size: 2px;	
+}
+
+.yourLog .downloadbtn:hover {
+	border-radius: 10px;
+	width: 60px;
+	height: 20px;
+	outline: none;
+	background: #8bbbbd;
+}
+
+.yourLog .yourprofile {
+	display: flex;
+	text-align: left;
+}
+
+.yourLog .yourimg {
+	width: 50px;
+	height: 50px;
+	border-radius: 100px;
+}
+
+.yourLog .yourname {
+	margin-top: 10px;
+}
+
+.yourLog .yourmsg {
+	margin-top: 10px;
+	margin-right: 215px;
+	font-size: 13px;
+	word-break:break-all;
+	position:relative; 
+	max-width: 100px;
+	padding: 10px;
+  	background:pink; 
+  	border-radius: 10px;	
+}
+
+.yourmsg:after { 
+border-top:0px solid transparent; 
+ border-left: 5px solid transparent; 
+ border-right: 20px solid transparent; 
+ border-bottom: 10px solid pink; 
+ content:""; 
+ position:absolute;
+ top:-10px;
+ left:10px;   
+}
+
+.yourLog .yourtime {
+	font-size: 12px;
+	text-align: left;	
+}
+
+
+.form1 .yourMsg {
+	height: 100px;
+	background-color: #7AE5FF;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+}
+
+.yourMsg .chatting {
+	border: 1px solid gray;
+	border-radius: 10px;
+	width: 200px;
+	margin-left: 20px;
+	margin-top: 10px;
+	padding: 8px;
+	border: none;
+}
+
+.yourMsg .uploadinput {
+	border: 1px solid gray;
+	border-radius: 10px;
+	width: 200px;
+	margin-left: 20px;
+	margin-top: 10px;
+	padding: 8px;
+	border: none;	
+}
+
+.yourMsg .sendBtn {
+	width: 66px;
+	height: 30px;
+	border-radius: 10px;
+	margin-left: 10px;
+	margin-right: 20px;
+	margin-top: 1px;
+	outline: none;
+	font-size: 13px;
+	font: monospace;
+	background: #e1e1e1;
+	color: #4a6363;
+	font-weight: bold;
+	border: none;
+}
+
+.yourMsg .sendBtn:hover {
+	border-radius: 10px;
+	width: 66px;
+	height: 30px;
+	outline: none;
+	background: #8bbbbd;
+}
+
+.sendtext_box > textarea {
+	width: 70%; 
+	height: 60px;
+	border: 0;
+	font-size: 15px;
+}
+
+.sendtext_btn {
+	float: right;
+	border-radius: 10px;
+	width: 20%;
+	height: 50px;
+	outline: none;
+	font-size: 16px;
+	font: monospace;
+	background: #e1e1e1;
+	color: #4a6363;
+	font-weight: bold;
+	border: none;
+	margin-top: 5%;
+}

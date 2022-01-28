@@ -1,0 +1,104 @@
+#main_container{
+/*     padding-top: 250px; */
+    display: flex;
+    justify-content: center;
+}
+
+#main_container .inputlabel {
+	font-size: 15px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	color: #56b7ba;
+}
+
+#main_container .form_container {
+	width: 355px;
+}
+
+.form_container .form {
+	display: inline-block;
+	border: 1px solid white;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	background: white;
+	box-shadow: 10px 10px 60px #8bbbbd;
+	padding: 30px;
+}
+
+.form_container .form .invite-box {
+	margin-bottom: 20px;
+}
+
+.invite-box input {
+	border: 1px solid gray;
+	border-radius: 10px;
+	background: white;
+	width: 260px;
+	height: 50px;
+	color: black;
+	padding-left: 20px;
+	padding-right: 20px;
+
+}
+
+input:focus {
+	outline: none;
+}
+
+.invite-box .error {
+	font-size: 15px;
+	margin-top: 5px;
+	margin-left: 10px;
+	color: red;
+}
+
+.submit_btn {
+	border-radius: 10px;
+	width: 300px;
+	height: 50px;
+	outline: none;
+	font-size: 16px;
+	font: monospace;
+	background: #e1e1e1;
+	color: #4a6363;
+	font-weight: bold;
+	border: none;
+	margin-top: 5%;
+	
+}
+
+.submit_btn:hover {
+	border-radius: 10px;
+	width: 300px;
+	height: 50px;
+	outline: none;
+	background: #8bbbbd;
+}
+
+/* 방만들기, 삭제 div */
+
+.borderline {
+	width: 300px;
+	border-top: 3px solid #8bbbbd;
+	margin-top: 15px;
+}
+
+
+.chatList_btn {
+	float: right;
+}
+
+.chatList_btn #create_room {
+	width: 100px;
+	height: 30px;
+	padding-left: 20px;
+	padding-right: 20px;	
+}
+
+.chatList_btn #delete_room {
+	width: 100px;
+	height: 30px;
+	padding-left: 20px;
+	padding-right: 20px;	
+}
