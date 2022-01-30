@@ -1,6 +1,8 @@
 package com.example.mychatproj.model;
 
-public class Member {
+import java.util.List;
+
+public class MemberDTO {
 	private int member_no;
 	private String member_id;
 	private String member_pw;
@@ -8,9 +10,9 @@ public class Member {
 	private String member_email;
 	private String member_phone;
 	
-	public Member(int member_no, String member_id, String member_pw, String member_name, String member_email, String member_phone) {
-		// TODO Auto-generated constructor stub
-	}
+	private Member_profileimgDTO member_profileimgdto;
+	private ChatroomInMemberDTO chatroominmemberdto;
+	
 	public int getMember_no() {
 		return member_no;
 	}
@@ -47,7 +49,17 @@ public class Member {
 	public void setMember_phone(String member_phone) {
 		this.member_phone = member_phone;
 	}
-	
-	
+	public Member_profileimgDTO getMember_profileimgdto() {
+		return member_profileimgdto;
+	}
+	public void setMember_profileimgdto(Member_profileimgDTO member_profileimgdto) {
+		this.member_profileimgdto = member_profileimgdto;
+	}
+	public ChatroomInMemberDTO getChatroominmemberdto() {
+		return chatroominmemberdto;
+	}
+	public void setChatroominmemberdto(ChatroomInMemberDTO chatroominmemberdto) {
+		this.chatroominmemberdto = chatroominmemberdto;
+	}
 	
 }
