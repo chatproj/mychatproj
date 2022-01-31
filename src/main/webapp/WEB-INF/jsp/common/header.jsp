@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="com.example.chatproj.chatproj.domain.User"%>
+<%-- <%@page import="com.example.chatproj.chatproj.domain.User"%> --%>
 <head>
 <section id="header_container">
 	<div id="header_form_container">

@@ -2,15 +2,15 @@ package com.example.mychatproj.model;
 
 import java.util.List;
 
-public class MemberDTO {
+public class Member {
 	private int member_no;
 	private String member_id;
-	private String member_pw;
+	private String member_pwd;
 	private String member_name;
 	private String member_email;
 	private String member_phone;
 	
-	private Member_profileimgDTO member_profileimgdto;
+	private Member_profileimg member_profileimgdto;
 	private ChatroomInMemberDTO chatroominmemberdto;
 	
 	public int getMember_no() {
@@ -25,11 +25,11 @@ public class MemberDTO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	public String getMember_pw() {
-		return member_pw;
+	public String getMember_pwd() {
+		return member_pwd;
 	}
-	public void setMember_pw(String member_pw) {
-		this.member_pw = member_pw;
+	public void setMember_pwd(String member_pwd) {
+		this.member_pwd = member_pwd;
 	}
 	public String getMember_name() {
 		return member_name;
@@ -49,10 +49,10 @@ public class MemberDTO {
 	public void setMember_phone(String member_phone) {
 		this.member_phone = member_phone;
 	}
-	public Member_profileimgDTO getMember_profileimgdto() {
+	public Member_profileimg getMember_profileimgdto() {
 		return member_profileimgdto;
 	}
-	public void setMember_profileimgdto(Member_profileimgDTO member_profileimgdto) {
+	public void setMember_profileimgdto(Member_profileimg member_profileimgdto) {
 		this.member_profileimgdto = member_profileimgdto;
 	}
 	public ChatroomInMemberDTO getChatroominmemberdto() {
