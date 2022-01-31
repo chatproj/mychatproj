@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="com.example.mychatproj.mapper.TestMapper">
-	<select id="getMember" resultType="com.example.mychatproj.model.MemberDTO">
+<mapper namespace="com.example.mychatproj.mapper.MemberMapper">
+	
+	<insert id="insertmember" parameterType="com.example.mychatproj.model.Member" useGeneratedKeys="true" keyProperty="member_no">
+		insert into member(member_id, member_pwd, member_name, member_email, member_phone)
+		values (#{member.member_id} , #{member.member_pwd} , #{member.member_name} , #{member.member_email} , #{member.member_phone});		
+	</insert>
+	
+	<select id="getById" resultType="com.example.mychatproj.model.Member">
+		select member_id from member where member_id=#{member_id}			
+	</select>
+	<select id="getByEmail" resultType="com.example.mychatproj.model.Member">
+		select member_email from member where member_email=#{member_email}
+	</select>
+	
+	<insert id="insertmemberimg" parameterType="com.example.mychatproj.model.Member_profileimg">
+		insert into member_profileimg(member_no, member_profileimg_filename, member_profileimg_original_filename, member_profileimg_url)
+		values (#{member_profileimg.member_no} , 
+		        #{member_profileimg.member_profileimg_filename} ,
+		        #{member_profileimg.member_profileimg_original_filename} ,
+		        #{member_profileimg.member_profileimg_url})
+	</insert>
+	
+<!-- 	<select id="getMember" resultType="com.example.mychatproj.model.MemberDTO">
 		select * from member where member_no=#{exam} and member_id=#{exam1}
 	</select>
 
@@ -14,7 +34,7 @@
 		<result property="member_email" column="member_email" />
 		<result property="member_phone" column="member_phone" />
 		
-		<!-- 1 : 1 -->
+		1 : 1
 		<association javaType="Member_profileimgDTO" property="member_profileimgdto">
 			<id property="member_profileimg_no" column="member_profileimg_no" />
 			<result property="member_profileimg_filename" column="member_profileimg_filename" />
@@ -38,7 +58,7 @@
 		<result property="member_email" column="member_email" />
 		<result property="member_phone" column="member_phone" />
 		
-		<!-- 1 : 1 -->
+		1 : 1
 		<association javaType="ChatroomInMemberDTO" property="chatroominmemberdto">
 			<result property="chatroomINmember_no" column="chatroomINmember_no" />
 			<result property="chatroom_no" column="chatroom_no" />
@@ -51,9 +71,6 @@
 		from mychatproj.member as m inner join mychatproj.chatroomINmember as n 
 		on m.member_no = n.member_no
 		where m.member_no=1;		
-	</select>
+	</select> -->
 
 </mapper>
-
-
-

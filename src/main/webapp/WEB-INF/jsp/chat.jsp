@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.example.chatproj.chatproj.domain.Chatlog_Table"%>
 <%@page import="javax.servlet.http.HttpSession"%>
 <!DOCTYPE html>
 <html>

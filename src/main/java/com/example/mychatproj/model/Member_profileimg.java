@@ -1,12 +1,13 @@
 package com.example.mychatproj.model;
 
-public class Member_profileimgDTO {
+import org.springframework.web.multipart.MultipartFile;
+
+public class Member_profileimg {
 	private int member_profileimg_no;
 	private String member_profileimg_filename;
 	private String member_profileimg_original_filename;
 	private String member_profileimg_url;
 	private int member_no;
-	
 	
 	public int getMember_profileimg_no() {
 		return member_profileimg_no;
@@ -39,5 +40,13 @@ public class Member_profileimgDTO {
 		this.member_no = member_no;
 	}
 	
+	
+	MultipartFile memberimg;
+	public MultipartFile getMemberimg() {
+		return memberimg;
+	}
+	public void setMemberimg(MultipartFile memberimg) {
+		this.memberimg = memberimg;
+	}
 	
 }
