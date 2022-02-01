@@ -25,4 +25,7 @@ public interface MemberMapper {
 	int modifyMember(@Param("member") Member member);
 	// Update Memberimg
 	void updatememberimg(@Param("member_profileimg") Member_profileimg memberimg);
+	
+	// findId
+	Optional<Member> findId(@Param("member_name") String member_name, @Param("member_email") String member_email);
 }

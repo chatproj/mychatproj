@@ -107,4 +107,23 @@ public class MemberServiceimpl implements MemberService{
 		System.out.println("se" + member_profileimg.getMember_no());
 		membermapper.updatememberimg(member_profileimg);
 	}
+	
+	@Override
+	public String getMemberfind(Member member) {
+		String res = findMemberId(member);
+		
+		return res;
+	}
+	private String findMemberId(Member member) {
+		String res = null;
+		
+		try {
+			Optional<Member> findId = membermapper.findId(member.getMember_name(), member.getMember_email());
+			res = findId.get().getMember_id();
+		}catch(NoSuchElementException e) {
+			res = "notfound";
+		}
+		
+		return res;
+	}
 }

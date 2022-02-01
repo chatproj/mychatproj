@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -173,6 +175,10 @@ public class MemberController {
 			return "redirect:/signin?message=FAILURE_notfound";
 		}else {
 //			HashMap<Integer, String> sessionInfo = memberservice.getMemberSession(form.getMember_id());	
+//			System.out.println("ddd" + sessionInfo.keySet());
+//			System.out.println("fff" + sessionInfo.get(sessionInfo));
+			
+			
 			String session_id    = form.getMember_id();		
 			HttpSession session  = request.getSession();
 			session.setAttribute ("session_id", session_id);
@@ -222,7 +228,6 @@ public class MemberController {
 		memberservice.modifyMember(member);
 		
 		int memberPK = member_form.getMember_no();
-		System.out.println(memberPK);
 
 		if(member_profileimg_form.getMemberimg().getOriginalFilename().equals("")) {
 			Member_profileimg memberimg = normalupdateimg(memberPK);
@@ -275,5 +280,35 @@ public class MemberController {
 		
 		return memberimg;
 	}
+	
+	@RequestMapping("findId")
+	public String findId() {
+		
+		return "findId";
+	}
+	@PostMapping("/findId")
+	public String find_memberId(Member member_form, RedirectAttributes redirectAttributes) {
+		Member member = new Member();
+		member.setMember_name   (member_form.getMember_name());
+		member.setMember_email  (member_form.getMember_email());
+		
+		String findmsg = null;
+		String res = memberservice.getMemberfind(member);
+		if(res.equals("notfound")) {
+			findmsg = "존재하지 않는 ID 입니다.";
+		}else {
+			findmsg = res;
+		}
+		
+		redirectAttributes.addAttribute("findmsg", findmsg);
+		
+		return "redirect:/memberprocess";
+	}
+	@RequestMapping("memberprocess")
+	public String memberprocess() {
+		
+		return "memberprocess";
+	}
+	
 	
 }
