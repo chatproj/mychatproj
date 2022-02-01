@@ -4,29 +4,39 @@
 	
 	<insert id="insertmember" parameterType="com.example.mychatproj.model.Member" useGeneratedKeys="true" keyProperty="member_no">
 		insert into member(member_id, member_pwd, member_name, member_email, member_phone)
-		values (#{member.member_id} , #{member.member_pwd} , #{member.member_name} , #{member.member_email} , #{member.member_phone});		
+		
+		values (  #{member.member_id} ,
+		          #{member.member_pwd} ,
+		          #{member.member_name} , 
+		          #{member.member_email} , 
+		          #{member.member_phone}   )		
 	</insert>
 	
 	<select id="getById" resultType="com.example.mychatproj.model.Member">
-		select member_no, member_id, member_pwd, member_name, member_email, member_phone from member where member_id=#{member_id}			
+		select member_no, member_id, member_pwd, member_name, member_email, member_phone 
+		
+		from member 
+		
+		where member_id=#{member_id}			
 	</select>
 	<select id="getByEmail" resultType="com.example.mychatproj.model.Member">
-		select member_no, member_id, member_pwd, member_name, member_email, member_phone from member where member_email=#{member_email}
+		select member_no, member_id, member_pwd, member_name, member_email, member_phone 
+		
+		from member 
+		
+		where member_email=#{member_email}
 	</select>
 	
 	<insert id="insertmemberimg" parameterType="com.example.mychatproj.model.Member_profileimg">
 		insert into member_profileimg(member_no, member_profileimg_filename, member_profileimg_original_filename, member_profileimg_url)
-		values (#{member_profileimg.member_no} , 
-		        #{member_profileimg.member_profileimg_filename} ,
-		        #{member_profileimg.member_profileimg_original_filename} ,
-		        #{member_profileimg.member_profileimg_url})
-	</insert>
-	
-<!-- 	<select id="getMember" resultType="com.example.mychatproj.model.MemberDTO">
-		select * from member where member_no=#{exam} and member_id=#{exam1}
-	</select>
+		
+		values (  #{member_profileimg.member_no} , 
+		          #{member_profileimg.member_profileimg_filename} ,
+		          #{member_profileimg.member_profileimg_original_filename} ,
+		          #{member_profileimg.member_profileimg_url}                 )
+	</insert>	
 
-	<resultMap id="getjoinRM" type="com.example.mychatproj.model.MemberDTO">
+	<resultMap id="JoinMemberRM" type="com.example.mychatproj.model.Member">
 		<id property="member_no" column="member_no" />
 		<result property="member_id" column="member_id" />
 		<result property="member_pwd" column="member_pwd" />
@@ -34,8 +44,8 @@
 		<result property="member_email" column="member_email" />
 		<result property="member_phone" column="member_phone" />
 		
-		1 : 1
-		<association javaType="Member_profileimgDTO" property="member_profileimgdto">
+        <!-- 1 : 1 -->
+		<association javaType="Member_profileimg" property="member_profileimg">
 			<id property="member_profileimg_no" column="member_profileimg_no" />
 			<result property="member_profileimg_filename" column="member_profileimg_filename" />
 			<result property="member_profileimg_original_filename" column="member_profileimg_original_filename" />
@@ -44,33 +54,33 @@
 		</association>
 	</resultMap>
 	
-	<select id="getjoin" resultMap="getjoinRM">
-		select m.member_no, member_id, member_profileimg_no, member_profileimg_original_filename, member_profileimg_filename
-		from mychatproj.member as m inner join mychatproj.member_profileimg as n 
+	<select id="getMemberInfo" resultMap="JoinMemberRM">
+		select m.member_no, member_id, member_pwd, member_name, member_email, member_phone,
+		       member_profileimg_no,  member_profileimg_filename, member_profileimg_original_filename, member_profileimg_url
+		       
+		from member as m inner join member_profileimg as n
+		 
 		on m.member_no = n.member_no		
 	</select>
-
-	<resultMap id="gettestjoinRM" type="com.example.mychatproj.model.MemberDTO">
-		<id property="member_no" column="member_no" />
-		<result property="member_id" column="member_id" />
-		<result property="member_pwd" column="member_pwd" />
-		<result property="member_name" column="member_name" />
-		<result property="member_email" column="member_email" />
-		<result property="member_phone" column="member_phone" />
-		
-		1 : 1
-		<association javaType="ChatroomInMemberDTO" property="chatroominmemberdto">
-			<result property="chatroomINmember_no" column="chatroomINmember_no" />
-			<result property="chatroom_no" column="chatroom_no" />
-			<result property="member_no" column="member_no" />
-		</association>
-	</resultMap>	
 	
-	<select id="gettestjoin" resultMap="gettestjoinRM">
-		select m.member_no, member_id, chatroomINmember_no
-		from mychatproj.member as m inner join mychatproj.chatroomINmember as n 
-		on m.member_no = n.member_no
-		where m.member_no=1;		
-	</select> -->
+	<update id="modifyMember" parameterType="com.example.mychatproj.model.Member">
+		update member 
+		
+		set member_pwd      =#{member.member_pwd},
+		    member_name     =#{member.member_name},
+		    member_email    =#{member.member_email},
+		    member_phone    =#{member.member_phone}
+		    
+		where member_id     =#{member.member_id}; 
+	</update>
+	<update id="updatememberimg" parameterType="com.example.mychatproj.model.Member_profileimg">
+		update member_profileimg
+		
+		set member_profileimg_filename            =#{member_profileimg.member_profileimg_filename},
+		    member_profileimg_original_filename   =#{member_profileimg.member_profileimg_original_filename}, 
+		    member_profileimg_url                 =#{member_profileimg.member_profileimg_url}
+		    
+		where member_no                           =#{member_profileimg.member_no}
+	</update>
 
 </mapper>

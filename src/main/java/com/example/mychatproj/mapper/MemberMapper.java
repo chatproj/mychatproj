@@ -17,5 +17,12 @@ public interface MemberMapper {
 	Optional<Member> getByEmail(@Param("member_email") String member_email);
 	// Insert Memberimg
 	void insertmemberimg(@Param("member_profileimg") Member_profileimg memberimg);
-
+	
+	// Select Memberinfo
+	Optional<Member> getMemberInfo(@Param("member_id") String member_id);
+	
+	// Update Member
+	int modifyMember(@Param("member") Member member);
+	// Update Memberimg
+	void updatememberimg(@Param("member_profileimg") Member_profileimg memberimg);
 }

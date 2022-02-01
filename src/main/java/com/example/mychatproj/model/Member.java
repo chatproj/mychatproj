@@ -10,8 +10,7 @@ public class Member {
 	private String member_email;
 	private String member_phone;
 	
-	private Member_profileimg member_profileimgdto;
-	private ChatroomInMemberDTO chatroominmemberdto;
+	private Member_profileimg member_profileimg;
 	
 	public int getMember_no() {
 		return member_no;
@@ -49,17 +48,15 @@ public class Member {
 	public void setMember_phone(String member_phone) {
 		this.member_phone = member_phone;
 	}
-	public Member_profileimg getMember_profileimgdto() {
-		return member_profileimgdto;
+	
+	
+	public Member_profileimg getMember_profileimg() {
+		return member_profileimg;
 	}
-	public void setMember_profileimgdto(Member_profileimg member_profileimgdto) {
-		this.member_profileimgdto = member_profileimgdto;
+	public void setMember_profileimg(int member_no, String member_profileimg_filename, String member_profileimg_original_filename, String member_profileimg_url) {
+		this.member_profileimg = member_profileimg;
 	}
-	public ChatroomInMemberDTO getChatroominmemberdto() {
-		return chatroominmemberdto;
-	}
-	public void setChatroominmemberdto(ChatroomInMemberDTO chatroominmemberdto) {
-		this.chatroominmemberdto = chatroominmemberdto;
-	}
+	
+
 	
 }

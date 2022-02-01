@@ -2,7 +2,12 @@ package com.example.mychatproj.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -34,10 +39,41 @@ public class MemberController {
 	@Autowired
 	ServletContext application;
 	
+//	public int getSession_no(HashMap<Integer, String> sessionInfo) {
+//		Integer session_no = null;
+//		try {
+//			for(Map.Entry<Integer, String> entry : sessionInfo.entrySet()) {
+//				session_no = entry.getKey();
+//			}
+//		}catch(NullPointerException e) {
+//			return session_no;
+//		}
+//		
+//		return session_no;
+//	}
+//	
+//	public String getSession_id(HashMap<Integer, String> sessionInfo) {
+//		String session_id = null;
+//		try {
+//			for(Map.Entry<Integer, String> entry : sessionInfo.entrySet()) {
+//				session_id = entry.getValue();
+//			}
+//		}catch(NullPointerException e) {
+//			return session_id;
+//		}
+//		return session_id;
+//	}
+	
 	@RequestMapping("/")
 	public String main(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		return null;
+		String session_id = (String) session.getAttribute("session_id");
+		
+		if(session_id != null) {
+			return "redirect:/chatList";
+		}else {
+			return "redirect:/signin";
+		}
 	}
 	
 	@RequestMapping("/signup")
@@ -80,29 +116,29 @@ public class MemberController {
 	private Member_profileimg normalinsertimg(int memberPK) {
 		Member_profileimg memberimg = new Member_profileimg();
 		
-		String originalfilename = "normal_img.png";
-		String fileurl = "/memberimg/";
+		String originalfilename   = "normal_img.png";
+		String fileurl            = "/memberimg/";
 		
-		memberimg.setMember_profileimg_filename(originalfilename);
-		memberimg.setMember_profileimg_original_filename(originalfilename);
-		memberimg.setMember_profileimg_url(application.getRealPath(fileurl));
-		memberimg.setMember_no(memberPK);
+		memberimg.setMember_profileimg_filename            (originalfilename);
+		memberimg.setMember_profileimg_original_filename   (originalfilename);
+		memberimg.setMember_profileimg_url                 (application.getRealPath(fileurl));
+		memberimg.setMember_no                             (memberPK);
 		
 		return memberimg;
 	}
 	private Member_profileimg insertimg(int memberPK, @RequestPart MultipartFile files) throws Exception{
 		Member_profileimg memberimg = new Member_profileimg();
 		
-		String originalfilename = files.getOriginalFilename();
-		String originalfilenameExtension = FilenameUtils.getExtension(originalfilename).toLowerCase();
+		String originalfilename            = files.getOriginalFilename();
+		String originalfilenameExtension   = FilenameUtils.getExtension(originalfilename).toLowerCase();
 		File destinationfile;
 		String destinationfilename;
-		String fileurl = "/memberimg/";
-		String savePath = application.getRealPath(fileurl);
+		String fileurl                     = "/memberimg/";
+		String savePath                    = application.getRealPath(fileurl);
 		
 		do {
-			destinationfilename = RandomStringUtils.randomAlphanumeric(32) + "." + originalfilenameExtension;
-			destinationfile = new File(savePath, destinationfilename);
+			destinationfilename  = RandomStringUtils.randomAlphanumeric(32) + "." + originalfilenameExtension;
+			destinationfile      = new File(savePath, destinationfilename);
 		}while(destinationfile.exists());
 		
 		try {
@@ -111,10 +147,10 @@ public class MemberController {
 			
 		}
 		
-		memberimg.setMember_profileimg_filename(destinationfilename);
-		memberimg.setMember_profileimg_original_filename(originalfilename);
-		memberimg.setMember_profileimg_url(savePath);
-		memberimg.setMember_no(memberPK);
+		memberimg.setMember_profileimg_filename           (destinationfilename);
+		memberimg.setMember_profileimg_original_filename  (originalfilename);
+		memberimg.setMember_profileimg_url                (savePath);
+		memberimg.setMember_no                            (memberPK);
 		
 		return memberimg;
 	}
@@ -127,8 +163,8 @@ public class MemberController {
 	@PostMapping("/signin")
 	public String signin_member(Member form, HttpServletRequest request) {
 		Member member = new Member();
-		member.setMember_id(form.getMember_id());
-		member.setMember_pwd(form.getMember_pwd());
+		member.setMember_id   (form.getMember_id());
+		member.setMember_pwd  (form.getMember_pwd());
 		
 		String res = memberservice.getMemberLogin(member);
 		if(res.equals("fail")) {
@@ -136,14 +172,108 @@ public class MemberController {
 		}else if(res.equals("notfound")) {
 			return "redirect:/signin?message=FAILURE_notfound";
 		}else {
-			int session_no = memberservice.getMemberSession(form.getMember_id());			
-			HttpSession session = request.getSession();
-			session.setAttribute("session_no", session_no);
-			System.out.println(session_no);
+//			HashMap<Integer, String> sessionInfo = memberservice.getMemberSession(form.getMember_id());	
+			String session_id    = form.getMember_id();		
+			HttpSession session  = request.getSession();
+			session.setAttribute ("session_id", session_id);
+			
 			return "redirect:/chatList";
 		}
 		
 	}
 	
+	@PostMapping("/signout")
+	public String signout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		
+		return "/redirect:/signin";
+	}
+	
+	@RequestMapping("/modifymember")
+	public String modify(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String session_id   = (String) session.getAttribute("session_id");
+		
+		if(session_id != null) {
+			Optional<Member> memberinfo = memberservice.getId_to_memberinfo(session_id);
+			model.addAttribute("member_no",                           memberinfo.get().getMember_no());
+			model.addAttribute("member_id",                           memberinfo.get().getMember_id());
+			model.addAttribute("member_name",                         memberinfo.get().getMember_name());
+			model.addAttribute("member_email",                        memberinfo.get().getMember_email());
+			model.addAttribute("member_phone",                        memberinfo.get().getMember_phone());
+			model.addAttribute("member_profileimg_filename",          memberinfo.get().getMember_profileimg().getMember_profileimg_filename());
+			model.addAttribute("member_profileimg_original_filename", memberinfo.get().getMember_profileimg().getMember_profileimg_original_filename());
+					
+			return "modifymember";
+		}else {
+			return "/redirect:/signin";
+		}	
+	}
+	@PostMapping("/modify")
+	public String modifyMember(Member member_form, Member_profileimg member_profileimg_form) throws Exception {
+		Member member = new Member();
+		member.setMember_id          (member_form.getMember_id());
+		member.setMember_pwd         (member_form.getMember_pwd());
+		member.setMember_name        (member_form.getMember_name());
+		member.setMember_email       (member_form.getMember_email());
+		member.setMember_phone       (member_form.getMember_phone());
+		
+		memberservice.modifyMember(member);
+		
+		int memberPK = member_form.getMember_no();
+		System.out.println(memberPK);
+
+		if(member_profileimg_form.getMemberimg().getOriginalFilename().equals("")) {
+			Member_profileimg memberimg = normalupdateimg(memberPK);
+			memberservice.updatememberimg(memberimg);	
+		} else {
+			Member_profileimg memberimg = updateimg(memberPK, member_profileimg_form.getMemberimg());
+			memberservice.updatememberimg(memberimg);
+		}
+		
+		return "redirect:/signin";
+	}
+	private Member_profileimg normalupdateimg(int memberPK) {
+		Member_profileimg memberimg = new Member_profileimg();
+		
+		String originalfilename   = "normal_img.png";
+		String fileurl            = "/memberimg/";
+		
+		memberimg.setMember_profileimg_filename            (originalfilename);
+		memberimg.setMember_profileimg_original_filename   (originalfilename);
+		memberimg.setMember_profileimg_url                 (application.getRealPath(fileurl));
+		memberimg.setMember_no                             (memberPK);
+		
+		return memberimg;
+	}
+	private Member_profileimg updateimg(int memberPK, @RequestPart MultipartFile files) throws Exception{
+		Member_profileimg memberimg = new Member_profileimg();
+		
+		String originalfilename            = files.getOriginalFilename();
+		String originalfilenameExtension   = FilenameUtils.getExtension(originalfilename).toLowerCase();
+		File destinationfile;
+		String destinationfilename;
+		String fileurl                     = "/memberimg/";
+		String savePath                    = application.getRealPath(fileurl);
+		
+		do {
+			destinationfilename  = RandomStringUtils.randomAlphanumeric(32) + "." + originalfilenameExtension;
+			destinationfile      = new File(savePath, destinationfilename);
+		}while(destinationfile.exists());
+		
+		try {
+			files.transferTo(destinationfile);
+		} catch(IOException e) {
+			
+		}
+		
+		memberimg.setMember_profileimg_filename           (destinationfilename);
+		memberimg.setMember_profileimg_original_filename  (originalfilename);
+		memberimg.setMember_profileimg_url                (savePath);
+		memberimg.setMember_no                            (memberPK);
+		
+		return memberimg;
+	}
 	
 }
