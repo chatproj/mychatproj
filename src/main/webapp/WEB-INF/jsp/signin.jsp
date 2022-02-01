@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!doctype html>
 <html>
@@ -10,7 +9,7 @@
 <script type="text/javascript">
 	window.addEventListener("DOMContentLoaded", function(){
 		<%
-			if(request.getParameter("message") != null && request.getParameter("message").equals("FAILURE_matchX")){
+			if(request.getParameter("message") != null && request.getParameter("message").equals("FAILURE_fail")){
 		%>
 				setErrorMessage("upw_error", "비밀번호를 확인해주세요.");
 		<%
@@ -18,7 +17,7 @@
 		%>
 		
 		<%
-			if(request.getParameter("message") != null && request.getParameter("message").equals("FAILURE_noid")){
+			if(request.getParameter("message") != null && request.getParameter("message").equals("FAILURE_notfound")){
 		%>
 				setErrorMessage("upw_error", "존재하지 않는 사용자입니다.");
 		<%		
@@ -42,13 +41,13 @@
 				<form method="POST" action="/signin">
 					<div class="input-box">
 						<div class="inputlabel">아이디</div>
-						<input type="text" name="uid" id="uid">
+						<input type="text" name="member_id" id="uid">
 						<div id="uid_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">비밀번호</div>
-						<input type="password" name="upw" id="upw">
+						<input type="password" name="member_pwd" id="upw">
 						<div id="upw_error" class="error"></div>
 					</div>
 

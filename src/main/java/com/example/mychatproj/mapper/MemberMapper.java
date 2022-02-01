@@ -17,4 +17,5 @@ public interface MemberMapper {
 	Optional<Member> getByEmail(@Param("member_email") String member_email);
 	// Insert Memberimg
 	void insertmemberimg(@Param("member_profileimg") Member_profileimg memberimg);
+
 }
