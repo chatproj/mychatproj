@@ -6,29 +6,29 @@
 	<div id="header_form_container">
 		<div class="header_form">
 			<%
-				String headerSession = (String) session.getAttribute("sessionId");
+				String session_id = (String) session.getAttribute("session_id");
 			%>
 			
 			<%
-				if(headerSession != null){
+				if(session_id != null){
 			%>
-			<form method="POST" action="/signout">
+			<form method="POST" action="signout">
 				<div class="section1">
-					<div class="sessionStatus"><%=headerSession %></div>
+					<div class="sessionStatus"><%=session_id %></div>
 					<input type="submit" id="signout" value="로그아웃" class="signout">
 					
 				</div>
 			</form>
 			
-			<form method="POST" action="/deleteuser">
+			<form method="POST" action="/deletemember">
 				<div class="section2">
-					<input type="hidden" name="sessionId" value="<%=headerSession %>">
+					<input type="hidden" name="sessionId" value="<%=session_id %>">
 					<input type="submit" id="deleteuser" value="회원탈퇴" class="deleteuser">
 				</div>
 			</form>
 			
 			<div class="section3">
-				<input type="button" onclick="location.href='/modifyUser'" id="modifyuser" value="회원정보수정" class="modifyuser">
+				<input type="button" onclick="location.href='/modifymember'" id="modifyuser" value="회원정보수정" class="modifyuser">
 			</div>
 			
 			<%

@@ -184,7 +184,7 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
-		return "/redirect:/signin";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/modifymember")
@@ -204,7 +204,7 @@ public class MemberController {
 					
 			return "modifymember";
 		}else {
-			return "/redirect:/signin";
+			return "redirect:/signin";
 		}	
 	}
 	@PostMapping("/modify")
@@ -299,6 +299,17 @@ public class MemberController {
 	public String memberprocess() {
 		
 		return "memberprocess";
+	}
+	
+	@PostMapping("deletemember")
+	public String deletemember(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String session_id   = (String) session.getAttribute("session_id");		
+		
+		memberservice.deleteMember(session_id);
+		session.invalidate();
+		
+		return "redirect:/";
 	}
 	
 	
