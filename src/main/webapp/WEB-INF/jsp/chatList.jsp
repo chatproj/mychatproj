@@ -32,14 +32,46 @@
 				
 				<div class="borderline">
 					<div class="chatList_btn">
-					<input type="submit" id="create_room" value="방만들기" class="submit_btn" onclick="location.href='/inviteuser'">
+					<button id="create_room" class="submit_btn" onclick="openinvite()">방만들기</button>
 					</div>
 				</div>
+				
+				<dialog id="invite" class="invite">
+					<form method="POST" action="/invitechat">
+						<div class="invite-box">
+							<div class="inputlabel">방제목</div>
+							<input type="hidden" name="cnum" id="cnum" value="">
+							<input type="text" name="chatroom_name" id="cname" value="">
+							<div id="cname_error" class="error"></div>
+						</div>
+						
+						<div class="invite-box">
+							<div class="inputlabel">아이디</div>
+							<input type="text" name="member_id" id="uid">
+							<div id="uid_error" class="error"></div>
+						</div>
+						
+						<input type="submit" id="submit_btn" value="방만들기"
+							class="submit_btn">
+	
+					</form>
+				</dialog>
+				
 			</div>
 		</div>
 	</div>
 
 	<!-- Script -->
+	<script type="text/javascript">
+		var invite = document.getElementById('invite');
+		function openinvite() {
+			if(typeof invite.showModal === "function") {
+				invite.showModal();
+			}else{
+				alert("The <dialog> API is not supported by this browser");
+			}
+		}
+	</script>
 	<script src="/js/account_form.js" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

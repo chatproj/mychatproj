@@ -154,10 +154,10 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signin")
-	public String signin_member(Member form, HttpServletRequest request) {
+	public String signin_member(Member member_form, HttpServletRequest request) {
 		Member member = new Member();
-		member.setMember_id   (form.getMember_id());
-		member.setMember_pwd  (form.getMember_pwd());
+		member.setMember_id   (member_form.getMember_id());
+		member.setMember_pwd  (member_form.getMember_pwd());
 		
 		String res = memberservice.getMemberLogin(member);
 		if(res.equals("fail")) {
@@ -170,7 +170,7 @@ public class MemberController {
 //			System.out.println("fff" + sessionInfo.get(sessionInfo));
 			
 			
-			String session_id    = form.getMember_id();		
+			String session_id    = member_form.getMember_id();		
 			HttpSession session  = request.getSession();
 			session.setAttribute ("session_id", session_id);
 			
