@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!doctype html>
 <html>
@@ -18,18 +17,18 @@
 			<div class="form">
 					<%
 						request.setCharacterEncoding("UTF-8");
-						String uid = (String)request.getParameter("redirectprocess");
+						String findmsg = (String)request.getParameter("findmsg");
 					%>		
 					<div class="finduser_id">
 					<%
-						if(uid.equals("존재하지 않는 ID 입니다.") || uid == "존재하지 않는 ID 입니다."){
+						if(findmsg.equals("존재하지 않는 ID 입니다.") || findmsg == "존재하지 않는 ID 입니다."){
 					%>
 							<a class="findinform">존재하지 않는 ID 입니다.</a>
 					<%
 						}else{
 					%>
 						<a class="finduser_in">고객님의 아이디는</a>
-						<a class="findinform"><%=uid %></a>
+						<a class="findinform"><%=findmsg %></a>
 						<a class="finduser_in">입니다.</a>
 					<%
 						}

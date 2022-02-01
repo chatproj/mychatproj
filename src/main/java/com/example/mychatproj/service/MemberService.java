@@ -23,6 +23,9 @@ public interface MemberService {
 	int modifyMember(Member member);
 	void updatememberimg(Member_profileimg member_profileimg);
 	
+	// findMember
+	String getMemberfind(Member member);
+	
 }
 
 

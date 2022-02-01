@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!doctype html>
 <html>
@@ -16,16 +15,16 @@
 	<div id="main_container">
 		<div class="form_container">
 			<div class="form">
-				<form method="POST" action="/findid">
+				<form method="POST" action="/findId">
 					<div class="input-box">
 						<div class="inputlabel">이름</div>
-						<input type="text" name="uname" id="uname">
+						<input type="text" name="member_name" id="uname">
 						<div id="uname_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">이메일</div>
-						<input type="email" name="email" id="email">
+						<input type="email" name="member_email" id="email">
 						<div id="email_error" class="error"></div>
 					</div>
 

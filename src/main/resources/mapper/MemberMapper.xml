@@ -82,5 +82,13 @@
 		    
 		where member_no                           =#{member_profileimg.member_no}
 	</update>
+	
+	<select id="findId" resultType="com.example.mychatproj.model.Member">
+		select member_id
+		
+		from member
+		
+		where member_name=#{member_name} and member_email=#{member_email}
+	</select>
 
 </mapper>
