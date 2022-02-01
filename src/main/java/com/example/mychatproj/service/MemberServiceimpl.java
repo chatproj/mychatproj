@@ -2,6 +2,7 @@ package com.example.mychatproj.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -65,9 +66,6 @@ public class MemberServiceimpl implements MemberService{
 	private String unmatch(String member_id, String member_pwd, Member member) {
 		Optional<Member> validID = membermapper.getById(member.getMember_id());
 		
-		System.out.println(validID.get().getMember_id());
-		System.out.println(validID.get().getMember_pwd());
-		
 		String res = null;
 		
 		try {
@@ -80,14 +78,33 @@ public class MemberServiceimpl implements MemberService{
 			res = "notfound";
 		}
 		
-		System.out.println(res);
-		
 		return res;
 	}
 	
 	@Override
-	public int getMemberSession(String member_id) {
-		Optional<Member> res = membermapper.getById(member_id);
-		return res.get().getMember_no();
+	public Optional<Member> getId_to_memberinfo(String session_id) {
+		return membermapper.getMemberInfo(session_id);
+	}
+	
+//	@Override
+//	public HashMap<Integer, String> getMemberSession(String member_id) {
+//		Optional<Member> sessionInfo = membermapper.getById(member_id);
+//		HashMap<Integer, String> res = new HashMap<Integer, String>();
+//		res.put(sessionInfo.get().getMember_no(), sessionInfo.get().getMember_id());
+//		
+//		return res;
+//	}
+	
+	@Override
+	public int modifyMember(Member member) {
+		int memberPK = membermapper.modifyMember(member);
+		
+		return memberPK;
+	}
+
+	@Override
+	public void updatememberimg(Member_profileimg member_profileimg) {
+		System.out.println("se" + member_profileimg.getMember_no());
+		membermapper.updatememberimg(member_profileimg);
 	}
 }

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!doctype html>
 <html>
@@ -22,12 +21,13 @@
 		%>
 		
 		<%
-			int unum = (Integer) request.getAttribute("unum");
-			String uid = (String) request.getAttribute("uid");
-			String uname = (String) request.getAttribute("uname");
-			String email = (String) request.getAttribute("email");
-			String phone = (String) request.getAttribute("phone");
-			String userimg = (String) request.getAttribute("userimg");
+			int    member_no                             =   (Integer) request.getAttribute("member_no");
+			String member_id                             =   (String) request.getAttribute("member_id");
+			String member_name                           =   (String) request.getAttribute("member_name");
+			String member_email                          =   (String) request.getAttribute("member_email");
+			String member_phone                          =   (String) request.getAttribute("member_phone");
+			String member_profileimg_filename            =   (String) request.getAttribute("member_profileimg_filename");
+			String member_profileimg_original_filename   =   (String) request.getAttribute("member_profileimg_original_filename");
 		%>
 		
 		function setErrorMessage(id, message){
@@ -45,28 +45,28 @@
 		<div class="form_container">
 			<div class="form">
 				<form method="POST" action="/modify" enctype="multipart/form-data">
-					<input type="hidden" name="unum" value="<%=unum %>">
+					<input type="hidden" name="member_no" value="<%=member_no %>">
 					<div class="input-box">
 						<div class="inputlabel">아이디</div>
-						<input type="text" name="uid" id="uid" maxlength="15" value="<%=uid %>" readonly>
+						<input type="text" name="member_id" id="uid" maxlength="15" value="<%=member_id %>" readonly>
 						<div id="uid_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">이름</div>
-						<input type="text" name="uname" id="uname" maxlength="10" value="<%=uname %>">
+						<input type="text" name="member_name" id="uname" maxlength="10" value="<%=member_name %>">
 						<div id="uname_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">이메일</div>
-						<input type="email" name="email" id="email" maxlength="30" value="<%=email %>">
+						<input type="email" name="member_email" id="email" maxlength="30" value="<%=member_email %>">
 						<div id="email_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">비밀번호</div>
-						<input type="password" name="upw" id="upw" maxlength="20">
+						<input type="password" name="member_pwd" id="upw" maxlength="20">
 						<div id="upw_error" class="error"></div>
 					</div>
 
@@ -78,7 +78,7 @@
 
 					<div class="input-box">
 						<div class="inputlabel">휴대전화</div>
-						<input type="text" name="phone_num" id="phone_num" maxlength="20" value="<%=phone %>">
+						<input type="text" name="member_phone" id="phone_num" maxlength="20" value="<%=member_phone %>">
 						<div id="phone_num_error" class="error"></div>
 					</div>
 					
@@ -86,7 +86,7 @@
 					
 					<div class="input-box">
 						<div class="inputlabel">프로필이미지</div>
-						<input type="file" name="userimg" id="userimg" maxlength="40">
+						<input type="file" name="memberimg" id="userimg" maxlength="40" value="<%=member_profileimg_original_filename %>>">
 						<div id="phone_num_error" class="error"></div>
 					</div>
 
@@ -104,7 +104,7 @@
 	    const context = canvas.getContext('2d');
 	    
 	    var origin_userimg = new Image();
-	    origin_userimg.src = "userimg/<%=userimg %>";
+	    origin_userimg.src = "memberimg/<%=member_profileimg_filename %>";
 	    origin_userimg.addEventListener("load", () => {
        		context.drawImage(origin_userimg, 0, 0, 300, 150);
 	    });
