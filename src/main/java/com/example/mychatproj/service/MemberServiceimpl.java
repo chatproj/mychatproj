@@ -2,6 +2,8 @@ package com.example.mychatproj.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.servlet.ServletContext;
 
@@ -48,7 +50,44 @@ public class MemberServiceimpl implements MemberService{
 	}
 	
 	@Override
-	public void insertmemberimg(Member_profileimg member_profileimg){
+	public void insertmemberimg(Member_profileimg member_profileimg) {
 		membermapper.insertmemberimg(member_profileimg);
+	}
+	
+	@Override
+	public String getMemberLogin(Member member) {
+		String member_id   =  member.getMember_id();
+		String member_pwd  =  member.getMember_pwd();
+		String res = unmatch(member_id, member_pwd, member);
+		
+		return res;
+	}
+	private String unmatch(String member_id, String member_pwd, Member member) {
+		Optional<Member> validID = membermapper.getById(member.getMember_id());
+		
+		System.out.println(validID.get().getMember_id());
+		System.out.println(validID.get().getMember_pwd());
+		
+		String res = null;
+		
+		try {
+			if(member_id.equals(validID.get().getMember_id()) && member_pwd.equals(validID.get().getMember_pwd())) {
+				res = "success";
+			}else {
+				res = "fail";
+			}
+		}catch(NoSuchElementException e) {
+			res = "notfound";
+		}
+		
+		System.out.println(res);
+		
+		return res;
+	}
+	
+	@Override
+	public int getMemberSession(String member_id) {
+		Optional<Member> res = membermapper.getById(member_id);
+		return res.get().getMember_no();
 	}
 }

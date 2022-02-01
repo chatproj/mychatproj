@@ -9,7 +9,10 @@ import com.example.mychatproj.model.Member_profileimg;
 public interface MemberService {
 	int insertmember(Member member);
 	void insertmemberimg(Member_profileimg member_profileimg);
-
+	
+	String getMemberLogin(Member member);
+	int getMemberSession(String member_id);
+	
 }
 
 

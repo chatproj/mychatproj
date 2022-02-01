@@ -119,6 +119,31 @@ public class MemberController {
 		return memberimg;
 	}
 	
+	@RequestMapping("/signin")
+	public String signin() {
+		return "signin";
+	}
+	
+	@PostMapping("/signin")
+	public String signin_member(Member form, HttpServletRequest request) {
+		Member member = new Member();
+		member.setMember_id(form.getMember_id());
+		member.setMember_pwd(form.getMember_pwd());
+		
+		String res = memberservice.getMemberLogin(member);
+		if(res.equals("fail")) {
+			return "redirect:/signin?message=FAILURE_fail";
+		}else if(res.equals("notfound")) {
+			return "redirect:/signin?message=FAILURE_notfound";
+		}else {
+			int session_no = memberservice.getMemberSession(form.getMember_id());			
+			HttpSession session = request.getSession();
+			session.setAttribute("session_no", session_no);
+			System.out.println(session_no);
+			return "redirect:/chatList";
+		}
+		
+	}
 	
 	
 }
