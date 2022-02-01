@@ -90,5 +90,11 @@
 		
 		where member_name=#{member_name} and member_email=#{member_email}
 	</select>
+	
+	<delete id="deleteMember" parameterType="com.example.mychatproj.model.Member_profileimg">
+		delete from member
+		
+		where member_id=#{member_id}
+	</delete>
 
 </mapper>

@@ -22,6 +22,9 @@ public interface MemberService {
 	// findMember
 	String getMemberfind(Member member);
 	
+	// deleteMember
+	void deleteMember(String member_id);
+	
 }
 
 

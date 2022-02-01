@@ -28,4 +28,7 @@ public interface MemberMapper {
 	
 	// findId
 	Optional<Member> findId(@Param("member_name") String member_name, @Param("member_email") String member_email);
+	
+	// delete Member
+	void deleteMember(@Param("member_id") String member_id);
 }

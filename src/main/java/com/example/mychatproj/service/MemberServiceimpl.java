@@ -126,4 +126,9 @@ public class MemberServiceimpl implements MemberService{
 		
 		return res;
 	}
+	
+	@Override
+	public void deleteMember(String member_id) {
+		membermapper.deleteMember(member_id);
+	}
 }
