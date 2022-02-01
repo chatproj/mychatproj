@@ -2,5 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mychatproj.mapper.ChatMapper">
 
-
+	<select id="getSession_no" resultType="com.example.mychatproj.model.Member">
+		select member_no
+		
+		from member 
+		
+		where member_id=#{member_id}			
+	</select>
+	
+		<resultMap id="JoinChatroom_MemberRM" type="com.example.mychatproj.model.Chatroom_Member">
+		<id property="chatroom_member_no" column="chatroom_member_no" />
+		<result property="chatroom_no" column="chatroom_no" />
+		<result property="member_no" column="member_no" />
+		
+        <!-- 1 : 1 -->
+		<collection javaType="Chatroom" property="chatroom">
+			<id property="chatroom_no" column="chatroom_no" />
+			<result property="chatroom_name" column="chatroom_name" />
+		</collection>
+	</resultMap>
+	<select id="getchatlist" resultMap="JoinChatroom_MemberRM">
+		select chatroom_member_no, m.chatroom_no, member_no, chatroom_name 
+		
+		from mychatproj.chatroom_member as m inner join mychatproj.chatroom as n
+		
+		on m.chatroom_no = n.chatroom_no
+		
+		where m.member_no=#{member_no};			
+	</select>	
 </mapper>

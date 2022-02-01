@@ -17,16 +17,17 @@
 	<div id="main_container">
 		<div class="form_container">
 			<div class="form">
-<%-- 			<%
+ 			<%
 				request.setCharacterEncoding("UTF-8");				
-				HashMap<Integer, String> CnameList = (HashMap<Integer, String>)request.getAttribute("chatlist");
-			%> --%>
+				HashMap<Integer, String> chatList = (HashMap<Integer, String>)request.getAttribute("chatList");
+			%> 
 				<form method="POST" action="/chatList">
-<%-- 				<% for(Integer key : CnameList.keySet()){ %>
+ 				<% for(Integer key : chatList.keySet()){ %>
 					<div class="chatList">
-						<input type="submit" id="list" name="list" value="<%=key %>.<%=CnameList.get(key) %>" class="submit_btn">
+						<input type="hidden" id="list" name="list" value="<%=key %>">
+						<input type="submit" id="list" name="list" value="<%=chatList.get(key) %>" class="submit_btn">
 					</div>	
-				<% } %> --%>
+				<% } %>
 				</form>
 				
 				<div class="borderline">
