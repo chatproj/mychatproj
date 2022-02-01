@@ -30,4 +30,24 @@
 		
 		where m.member_no=#{member_no};			
 	</select>	
+	
+	<select id="getChatroom_no" resultType="com.example.mychatproj.model.Chatroom">
+		select chatroom_no 
+		
+		from chatroom
+		
+		order by chatroom_no desc
+	</select>
+	<insert id="insertChatroom" parameterType="com.example.mychatproj.model.Chatroom">
+		insert into chatroom(chatroom_no, chatroom_name)
+		
+		values (  #{chatroom.chatroom_no} , 
+		          #{chatroom.chatroom_name}   )
+	</insert>
+	<insert id="insertChatroom_Member" parameterType="com.example.mychatproj.model.Chatroom_Member">
+		insert into chatroom_member(chatroom_no, member_no)
+		
+		values (  #{chatroom_member.chatroom_no} , 
+		          #{chatroom_member.member_no}   )	
+	</insert>
 </mapper>
