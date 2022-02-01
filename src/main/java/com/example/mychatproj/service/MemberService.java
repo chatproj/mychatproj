@@ -1,10 +1,6 @@
 package com.example.mychatproj.service;
 
-import java.util.HashMap;
 import java.util.Optional;
-
-import org.apache.ibatis.annotations.Param;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.mychatproj.model.Member;
 import com.example.mychatproj.model.Member_profileimg;
