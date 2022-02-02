@@ -22,4 +22,6 @@ public interface ChatMapper {
 	
 	List<Chatroom_Member> getchatroomMemberlistAll();
 	List<Chatroom_Member> getincludeMemberlist(@Param("chatroom_no") int chatroom_no);
+	
+	List<Chatroom_Member> memberlistinfo(@Param("chatroom_no") int chatroom_no);
 }

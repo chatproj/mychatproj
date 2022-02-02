@@ -137,5 +137,12 @@ public class ChatServiceimpl implements ChatService{
 		return res;
 	}
 	
+	@Override
+	public List<Chatroom_Member> getmemberlistinfo(int chatroom_no){
+		
+		return chatmapper.memberlistinfo(chatroom_no);
+
+	}
+	
 	
 }

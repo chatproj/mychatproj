@@ -63,4 +63,48 @@
 		
 		where chatroom_no=#{chatroom_no}
 	</select>
+	
+	<resultMap id="JoinmemberlistinfoRM" type="com.example.mychatproj.model.Chatroom_Member">
+		<id property="chatroom_member_no" column="chatroom_member_no" />
+		<result property="chatroom_no" column="chatroom_no" />
+		<result property="member_no" column="member_no" />
+		
+		<collection javaType="Chatroom" property="chatroom">
+			<id property="chatroom_no" column="chatroom_no" />
+			<result property="chatroom_name" column="chatroom_name" />
+		</collection>
+		<collection javaType="Member" property="member">
+			<id property="member_no" column="member_no" />
+			<result property="member_id" column="member_id" />
+			<result property="member_pwd" column="member_pwd" />
+			<result property="member_name" column="member_name" />
+			<result property="member_email" column="member_email" />
+			<result property="member_phone" column="member_phone" />
+		</collection>
+		<collection javaType="Member_profileimg" property="member_profileimg">
+			<id property="member_profileimg_no" column="member_no" />
+			<result property="member_no" column="member_no" />
+			<result property="member_profileimg_filename" column="member_profileimg_filename" />
+			<result property="member_profileimg_original_filename" column="member_profileimg_original_filename" />
+			<result property="member_profileimg_url" column="member_profileimg_url" />
+		</collection>
+	</resultMap>
+	<select id="memberlistinfo" resultMap="JoinmemberlistinfoRM">
+		select chatroom_member_no, m.chatroom_no, chatroom_name,
+		                           m.member_no, member_id, member_pwd, member_name, member_email, member_phone,
+		                           member_profileimg_filename, member_profileimg_original_filename, member_profileimg_url
+		
+		from mychatproj.chatroom_member as m 
+		
+		inner join mychatproj.chatroom as n
+		on m.chatroom_no = n.chatroom_no
+		
+		inner join member as o
+		on m.member_no = o.member_no
+		
+		inner join member_profileimg as p
+		on o.member_no = p.member_no
+		
+		where m.chatroom_no=#{chatroom_no};			
+	</select>	
 </mapper>
