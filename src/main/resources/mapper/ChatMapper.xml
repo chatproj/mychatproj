@@ -21,7 +21,7 @@
 			<result property="chatroom_name" column="chatroom_name" />
 		</collection>
 	</resultMap>
-	<select id="getchatlist" resultMap="JoinChatroom_MemberRM">
+	<select id="getchatroomlist" resultMap="JoinChatroom_MemberRM">
 		select chatroom_member_no, m.chatroom_no, member_no, chatroom_name 
 		
 		from mychatproj.chatroom_member as m inner join mychatproj.chatroom as n
@@ -50,4 +50,17 @@
 		values (  #{chatroom_member.chatroom_no} , 
 		          #{chatroom_member.member_no}   )	
 	</insert>
+	
+	<select id="getchatroomMemberlistAll" resultType="com.example.mychatproj.model.Chatroom_Member">
+		select chatroom_member_no, chatroom_no, member_no
+		
+		from chatroom_member	
+	</select>
+	<select id="getincludeMemberlist" resultType="com.example.mychatproj.model.Chatroom_Member">
+		select chatroom_member_no, chatroom_no, member_no
+		
+		from chatroom_member
+		
+		where chatroom_no=#{chatroom_no}
+	</select>
 </mapper>

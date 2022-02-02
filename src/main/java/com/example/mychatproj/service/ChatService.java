@@ -11,7 +11,7 @@ public interface ChatService {
 	Optional<Member> getSession_no(String member_id);
 	
 	// chatlist
-	List<Chatroom_Member> getchatlist(int member_no);
+	List<Chatroom_Member> getchatroomlist(int member_no);
 
 	// inviteMember and create chatroom
 		// id check
@@ -22,5 +22,9 @@ public interface ChatService {
 		void insertChatroom(Chatroom chatroom);
 		// insert chatroom_member
 		void insertChatroom_Member(Chatroom_Member chatroom_member);
+		
+	// chatroom member
+	String getchatroomMemberlistAll(int chatroom_no);
+	String getchatroom_memberInfo(int session_no, int chatroom_no);
 	
 }

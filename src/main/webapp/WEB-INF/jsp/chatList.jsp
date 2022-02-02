@@ -21,11 +21,11 @@
 				request.setCharacterEncoding("UTF-8");				
 				HashMap<Integer, String> chatList = (HashMap<Integer, String>)request.getAttribute("chatList");
 			%> 
-				<form method="POST" action="/chatList">
+				<form method="POST" action="/Joinchatroom">
  				<% for(Integer key : chatList.keySet()){ %>
 					<div class="chatList">
-						<input type="hidden" id="list" name="list" value="<%=key %>">
-						<input type="submit" id="list" name="list" value="<%=chatList.get(key) %>" class="submit_btn">
+						<input type="text" id="list" name="chatroom_no" value="<%=key %>">
+						<input type="submit" id="list" name="list" value="<%=key %>.<%=chatList.get(key) %>" class="submit_btn">
 					</div>	
 				<% } %>
 				</form>

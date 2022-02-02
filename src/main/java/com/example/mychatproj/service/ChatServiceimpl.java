@@ -29,13 +29,14 @@ public class ChatServiceimpl implements ChatService{
 	}
 	
 	@Override
-	public List<Chatroom_Member> getchatlist(int member_no) {
+	public List<Chatroom_Member> getchatroomlist(int member_no) {
 		
-		return chatmapper.getchatlist(member_no); 
+		return chatmapper.getchatroomlist(member_no); 
 	}
 
 	@Override
 	public String invite_id_check(String session_id, String member_id) {
+		
 		return validateDuplicateId(session_id, member_id);
 	}
 	private String validateDuplicateId(String session_id, String member_id) {
@@ -45,12 +46,12 @@ public class ChatServiceimpl implements ChatService{
 			Optional<Member> id_check = membermapper.getById(member_id);
 			
 			if(session_id.equals(id_check.get().getMember_id())) {
-				res = "자기 자신 초대 불가능";
+				res  =  "자기 자신 초대 불가능";
 			}else {
-				res = "체크 완료";
+				res  =  "체크 완료";
 			}
 		}catch(NoSuchElementException e) {
-			res = "존재하지 않는 아이디 입니다.";
+			    res  =  "존재하지 않는 아이디 입니다.";
 		}
 		
 		return res;
@@ -58,15 +59,83 @@ public class ChatServiceimpl implements ChatService{
 	
 	@Override
 	public List<Chatroom> getChatroom_no() {
+		
 		return chatmapper.getChatroom_no();
 	}
 	@Override
 	public void insertChatroom(Chatroom chatroom) {
+		
 		chatmapper.insertChatroom(chatroom);
 	}
 	@Override
 	public void insertChatroom_Member(Chatroom_Member chatroom_member) {
+		
 		chatmapper.insertChatroom_Member(chatroom_member);
 	}
+	
+	@Override
+	public String getchatroomMemberlistAll(int chatroom_no) {
+		String res = chatroom_no_check(chatroom_no);
+		
+		return res;
+	}
+	private String chatroom_no_check(int chatroom_no) {
+		String res = null;
+		
+		List<Chatroom_Member> chatroom_memberAll  =  chatmapper.getchatroomMemberlistAll();
+		int compare_chatroomlist[]                =  new int[chatroom_memberAll.size()];
+		for(int i = 0 ; i < chatroom_memberAll.size(); i++) {
+			compare_chatroomlist[i] = chatroom_memberAll.get(i).getChatroom_no();
+		}
+		
+		int chatroom_member_match = 0;
+		while(true) {
+			if(chatroom_no != compare_chatroomlist[chatroom_member_match]) {
+				chatroom_member_match++;
+				if(chatroom_member_match == chatroom_memberAll.size()) {
+					res = "chatroom not found";
+					break;
+				}
+			}else {
+				res = "chatroomOK";
+				break;
+			}
+		}
+		
+		
+		return res;
+	}
+	
+	@Override
+	public String getchatroom_memberInfo(int session_no, int chatroom_no) {
+		String res = member_include_check(session_no, chatroom_no);
+		return res;
+	}
+	private String member_include_check(int session_no, int chatroom_no) {
+		String res = null;
+
+		List<Chatroom_Member> include_memberlist  =  chatmapper.getincludeMemberlist(chatroom_no);
+		int member_no_list[] = new int[include_memberlist.size()];
+		for(int i = 0; i < include_memberlist.size(); i++) {
+			member_no_list[i] = include_memberlist.get(i).getMember_no();
+		}
+
+		int member_no_match = 0;
+		while(true) {
+			if(session_no != member_no_list[member_no_match]) {
+				member_no_match++;
+				if(member_no_match == include_memberlist.size()) {
+					res = "비정상적인 접근";
+					break;
+				}
+			}else {
+				res = "접근허용";
+				break;
+			}
+		}
+				
+		return res;
+	}
+	
 	
 }
