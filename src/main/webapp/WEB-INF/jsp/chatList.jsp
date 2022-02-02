@@ -24,7 +24,7 @@
 				<form method="POST" action="/Joinchatroom">
  				<% for(Integer key : chatList.keySet()){ %>
 					<div class="chatList">
-						<input type="text" id="list" name="chatroom_no" value="<%=key %>">
+	<%-- 					<input type="text" id="list" name="chatroom_no" value="<%=key %>"> --%>
 						<input type="submit" id="list" name="list" value="<%=key %>.<%=chatList.get(key) %>" class="submit_btn">
 					</div>	
 				<% } %>

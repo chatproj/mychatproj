@@ -107,4 +107,26 @@
 		
 		where m.chatroom_no=#{chatroom_no};			
 	</select>	
+	
+	<insert id="insertLogText" parameterType="com.example.mychatproj.model.Chatlog">
+		insert into chatlog(member_no, chatroom_no, chatlog_log, chatlog_time, chatlog_division)
+		
+		values (  #{chatlog.member_no} , 
+		          #{chatlog.chatroom_no} ,
+		          #{chatlog.chatlog_log} ,
+		          #{chatlog.chatlog_time},
+		          #{chatlog.chatlog_division}    )
+	</insert>
+	
+	<insert id="insertchatfile"  parameterType="com.example.mychatproj.model.Chat_filelist">
+		insert into chat_filelist(chatroom_no, member_no, chat_filelist_filename, chat_filelist_original_filename,
+		                          chat_filelist_time, chat_filelist_url)
+		
+		values (  #{chat_filelist.chatroom_no} , 
+		          #{chat_filelist.member_no} ,
+		          #{chat_filelist.chat_filelist_filename} ,
+		          #{chat_filelist.chat_filelist_original_filename},
+		          #{chat_filelist.chat_filelist_time},
+		          #{chat_filelist.chat_filelist_url}    )
+	</insert>
 </mapper>
