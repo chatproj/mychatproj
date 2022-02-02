@@ -154,6 +154,25 @@ public class ChatController {
 				if(chatroom_member_include_check.equals("비정상적인 접근")) {
 					return "redirect:/chatList";
 				}
+				
+				// 채팅방 참여자 목록
+				List<Chatroom_Member> memberlist           =   chatservice.getmemberlistinfo(chatroom_no);
+				ArrayList<Chatroom_Member> mychatroominfo          =   new ArrayList<>();
+				ArrayList<Chatroom_Member> memberlistAll   =   new ArrayList<>();
+				
+				for(int i = 0; i<memberlist.size(); i++) {
+					if(session_no == memberlist.get(i).getMember().getMember_no()) {
+						mychatroominfo.add(memberlist.get(i));
+					}else {
+						memberlistAll.add(memberlist.get(i));
+					}
+				}
+				
+				System.out.println(mychatroominfo);
+				System.out.println(memberlistAll);
+				
+				model.addAttribute("mychatroominfo", mychatroominfo);
+				model.addAttribute("memberlistAll", memberlistAll);
 			
 			return "chat";
 		}else {

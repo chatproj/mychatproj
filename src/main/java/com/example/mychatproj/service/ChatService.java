@@ -27,4 +27,7 @@ public interface ChatService {
 	String getchatroomMemberlistAll(int chatroom_no);
 	String getchatroom_memberInfo(int session_no, int chatroom_no);
 	
+	// chatroom member list
+	List<Chatroom_Member> getmemberlistinfo(int chatroom_no);
+	
 }
