@@ -429,6 +429,7 @@
 		
 		var nowTimes = hours + ":" + minutes + ":" + seconds;
 		
+		var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>";
 		ws.send(member_no+","+member_name+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+"file");
 		$('#uploadinput').val("");
 		
