@@ -169,6 +169,11 @@ public class ChatController {
 					return "redirect:/chatList";
 				}
 				
+				// log Á¶È¸
+				List<Chatlog> chatlog = chatservice.getchatlog(chatroom_no);
+				
+				model.addAttribute("chatlog", chatlog);
+				
 				// log insert Text
 				Chatlog insertLog = new Chatlog();
 				try {
@@ -179,20 +184,23 @@ public class ChatController {
 						insertLog.setChatlog_time(nowTimes);
 						insertLog.setChatlog_division("text");
 						
-						chatservice.insertLogText(insertLog);
+						chatservice.insertLog(insertLog);
 					}
 				}catch(NullPointerException e) {
 					
 				}
+				
 				
 				// log insert File
 				try {
 					if(!sockfilename.equals("") && sockfilename != null) {
 						insertLog.setMember_no(session_no);
 						insertLog.setChatroom_no(chatroom_no);
-						insertLog.setChatlog_log(msg);
+						insertLog.setChatlog_log(sockfilename);
 						insertLog.setChatlog_time(nowTimes);
 						insertLog.setChatlog_division("file");
+						
+						chatservice.insertLog(insertLog);
 					}
 				}catch(NullPointerException e) {
 					
@@ -268,8 +276,7 @@ public class ChatController {
 		
 		redirectAttributes.addAttribute("chatroom_no", form.getChatroom_no());
 		redirectAttributes.addAttribute("sockfilename", destinationfilename);
-		
-		System.out.println("dsfsfsdfs");
+		redirectAttributes.addAttribute("nowTimes", time);
 		
 		return "redirect:chat";
 	}

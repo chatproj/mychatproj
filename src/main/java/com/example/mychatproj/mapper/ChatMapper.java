@@ -27,7 +27,9 @@ public interface ChatMapper {
 	
 	List<Chatroom_Member> memberlistinfo(@Param("chatroom_no") int chatroom_no);
 	
-	void insertLogText(@Param("chatlog") Chatlog chatlog);
+	void insertLog(@Param("chatlog") Chatlog chatlog);
 	
 	void insertchatfile(@Param("chat_filelist") Chat_filelist chat_filelist);
+	
+	List<Chatlog> getchatlog(@Param("chatroom_no") int chatroom_no);
 }

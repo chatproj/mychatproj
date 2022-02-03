@@ -32,9 +32,12 @@ public interface ChatService {
 	// chatroom member list
 	List<Chatroom_Member> getmemberlistinfo(int chatroom_no);
 	
-	// insertLog text
-	void insertLogText(Chatlog chatlog);
+	// insertLog
+	void insertLog(Chatlog chatlog);
 	
 	// insertchatfile
 	void insertchatfile(Chat_filelist chat_filelist);
+	
+	// selectLog
+	List<Chatlog> getchatlog(int chatroom_no);
 }

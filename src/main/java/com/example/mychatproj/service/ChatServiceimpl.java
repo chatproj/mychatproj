@@ -147,9 +147,9 @@ public class ChatServiceimpl implements ChatService{
 	}
 	
 	@Override
-	public void insertLogText(Chatlog chatlog) {
+	public void insertLog(Chatlog chatlog) {
 		
-		 chatmapper.insertLogText(chatlog);
+		 chatmapper.insertLog(chatlog);
 	}
 	
 	@Override
@@ -158,5 +158,10 @@ public class ChatServiceimpl implements ChatService{
 		chatmapper.insertchatfile(chat_filelist);
 	}
 	
+	@Override
+	public List<Chatlog> getchatlog(int chatroom_no) {
+		
+		return chatmapper.getchatlog(chatroom_no);
+	}
 	
 }
