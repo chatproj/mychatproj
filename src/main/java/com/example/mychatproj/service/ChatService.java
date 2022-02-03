@@ -3,6 +3,8 @@ package com.example.mychatproj.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.mychatproj.model.Chat_filelist;
+import com.example.mychatproj.model.Chatlog;
 import com.example.mychatproj.model.Chatroom;
 import com.example.mychatproj.model.Chatroom_Member;
 import com.example.mychatproj.model.Member;
@@ -30,4 +32,9 @@ public interface ChatService {
 	// chatroom member list
 	List<Chatroom_Member> getmemberlistinfo(int chatroom_no);
 	
+	// insertLog text
+	void insertLogText(Chatlog chatlog);
+	
+	// insertchatfile
+	void insertchatfile(Chat_filelist chat_filelist);
 }

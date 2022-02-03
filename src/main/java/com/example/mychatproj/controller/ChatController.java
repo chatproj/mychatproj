@@ -1,6 +1,10 @@
 package com.example.mychatproj.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -10,14 +14,19 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.mychatproj.model.Chat_filelist;
+import com.example.mychatproj.model.Chatlog;
 import com.example.mychatproj.model.Chatroom;
 import com.example.mychatproj.model.Chatroom_Member;
 import com.example.mychatproj.model.Member;
@@ -133,7 +142,12 @@ public class ChatController {
 	}
 	
 	@RequestMapping("/chat")
-	public String chatpage(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, @RequestParam("chatroom_no") int chatroom_no ) {
+	public String chatpage(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+			@RequestParam("chatroom_no") int chatroom_no,			
+			@RequestParam(value= "msg",     required=false) String msg,
+			@RequestParam(value= "nowTimes", required=false) String nowTimes,
+			@RequestParam(value= "sockfilename", required=false) String sockfilename ) {
+		
 		HttpSession session   =   request.getSession();
 		String session_id     =   (String) session.getAttribute("session_id");	
 		System.out.println(session_id);
@@ -153,6 +167,35 @@ public class ChatController {
 				System.out.println("비정상 접근 체크 : " + chatroom_member_include_check);
 				if(chatroom_member_include_check.equals("비정상적인 접근")) {
 					return "redirect:/chatList";
+				}
+				
+				// log insert Text
+				Chatlog insertLog = new Chatlog();
+				try {
+					if(!msg.equals("") && msg != null) {
+						insertLog.setMember_no(session_no);
+						insertLog.setChatroom_no(chatroom_no);
+						insertLog.setChatlog_log(msg);
+						insertLog.setChatlog_time(nowTimes);
+						insertLog.setChatlog_division("text");
+						
+						chatservice.insertLogText(insertLog);
+					}
+				}catch(NullPointerException e) {
+					
+				}
+				
+				// log insert File
+				try {
+					if(!sockfilename.equals("") && sockfilename != null) {
+						insertLog.setMember_no(session_no);
+						insertLog.setChatroom_no(chatroom_no);
+						insertLog.setChatlog_log(msg);
+						insertLog.setChatlog_time(nowTimes);
+						insertLog.setChatlog_division("file");
+					}
+				}catch(NullPointerException e) {
+					
 				}
 				
 				// 채팅방 참여자 목록
@@ -179,6 +222,56 @@ public class ChatController {
 			
 			return "redirect:/";
 		}
+	}
+	
+	@PostMapping("/uploadFile")
+	public String upload_file(Chat_filelist form,
+							  RedirectAttributes redirectAttributes,
+			 			      HttpServletRequest request,
+						      @RequestParam("fileupload") MultipartFile files,
+							  @RequestParam("chatroom_no") int chatroom_no) throws Exception {
+		
+		System.out.println("ddd" + files.getOriginalFilename());
+		
+		Chat_filelist fileupload = new Chat_filelist();
+		fileupload.setMember_no(form.getMember_no());
+		fileupload.setChatroom_no(form.getChatroom_no());
+		
+		SimpleDateFormat nowTimes   =   new SimpleDateFormat("yyyy-MM-dd_HH:mm");
+		Calendar now                =   Calendar.getInstance();
+		String time                 =   nowTimes.format(now.getTime());
+		fileupload.setChat_filelist_time(time);
+		
+		String originalfilename           =  files.getOriginalFilename();
+		String originalfilenameExtension  =  FilenameUtils.getExtension(originalfilename).toLowerCase();
+		File destinationfile;
+		String destinationfilename;
+		String fileurl                    =  "/uploadfile/";
+		String savePath                   =  application.getRealPath(fileurl);
+		
+		do {
+			destinationfilename  =  RandomStringUtils.randomAlphabetic(32) + "." + originalfilenameExtension;
+			destinationfile      =  new File(savePath, destinationfilename);
+		}while(destinationfile.exists());
+		
+		try {
+			files.transferTo(destinationfile);
+		}catch(IOException e) {
+			
+		}
+		
+		fileupload.setChat_filelist_filename(destinationfilename);
+		fileupload.setChat_filelist_original_filename(originalfilename);
+		fileupload.setChat_filelist_url(savePath);
+		
+		chatservice.insertchatfile(fileupload);
+		
+		redirectAttributes.addAttribute("chatroom_no", form.getChatroom_no());
+		redirectAttributes.addAttribute("sockfilename", destinationfilename);
+		
+		System.out.println("dsfsfsdfs");
+		
+		return "redirect:chat";
 	}
 	
 }

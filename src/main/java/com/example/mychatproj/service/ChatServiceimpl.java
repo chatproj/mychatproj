@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.example.mychatproj.controller.InviteForm;
 import com.example.mychatproj.mapper.ChatMapper;
 import com.example.mychatproj.mapper.MemberMapper;
+import com.example.mychatproj.model.Chat_filelist;
+import com.example.mychatproj.model.Chatlog;
 import com.example.mychatproj.model.Chatroom;
 import com.example.mychatproj.model.Chatroom_Member;
 import com.example.mychatproj.model.Member;
@@ -142,6 +144,18 @@ public class ChatServiceimpl implements ChatService{
 		
 		return chatmapper.memberlistinfo(chatroom_no);
 
+	}
+	
+	@Override
+	public void insertLogText(Chatlog chatlog) {
+		
+		 chatmapper.insertLogText(chatlog);
+	}
+	
+	@Override
+	public void insertchatfile(Chat_filelist chat_filelist) {
+		
+		chatmapper.insertchatfile(chat_filelist);
 	}
 	
 	

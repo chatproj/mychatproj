@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.example.mychatproj.model.Chat_filelist;
+import com.example.mychatproj.model.Chatlog;
 import com.example.mychatproj.model.Chatroom;
 import com.example.mychatproj.model.Chatroom_Member;
 import com.example.mychatproj.model.Member;
@@ -24,4 +26,8 @@ public interface ChatMapper {
 	List<Chatroom_Member> getincludeMemberlist(@Param("chatroom_no") int chatroom_no);
 	
 	List<Chatroom_Member> memberlistinfo(@Param("chatroom_no") int chatroom_no);
+	
+	void insertLogText(@Param("chatlog") Chatlog chatlog);
+	
+	void insertchatfile(@Param("chat_filelist") Chat_filelist chat_filelist);
 }
