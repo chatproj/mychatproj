@@ -123,11 +123,11 @@
 								}else if(chatlog.get(i).getChatlog_division().equals("file")) {
 							%>
 								<form method='POST' action='/download' id="upfile" class="upfile">
-									<input type="hidden" name="cnum" value="">
-									<input type='hidden' name='filename' value='<%=chatlog.get(i).getChatlog_log() %>'>
-									<input type='hidden' name='original_filename' value=''>
-									<%-- <input type="text" name="sockoriginalfilename" value='<%=chatlog.get(i).getUp_filename() %>' readonly> --%>
-									<div id="sockoriginalfilename" class="sockoriginalfilename">파일명 : <%=chatlog.get(i).getChat_filelist().getChat_filelist_original_filename() %> </div>
+									<input type="hidden"           name="download_member_no" value="<%=chatlog.get(i).getMember_no() %>">
+									<input type="hidden"           name="download_chatroom_no" value="<%=chatlog.get(i).getChatroom_no() %>">
+									<input type="hidden"           name="download_filelist_time" value="<%=chatlog.get(i).getChat_filelist().getChat_filelist_time() %>">
+									<input type="hidden"           name="download_filelist_original_filename" value="<%=chatlog.get(i).getChat_filelist().getChat_filelist_original_filename() %>">
+									<div id="sockoriginalfilename" name="download_filelist_original_filename" class="sockoriginalfilename">파일명 : <%=chatlog.get(i).getChat_filelist().getChat_filelist_original_filename() %> </div>
 									<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>
 								</form>
 								<div class="mytime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>	
@@ -152,10 +152,10 @@
 								}else if(chatlog.get(i).getChatlog_division().equals("file")) {
 							%>
 								<form method='POST' action='/download' id="upfile" class="upfile">
-									<input type="hidden" name="cnum" value="">
-									<input type='hidden' name='filename' value='<%=chatlog.get(i).getChatlog_log() %>'>
-									<input type='hidden' name='original_filename' value=''>
-									<%-- <input type="text" name="sockoriginalfilename" value='<%=chatlog.get(i).getUp_filename() %>' readonly> --%>
+									<input type="hidden"           name="download_member_no" value="<%=chatlog.get(i).getMember_no() %>">
+									<input type="hidden"           name="download_chatroom_no" value="<%=chatlog.get(i).getChatroom_no() %>">
+									<input type="hidden"           name="download_filelist_time" value="<%=chatlog.get(i).getChat_filelist().getChat_filelist_time() %>">
+									<input type="hidden"           name="download_filelist_original_filename" value="<%=chatlog.get(i).getChat_filelist().getChat_filelist_original_filename() %>">
 									<div id="sockoriginalfilename" class="sockoriginalfilename">파일명 : <%=chatlog.get(i).getChat_filelist().getChat_filelist_original_filename() %> </div>
 									<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>
 								</form>
@@ -231,12 +231,13 @@
 			console.log(msgarr[4]);
 			console.log(msgarr[5]);
 			console.log(msgarr[6]);
+			console.log(msgarr[7]);
 			
 			console.log(chatroom_no);
 			
 		if(msgarr[5] == chatroom_no){
 			
-			if(msgarr[6] == "file") {
+			if(msgarr[7] == "file") {
 				if( msgarr[0] == member_no ){
 					var msgTemp = "<div>"
 						msgTemp = "<div class='myLog'>"
@@ -249,6 +250,18 @@
 						msgTemp += "</div>"
 						msgTemp += "</div>"
 						msgTemp += "<form method='POST' action='/download' id='upfile' class='upfile'>"
+						msgTemp += "<input type='hidden' name='download_member_no'     value='";
+						msgTemp += msgarr[0];
+						msgTemp += "'>";
+						msgTemp += "<input type='hidden' name='download_chatroom_no'   value='";
+						msgTemp += msgarr[5];
+						msgTemp += "'>";
+						msgTemp += "<input type='hidden' name='download_filelist_time' value='";
+						msgTemp += msgarr[6]; 
+						msgTemp += "'>";
+						msgTemp +="<input type='hidden'  name='download_filelist_original_filename' value='";
+						msgTemp += msgarr[2];
+						msgTemp += "'>";
 						msgTemp += "<div id='sockoriginalfilename' class='sockoriginalfilename'>파일명 : "
 						msgTemp += msgarr[2];
 						msgTemp += "</div>"
@@ -274,6 +287,18 @@
 						msgTemp += "</div>"
 						msgTemp += "</div>"
 						msgTemp += "<form method='POST' action='/download' id='upfile' class='upfile'>"
+						msgTemp += "<input type='hidden' name='download_member_no'     value='";
+						msgTemp += msgarr[0];
+						msgTemp += "'>";
+						msgTemp += "<input type='hidden' name='download_chatroom_no'   value='";
+						msgTemp += msgarr[5];
+						msgTemp += "'>";
+						msgTemp += "<input type='hidden' name='download_filelist_time' value='";
+						msgTemp += msgarr[6]; 
+						msgTemp += "'>";
+						msgTemp +="<input type='hidden'  name='download_filelist_original_filename' value='";
+						msgTemp += msgarr[2];
+						msgTemp += "'>";
 						msgTemp += "<div id='sockoriginalfilename' class='sockoriginalfilename'>파일명 : "
 						msgTemp += msgarr[2];
 						msgTemp += "</div>"
@@ -362,7 +387,7 @@
 		var minutes   =  today.getMinutes();
 		var seconds   =  today.getSeconds();
 		
-		var nowTimes = hours + ":" + minutes + ":" + seconds;
+		var nowTimes = (("00"+hours.toString()).slice(-2)) + ":" + (("00"+minutes.toString()).slice(-2)) + ":" + (("00"+seconds.toString()).slice(-2)); 
 		
 		// 채팅 공백 시 응답 X
 		var chatinput = document.querySelector("#chatting");
@@ -423,14 +448,22 @@
  	    var img           =   "<img class='img_inner' src='/memberimg/${mychatroominfo.get(0).getMember_profileimg().getMember_profileimg_filename()}' >"; 
 	
 		var today     =  new Date();
+		var years     =  today.getFullYear();
+		var month     =  today.getMonth()+1;
+		var date      =  today.getDate();
 		var hours     =  today.getHours();
 		var minutes   =  today.getMinutes();
 		var seconds   =  today.getSeconds();
 		
-		var nowTimes = hours + ":" + minutes + ":" + seconds;
+		var nowTimes        =  (("00"+hours.toString()).slice(-2)) + ":" + (("00"+minutes.toString()).slice(-2)) + ":" + (("00"+seconds.toString()).slice(-2)); 
+		var filelistTimes   =  years + "-" + (("00"+month.toString()).slice(-2)) + "-" + (("00"+date.toString()).slice(-2)) + "_" + (("00"+hours.toString()).slice(-2)) + ":" + (("00"+minutes.toString()).slice(-2)) + ":" + (("00"+seconds.toString()).slice(-2)); 
 		
+		console.log("month : " + month);
 		var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>";
-		ws.send(member_no+","+member_name+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+"file");
+		
+		setTimeout(function() {
+			ws.send(member_no+","+member_name+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+filelistTimes+","+"file");
+		}, 500);
 		$('#uploadinput').val("");
 		
 	}

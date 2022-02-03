@@ -164,4 +164,10 @@ public class ChatServiceimpl implements ChatService{
 		return chatmapper.getchatlog(chatroom_no);
 	}
 	
+	@Override
+	public Optional<Chat_filelist> getchatlist_filename(int member_no, int chatroom_no, String chat_filelist_original_filename, String chat_filelist_time) {
+		
+		return chatmapper.getchatlist_filename(member_no, chatroom_no, chat_filelist_original_filename, chat_filelist_time);
+	}
+	
 }
