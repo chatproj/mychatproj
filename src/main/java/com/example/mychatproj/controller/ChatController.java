@@ -172,6 +172,10 @@ public class ChatController {
 				// log Á¶È¸
 				List<Chatlog> chatlog = chatservice.getchatlog(chatroom_no);
 				
+				for(int i=0; i<chatlog.size(); i++) {
+					System.out.println("dddddddddddd " + chatlog.get(i).getChat_filelist().getChat_filelist_original_filename());
+				}
+				
 				model.addAttribute("chatlog", chatlog);
 				
 				// log insert Text

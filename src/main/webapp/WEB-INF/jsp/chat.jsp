@@ -127,7 +127,7 @@
 									<input type='hidden' name='filename' value='<%=chatlog.get(i).getChatlog_log() %>'>
 									<input type='hidden' name='original_filename' value=''>
 									<%-- <input type="text" name="sockoriginalfilename" value='<%=chatlog.get(i).getUp_filename() %>' readonly> --%>
-									<div id="sockoriginalfilename" class="sockoriginalfilename">파일명 : <%=chatlog.get(i).getChatlog_log() %> </div>
+									<div id="sockoriginalfilename" class="sockoriginalfilename">파일명 : <%=chatlog.get(i).getChat_filelist().getChat_filelist_original_filename() %> </div>
 									<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>
 								</form>
 								<div class="mytime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>	
@@ -156,7 +156,7 @@
 									<input type='hidden' name='filename' value='<%=chatlog.get(i).getChatlog_log() %>'>
 									<input type='hidden' name='original_filename' value=''>
 									<%-- <input type="text" name="sockoriginalfilename" value='<%=chatlog.get(i).getUp_filename() %>' readonly> --%>
-									<div id="sockoriginalfilename" class="sockoriginalfilename">파일명 : <%=chatlog.get(i).getChatlog_log() %> </div>
+									<div id="sockoriginalfilename" class="sockoriginalfilename">파일명 : <%=chatlog.get(i).getChat_filelist().getChat_filelist_original_filename() %> </div>
 									<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>
 								</form>
 								<div class="yourtime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>

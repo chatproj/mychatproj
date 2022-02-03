@@ -63,4 +63,14 @@ public class Chatlog {
 		this.member_profileimg = member_profileimg;
 	}
 	
+	public Chat_filelist chat_filelist;
+
+	public Chat_filelist getChat_filelist() {
+		return chat_filelist;
+	}
+	public void setChat_filelist(Chat_filelist chat_filelist) {
+		this.chat_filelist = chat_filelist;
+	}
+	
+	
 }
