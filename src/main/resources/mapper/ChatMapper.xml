@@ -108,7 +108,7 @@
 		where m.chatroom_no=#{chatroom_no};			
 	</select>	
 	
-	<insert id="insertLogText" parameterType="com.example.mychatproj.model.Chatlog">
+	<insert id="insertLog" parameterType="com.example.mychatproj.model.Chatlog">
 		insert into chatlog(member_no, chatroom_no, chatlog_log, chatlog_time, chatlog_division)
 		
 		values (  #{chatlog.member_no} , 
@@ -129,4 +129,46 @@
 		          #{chat_filelist.chat_filelist_time},
 		          #{chat_filelist.chat_filelist_url}    )
 	</insert>
+
+	<resultMap id="JoinLogRM" type="com.example.mychatproj.model.Chatlog">
+		<id property="chatlog_no" column="chatlog_no" />
+		<result property="member_no" column="member_no" />
+		<result property="chatroom_no" column="chatroom_no" />
+		<result property="chatlog_log" column="chatlog_log" />
+		<result property="chatlog_time" column="chatlog_time" />
+		<result property="chatlog_division" column="chatlog_division" />
+		
+		<collection javaType="Member" property="member">
+			<id property="member_no" column="member_no" />
+			<result property="member_id" column="member_id" />
+			<result property="member_pwd" column="member_pwd" />
+			<result property="member_name" column="member_name" />
+			<result property="member_email" column="member_email" />
+			<result property="member_phone" column="member_phone" />
+		</collection>
+		<collection javaType="Member_profileimg" property="member_profileimg">
+			<id property="member_profileimg_no" column="member_no" />
+			<result property="member_no" column="member_no" />
+			<result property="member_profileimg_filename" column="member_profileimg_filename" />
+			<result property="member_profileimg_original_filename" column="member_profileimg_original_filename" />
+			<result property="member_profileimg_url" column="member_profileimg_url" />
+		</collection>
+	</resultMap>
+	
+	<select id="getchatlog" resultMap="JoinLogRM">
+		select chatlog_no, m.member_no, m.chatroom_no, m.chatlog_log, m.chatlog_time, m.chatlog_division,
+		                   n.member_id, n.member_pwd, n.member_name, n.member_email, n.member_phone,
+                           o.member_profileimg_no, o.member_profileimg_filename, o.member_profileimg_original_filename,
+						   o.member_profileimg_url
+		
+		from chatlog as m 
+		
+		inner join member as n
+		on m.member_no = n.member_no
+		
+		inner join member_profileimg as o
+		on m.member_no = o.member_no
+		
+		where m.chatroom_no=#{chatroom_no};			
+	</select>	
 </mapper>

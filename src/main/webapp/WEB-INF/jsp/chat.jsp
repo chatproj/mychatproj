@@ -4,6 +4,7 @@
 <%@page import="javax.servlet.http.HttpSession"%>
 
 <%@page import="com.example.mychatproj.model.Chatroom_Member"%>
+<%@page import="com.example.mychatproj.model.Chatlog"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,7 @@
 </head>
 	<%
 			ArrayList<Chatroom_Member> mychatroominfo = (ArrayList) request.getAttribute("mychatroominfo");
+			ArrayList<Chatlog> chatlog = (ArrayList) request.getAttribute("chatlog");
 	%>
 <body>
 	<!-- Header -->
@@ -99,43 +101,76 @@
 				</div>
 				
 				<div id="chatform" class="chatform">
+					<%
+						for(int i = 0; i < chatlog.size(); i++){
+					%>
 						<div>
+					<%
+						  if(chatlog.get(i).getMember_no() == mychatroominfo.get(0).getMember().getMember_no()) {
+					%>
 							<div class="myLog">
 								<div class="myprofile">
-									<div class="myname"></div>
-								<div class="myimg"><img class="img_inner" src=''></div>
+									<div class="myname"><%=chatlog.get(i).getMember().getMember_name() %></div>
+								<div class="myimg"><img class="img_inner" src='memberimg/<%=chatlog.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
 									
 								</div>
-								<div class="mymsg"></div>
-								<div class="mytime">time : <  ></div>
+							<%
+								if(chatlog.get(i).getChatlog_division().equals("text")) {
+							%>
+								<div class="mymsg"><%=chatlog.get(i).getChatlog_log() %></div>
+								<div class="mytime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>
+							<%
+								}else if(chatlog.get(i).getChatlog_division().equals("file")) {
+							%>
 								<form method='POST' action='/download' id="upfile" class="upfile">
 									<input type="hidden" name="cnum" value="">
-									<input type='hidden' id="test" name='filename' value=''>
+									<input type='hidden' name='filename' value='<%=chatlog.get(i).getChatlog_log() %>'>
 									<input type='hidden' name='original_filename' value=''>
 									<%-- <input type="text" name="sockoriginalfilename" value='<%=chatlog.get(i).getUp_filename() %>' readonly> --%>
-									<div id="sockoriginalfilename" class="sockoriginalfilename">파일명 : </div>
+									<div id="sockoriginalfilename" class="sockoriginalfilename">파일명 : <%=chatlog.get(i).getChatlog_log() %> </div>
 									<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>
 								</form>
-								<div class="mytime">time : <  ></div>								
+								<div class="mytime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>	
+							<%
+								}
+							%>							
 							</div>
+					<%
+						  }else{
+					%>
 							<div class="yourLog">
 								<div class="yourprofile">
-									<div class="yourimg"><img class="img_inner" src=''></div>
-									<div class="yourname"></div>
+									<div class="yourimg"><img class="img_inner" src='memberimg/<%=chatlog.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
+									<div class="yourname"><%=chatlog.get(i).getMember().getMember_name() %></div>
 								</div>
-								<div class="yourmsg"></div>
-								<div class="yourtime">time : <  ></div>
+							<%
+								if(chatlog.get(i).getChatlog_division().equals("text")) {
+							%>
+								<div class="yourmsg"><%=chatlog.get(i).getChatlog_log() %></div>
+								<div class="yourtime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>
+							<%
+								}else if(chatlog.get(i).getChatlog_division().equals("file")) {
+							%>
 								<form method='POST' action='/download' id="upfile" class="upfile">
 									<input type="hidden" name="cnum" value="">
-									<input type='hidden' name='filename' value=''>
+									<input type='hidden' name='filename' value='<%=chatlog.get(i).getChatlog_log() %>'>
 									<input type='hidden' name='original_filename' value=''>
 									<%-- <input type="text" name="sockoriginalfilename" value='<%=chatlog.get(i).getUp_filename() %>' readonly> --%>
-									<div id="sockoriginalfilename" class="sockoriginalfilename">파일명 : </div>
+									<div id="sockoriginalfilename" class="sockoriginalfilename">파일명 : <%=chatlog.get(i).getChatlog_log() %> </div>
 									<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>
 								</form>
-								<div class="yourtime">time : <  ></div>	
+								<div class="yourtime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>
+							<%
+								}
+							%>		
 							</div>
+					<%
+						  }
+					%>
 						</div>	
+					<%
+						}
+					%>
 				</div>
 				<div id="yourMsg" class="yourMsg">
 					<table class="inputTable">	
