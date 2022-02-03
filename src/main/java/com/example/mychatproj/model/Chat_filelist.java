@@ -3,6 +3,7 @@ package com.example.mychatproj.model;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Chat_filelist {
+	private int chat_filelist_no;
 	private int chatroom_no;
 	private int member_no;
 	private String chat_filelist_filename;
@@ -10,6 +11,13 @@ public class Chat_filelist {
 	private String chat_filelist_time;
 	private String chat_filelist_url;
 	
+	
+	public int getChat_filelist_no() {
+		return chat_filelist_no;
+	}
+	public void setChat_filelist_no(int chat_filelist_no) {
+		this.chat_filelist_no = chat_filelist_no;
+	}
 	public int getChatroom_no() {
 		return chatroom_no;
 	}

@@ -153,22 +153,36 @@
 			<result property="member_profileimg_original_filename" column="member_profileimg_original_filename" />
 			<result property="member_profileimg_url" column="member_profileimg_url" />
 		</collection>
+		<collection javaType="Chat_filelist" property="chat_filelist">
+			<id property="chat_filelist_no" column="chat_filelist_no" />
+			<result property="chatroom_no" column="chatroom_no" />
+			<result property="member_no" column="member_no" />
+			<result property="chat_filelist_filename" column="chat_filelist_filename" />
+			<result property="chat_filelist_original_filename" column="chat_filelist_original_filename" />
+			<result property="chat_filelist_time" column="chat_filelist_time" />
+			<result property="chat_filelist_url" column="chat_filelist_url" />
+		</collection>
 	</resultMap>
 	
 	<select id="getchatlog" resultMap="JoinLogRM">
-		select chatlog_no, m.member_no, m.chatroom_no, m.chatlog_log, m.chatlog_time, m.chatlog_division,
-		                   n.member_id, n.member_pwd, n.member_name, n.member_email, n.member_phone,
-                           o.member_profileimg_no, o.member_profileimg_filename, o.member_profileimg_original_filename,
-						   o.member_profileimg_url
+		select chatlog_no, m.member_no, m.chatroom_no, chatlog_log, chatlog_time, chatlog_division,
+		                   member_id, member_pwd, member_name, member_email, member_phone,
+                           member_profileimg_no, member_profileimg_filename, member_profileimg_original_filename,
+						   member_profileimg_url,
+						   chat_filelist_no, chat_filelist_filename, chat_filelist_original_filename,
+						   chat_filelist_time, chat_filelist_url
 		
 		from chatlog as m 
 		
-		inner join member as n
+		left join member as n
 		on m.member_no = n.member_no
 		
-		inner join member_profileimg as o
+		left join member_profileimg as o
 		on m.member_no = o.member_no
 		
-		where m.chatroom_no=#{chatroom_no};			
+		left join mychatproj.chat_filelist as p
+		on m.chatlog_log = p.chat_filelist_filename
+		
+		where m.chatroom_no=#{chatroom_no}		
 	</select>	
 </mapper>
