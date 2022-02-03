@@ -219,6 +219,7 @@
 		}
 		ws.onmessage = function(data) {
 			var member_no = "<%=mychatroominfo.get(0).getMember().getMember_no() %>";
+			var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>"
 			var msg = data.data;
 			console.log(msg);
 			
@@ -229,8 +230,13 @@
 			console.log(msgarr[3]);
 			console.log(msgarr[4]);
 			console.log(msgarr[5]);
+			console.log(msgarr[6]);
 			
-			if(msgarr[5] == "file") {
+			console.log(chatroom_no);
+			
+		if(msgarr[5] == chatroom_no){
+			
+			if(msgarr[6] == "file") {
 				if( msgarr[0] == member_no ){
 					var msgTemp = "<div>"
 						msgTemp = "<div class='myLog'>"
@@ -327,6 +333,7 @@
 					$("#chatform").append(msgTemp);	
 			   }
 			}
+		}
 			var filesearch = msgarr[2].substring(61, 73); // value='file'
 			console.log(filesearch);
 			
@@ -362,7 +369,7 @@
 		
 		var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>";
 		if(chatinput.value != "") {
-			ws.send(member_no+","+member_name+","+msg+","+img+","+nowTimes);
+			ws.send(member_no+","+member_name+","+msg+","+img+","+nowTimes+","+chatroom_no);
 			$('#chatting').val("");
 			AjaxInsertChatText(msg, nowTimes);
 		}
@@ -422,7 +429,7 @@
 		
 		var nowTimes = hours + ":" + minutes + ":" + seconds;
 		
-		ws.send(member_no+","+member_name+","+sockfilename+","+img+","+nowTimes+","+"file");
+		ws.send(member_no+","+member_name+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+"file");
 		$('#uploadinput').val("");
 		
 	}
