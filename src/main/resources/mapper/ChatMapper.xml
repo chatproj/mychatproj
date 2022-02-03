@@ -185,4 +185,13 @@
 		
 		where m.chatroom_no=#{chatroom_no}		
 	</select>	
+	
+	<select id="getchatlist_filename" resultType="com.example.mychatproj.model.Chat_filelist">
+		select chat_filelist_filename
+		
+		from chat_filelist
+		
+		where chatroom_no=#{chatroom_no} and member_no=#{member_no} and chat_filelist_time=#{chat_filelist_time} and 
+		      chat_filelist_original_filename=#{chat_filelist_original_filename} 
+	</select>
 </mapper>

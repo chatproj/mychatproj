@@ -32,4 +32,9 @@ public interface ChatMapper {
 	void insertchatfile(@Param("chat_filelist") Chat_filelist chat_filelist);
 	
 	List<Chatlog> getchatlog(@Param("chatroom_no") int chatroom_no);
+	
+	Optional<Chat_filelist> getchatlist_filename(@Param("member_no") int member_no,
+											     @Param("chatroom_no") int chatroom_no,
+											     @Param("chat_filelist_original_filename") String chat_filelist_original_filename,
+											     @Param("chat_filelist_time") String chat_filelist_time);
 }

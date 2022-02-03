@@ -2,6 +2,11 @@ package com.example.mychatproj.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,6 +22,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -172,10 +183,6 @@ public class ChatController {
 				// log 조회
 				List<Chatlog> chatlog = chatservice.getchatlog(chatroom_no);
 				
-				for(int i=0; i<chatlog.size(); i++) {
-					System.out.println("dddddddddddd " + chatlog.get(i).getChat_filelist().getChat_filelist_original_filename());
-				}
-				
 				model.addAttribute("chatlog", chatlog);
 				
 				// log insert Text
@@ -198,10 +205,14 @@ public class ChatController {
 				// log insert File
 				try {
 					if(!sockfilename.equals("") && sockfilename != null) {
+						SimpleDateFormat simpledateformat   =   new SimpleDateFormat("HH:mm:ss");
+						Calendar now                        =   Calendar.getInstance();
+						String time                         =   simpledateformat.format(now.getTime());
+						
 						insertLog.setMember_no(session_no);
 						insertLog.setChatroom_no(chatroom_no);
 						insertLog.setChatlog_log(sockfilename);
-						insertLog.setChatlog_time(nowTimes);
+						insertLog.setChatlog_time(time);
 						insertLog.setChatlog_division("file");
 						
 						chatservice.insertLog(insertLog);
@@ -249,7 +260,7 @@ public class ChatController {
 		fileupload.setMember_no(form.getMember_no());
 		fileupload.setChatroom_no(form.getChatroom_no());
 		
-		SimpleDateFormat nowTimes   =   new SimpleDateFormat("yyyy-MM-dd_HH:mm");
+		SimpleDateFormat nowTimes   =   new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		Calendar now                =   Calendar.getInstance();
 		String time                 =   nowTimes.format(now.getTime());
 		fileupload.setChat_filelist_time(time);
@@ -280,9 +291,48 @@ public class ChatController {
 		
 		redirectAttributes.addAttribute("chatroom_no", form.getChatroom_no());
 		redirectAttributes.addAttribute("sockfilename", destinationfilename);
-		redirectAttributes.addAttribute("nowTimes", time);
 		
 		return "redirect:chat";
 	}
+	
+	@PostMapping("download")
+    public ResponseEntity<Object> download(FiledownloadForm form, HttpServletRequest request, RedirectAttributes redirectAttributes) throws IOException, URISyntaxException {
+    	int member_no              =  form.getDownload_member_no();
+    	int chatroom_no            =  form.getDownload_chatroom_no();
+    	String chat_filelist_original_filename   =  form.getDownload_filelist_original_filename();
+    	String chat_filelist_time       =  form.getDownload_filelist_time();
+		
+    	Optional<Chat_filelist> filename = chatservice.getchatlist_filename(member_no, chatroom_no, chat_filelist_original_filename, chat_filelist_time);
+    	
+    	System.out.println(member_no);
+    	System.out.println(chatroom_no);
+    	System.out.println(chat_filelist_original_filename);
+    	System.out.println(chat_filelist_time);
+    	System.out.println("ddd : " + filename.get().getChat_filelist_filename());
+    	String fileurl = "/uploadfile/";
+    	String path = application.getRealPath(fileurl) + filename.get().getChat_filelist_filename();   
+    	
+		try {
+			Path filePath = Paths.get(path);
+			Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+			
+			System.out.println("rrrrr" + resource);
+			String origin_filename = form.getDownload_filelist_original_filename();
+			
+			HttpHeaders headers = new HttpHeaders();
+	//		headers.setContentDisposition(ContentDisposition.builder("attachment").filename("dd", StandardCharsets.UTF_8);  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(origin_filename, StandardCharsets.UTF_8).build());			
+			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+		} catch(Exception e) {
+//			
+//			URI redirectUri = new URI("/chat?cnumPK=" + cnumPK + "&message=delfile");
+//			HttpHeaders headers = new HttpHeaders();
+//			headers.setLocation(redirectUri);
+//			return new ResponseEntity<Object>(headers, HttpStatus.SEE_OTHER);
+			System.out.println("Failed");
+			return new ResponseEntity<Object>(null, HttpStatus.SEE_OTHER);
+		}
+
+    }
 	
 }
