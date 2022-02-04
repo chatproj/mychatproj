@@ -223,8 +223,12 @@ public class ChatController {
 				
 				// 채팅방 참여자 목록
 				List<Chatroom_Member> memberlist           =   chatservice.getmemberlistinfo(chatroom_no);
-				ArrayList<Chatroom_Member> mychatroominfo          =   new ArrayList<>();
+				ArrayList<Chatroom_Member> mychatroominfo  =   new ArrayList<>();
 				ArrayList<Chatroom_Member> memberlistAll   =   new ArrayList<>();
+				
+				System.out.println("my : " + session_no);
+				System.out.println("my : " + memberlist.get(0).getMember().getMember_no());
+				System.out.println("my : " + memberlist.get(1).getMember().getMember_no());
 				
 				for(int i = 0; i<memberlist.size(); i++) {
 					if(session_no == memberlist.get(i).getMember().getMember_no()) {
@@ -235,7 +239,6 @@ public class ChatController {
 				}
 				
 				System.out.println(mychatroominfo);
-				System.out.println(memberlistAll);
 				
 				model.addAttribute("mychatroominfo", mychatroominfo);
 				model.addAttribute("memberlistAll", memberlistAll);
