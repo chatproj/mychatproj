@@ -31,7 +31,7 @@
 							<div class="chatroomuserlist">
 								<div class="chatuserlist">
 									<div class="userimg"><img class="img_inner" src=''></div>
-									<div class="username"><a class="username_txt"></a></div>
+									<div class="member_name"><a class="username_txt"></a></div>
 								</div>
 							</div>
 							<button id="invitebtn" class="invitebtn" onclick="openinvite()">친구초대</button>
@@ -44,15 +44,15 @@
 						<form method="POST" action="/invitechat">
 							<div class="invite-box">
 								<div class="inputlabel">방제목</div>
-								<input type="hidden" name="cnum" id="cnum" value="">
-								<input type="text" name="cname" id="cname" value="" readonly>
-								<div id="cname_error" class="error"></div>
+								<input type="hidden" name="chatroom_no" id="chatroom_no" value="">
+								<input type="text" name="chatroom_name" id="chatroom_name" value="" readonly>
+								<div id="chatroom_name_error" class="error"></div>
 							</div>
 							
 							<div class="invite-box">
 								<div class="inputlabel">아이디</div>
-								<input type="text" name="uid" id="uid">
-								<div id="uid_error" class="error"></div>
+								<input type="text" name="member_id" id="member_id">
+								<div id="member_id_error" class="error"></div>
 							</div>
 							
 							<input type="submit" id="submit_btn" value="초대하기"
@@ -76,24 +76,24 @@
 									<th class="filelist_table_header">삭제</th>
 								</tr>
 										<tr class="second_fileblock">
-											<td class="originalfilename"></td>
+											<td class="chatfile_original_filename"></td>
 											<td class="fileusername"></td>
-											<td class="fileuploadtime"></td>
+											<td class="chatfile_time"></td>
 										    <form method="POST" action="/download">
-										    	<input type="hidden" name="cnum" value="">
-										    	<input type="hidden" name="original_filename" value="">
-												<input type="hidden" name="filename" value="">
+										    	<input type="hidden" name="chatroom_no" value="">
+										    	<input type="hidden" name="chatfile_original_filename" value="">
+												<input type="hidden" name="chatfile_filename" value="">
 											    <td><input type="submit" id="downloadbtn" value="다운로드" class="downloadbtn"></td>	
 											</form>
 											<form method="POST" action="filedelete">
-												<input type="hidden" id="text" name="cnum" value="">
-												<input type="hidden" name="filename" value="">
+												<input type="hidden" id="text" name="chatroom_no" value="">
+												<input type="hidden" name="chatfile_filename" value="">
 											    <td><input type="submit" id="filedeletebtn" value="삭제" class="filedeletebtn"></td>										
 											</form>
 										</tr>
 								</table>
 								<div class="chatlistpage">
-											 <a href="chat?cnumPK=&page=">[]</a>
+											 <a href="chat?chatroom_noPK=&page=">[]</a>
 											<%-- <a><input type="button" id="page" name="page" value="<%=i %>" onclick="page()"></a> --%>
 								</div>
 					</dialog>

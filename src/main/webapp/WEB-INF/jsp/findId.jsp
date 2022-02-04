@@ -18,13 +18,13 @@
 				<form method="POST" action="/findId">
 					<div class="input-box">
 						<div class="inputlabel">이름</div>
-						<input type="text" name="member_name" id="uname">
+						<input type="text" name="member_name" id="member_name">
 						<div id="uname_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">이메일</div>
-						<input type="email" name="member_email" id="email">
+						<input type="email" name="member_email" id="member_email">
 						<div id="email_error" class="error"></div>
 					</div>
 
