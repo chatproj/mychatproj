@@ -11,7 +11,6 @@ public class Chat_filelist {
 	private String chat_filelist_time;
 	private String chat_filelist_url;
 	
-	
 	public int getChat_filelist_no() {
 		return chat_filelist_no;
 	}
@@ -63,5 +62,16 @@ public class Chat_filelist {
 	public void setFileupload(MultipartFile fileupload) {
 		this.fileupload = fileupload;
 	}
+	
+	Member member;
+
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
+	
+	
 	
 }

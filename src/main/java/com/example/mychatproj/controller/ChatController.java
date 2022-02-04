@@ -157,7 +157,8 @@ public class ChatController {
 			@RequestParam("chatroom_no") int chatroom_no,			
 			@RequestParam(value= "msg",     required=false) String msg,
 			@RequestParam(value= "nowTimes", required=false) String nowTimes,
-			@RequestParam(value= "sockfilename", required=false) String sockfilename ) {
+			@RequestParam(value= "sockfilename", required=false) String sockfilename,
+			@RequestParam(value= "page" , required=false) String page                 ) {
 		
 		HttpSession session   =   request.getSession();
 		String session_id     =   (String) session.getAttribute("session_id");	
@@ -242,6 +243,36 @@ public class ChatController {
 				
 				model.addAttribute("mychatroominfo", mychatroominfo);
 				model.addAttribute("memberlistAll", memberlistAll);
+				
+				// 파일 리스트 목록
+				int file_listtotalcount = chatservice.getTotal_filelist(chatroom_no);
+				System.out.println("file_listtotalcount : " + file_listtotalcount);
+				
+				int startPage = 0;
+				int onePageCnt = 5;
+				int count = (int)Math.ceil((double)file_listtotalcount/(double)onePageCnt);
+				
+				model.addAttribute("file_listtotalcount", file_listtotalcount);  // 파일 토탈
+				model.addAttribute("count", count);   // 페이징번호
+				
+				if(page != null) {
+					if(Integer.parseInt(page) > count || Integer.parseInt(page) <= 0) {
+						redirectAttributes.addAttribute("chatroom_no", chatroom_no);
+						redirectAttributes.addAttribute("page", 1);
+						
+						return "redirect:chat";
+					}else {
+						startPage = (Integer.parseInt(page) - 1)*onePageCnt;
+						
+						List<Chat_filelist> chat_filelist = chatservice.getchatfilelist(chatroom_no, startPage, onePageCnt);
+						
+						model.addAttribute("chat_filelist", chat_filelist);  // 파일 리스트 (5개씩)
+					}
+				}else {
+					List<Chat_filelist> chat_filelist = chatservice.getchatfilelist(chatroom_no, startPage, onePageCnt);
+					
+					model.addAttribute("chat_filelist", chat_filelist);  // 파일 리스트 (5개씩)					
+				}
 			
 			return "chat";
 		}else {

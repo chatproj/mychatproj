@@ -37,4 +37,8 @@ public interface ChatMapper {
 											     @Param("chatroom_no") int chatroom_no,
 											     @Param("chat_filelist_original_filename") String chat_filelist_original_filename,
 											     @Param("chat_filelist_time") String chat_filelist_time);
+	
+	int getTotal_filelist(@Param("chatroom_no") int chatroom_no);
+	
+	List<Chat_filelist> getchatfilelist(@Param("chatroom_no") int chatroom_no, @Param("startPage") int startPage, @Param("onePageCnt") int onePageCnt);
 }

@@ -43,4 +43,9 @@ public interface ChatService {
 	
 	// downloadfile (get getchatlist_filename)
 	Optional<Chat_filelist> getchatlist_filename(int member_no, int chatroom_no, String chat_filelist_original_filename, String chat_filelist_time);
+
+	// total file
+	int getTotal_filelist(int chatroom_no);
+	// getchatfilelist
+	List<Chat_filelist> getchatfilelist(int chatroom_no, int startPage, int onePageCnt);
 }
