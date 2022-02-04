@@ -11,7 +11,7 @@
 		<%
 			if(request.getParameter("message") != null && request.getParameter("message").equals("FAILURE_fail")){
 		%>
-				setErrorMessage("upw_error", "비밀번호를 확인해주세요.");
+				setErrorMessage("member_pwd_error", "비밀번호를 확인해주세요.");
 		<%
 			}
 		%>
@@ -19,7 +19,7 @@
 		<%
 			if(request.getParameter("message") != null && request.getParameter("message").equals("FAILURE_notfound")){
 		%>
-				setErrorMessage("upw_error", "존재하지 않는 사용자입니다.");
+				setErrorMessage("member_pwd_error", "존재하지 않는 사용자입니다.");
 		<%		
 			}
 		%>
@@ -41,14 +41,14 @@
 				<form method="POST" action="/signin">
 					<div class="input-box">
 						<div class="inputlabel">아이디</div>
-						<input type="text" name="member_id" id="uid">
-						<div id="uid_error" class="error"></div>
+						<input type="text" name="member_id" id="member_id">
+						<div id="member_id_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">비밀번호</div>
-						<input type="password" name="member_pwd" id="upw">
-						<div id="upw_error" class="error"></div>
+						<input type="password" name="member_pwd" id="member_pwd">
+						<div id="member_pwd_error" class="error"></div>
 					</div>
 
 					<input type="submit" id="submit_btn" value="Log in"

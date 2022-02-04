@@ -40,15 +40,15 @@
 					<form method="POST" action="/invitechat">
 						<div class="invite-box">
 							<div class="inputlabel">방제목</div>
-							<input type="hidden" name="cnum" id="cnum" value="">
-							<input type="text" name="chatroom_name" id="cname" value="">
-							<div id="cname_error" class="error"></div>
+							<input type="hidden" name="chatroom_no" id="chatroom_no" value="">
+							<input type="text" name="chatroom_name" id="chatroom_name" value="">
+							<div id="chatroom_name_error" class="error"></div>
 						</div>
 						
 						<div class="invite-box">
 							<div class="inputlabel">아이디</div>
-							<input type="text" name="member_id" id="uid">
-							<div id="uid_error" class="error"></div>
+							<input type="text" name="member_id" id="member_id">
+							<div id="member_id_error" class="error"></div>
 						</div>
 						
 						<input type="submit" id="submit_btn" value="방만들기"
