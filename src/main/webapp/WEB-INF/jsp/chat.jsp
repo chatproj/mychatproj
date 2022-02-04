@@ -14,6 +14,8 @@
 </head>
 	<%
 			ArrayList<Chatroom_Member> mychatroominfo = (ArrayList) request.getAttribute("mychatroominfo");
+			ArrayList<Chatroom_Member> memberlistAll  = (ArrayList) request.getAttribute("memberlistAll"); 
+			
 			ArrayList<Chatlog> chatlog = (ArrayList) request.getAttribute("chatlog");
 	%>
 <body>
@@ -28,12 +30,26 @@
 					<div id="menu_btn" class="menu_btn">
 						<img class="menuiconimg" src="/memberimg/menu_icon.png">
 						<div id="slideToggle" class="slideToggle">
+						
 							<div class="chatroomuserlist">
 								<div class="chatuserlist">
-									<div class="userimg"><img class="img_inner" src=''></div>
-									<div class="member_name"><a class="username_txt"></a></div>
+									<div class="userimg"><img class="img_inner" src='memberimg/<%=mychatroominfo.get(0).getMember_profileimg().getMember_profileimg_filename() %>'></div>
+									<div class="member_name"><a class="username_txt"><%=mychatroominfo.get(0).getMember().getMember_id() %></a></div>
 								</div>
 							</div>
+						<%
+							for(int i = 0; i < memberlistAll.size(); i++){
+						%>							
+							<div class="chatroomuserlist">
+							    <div class="chatuserlist">	
+									<div class="userimg"><img class="img_inner" src='/memberimg/<%=memberlistAll.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
+									<div class="member_name"><a class="username_txt"><%=memberlistAll.get(0).getMember().getMember_id() %></a></div>
+								</div>
+							</div>
+						<%
+							}
+						%>
+							
 							<button id="invitebtn" class="invitebtn" onclick="openinvite()">친구초대</button>
 							<button id="filelistbtn" class="filelistbtn" onclick="openfilelist()">파일</button>
 							<input type="submit" id="exitbtn" value="나가기" class="exitbtn" onclick="AjaxExitController()">

@@ -96,13 +96,13 @@
 		
 		from mychatproj.chatroom_member as m 
 		
-		inner join mychatproj.chatroom as n
+		left join mychatproj.chatroom as n
 		on m.chatroom_no = n.chatroom_no
 		
-		inner join member as o
+		left join member as o
 		on m.member_no = o.member_no
 		
-		inner join member_profileimg as p
+		left join member_profileimg as p
 		on o.member_no = p.member_no
 		
 		where m.chatroom_no=#{chatroom_no};			
