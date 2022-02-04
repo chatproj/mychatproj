@@ -5,6 +5,7 @@
 
 <%@page import="com.example.mychatproj.model.Chatroom_Member"%>
 <%@page import="com.example.mychatproj.model.Chatlog"%>
+<%@page import="com.example.mychatproj.model.Chat_filelist"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +14,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 	<%
-			ArrayList<Chatroom_Member> mychatroominfo = (ArrayList) request.getAttribute("mychatroominfo");
-			ArrayList<Chatroom_Member> memberlistAll  = (ArrayList) request.getAttribute("memberlistAll"); 
+			ArrayList<Chatroom_Member> mychatroominfo =  (ArrayList) request.getAttribute("mychatroominfo");
+			ArrayList<Chatroom_Member> memberlistAll  =  (ArrayList) request.getAttribute("memberlistAll"); 
 			
-			ArrayList<Chatlog> chatlog = (ArrayList) request.getAttribute("chatlog");
+			ArrayList<Chatlog> chatlog                =  (ArrayList) request.getAttribute("chatlog");
+			
+			int file_listtotalcount                   =  (Integer) request.getAttribute("file_listtotalcount");
+			int count                                 =  (Integer) request.getAttribute("count");
+			ArrayList<Chat_filelist> chat_filelist    =  (ArrayList) request.getAttribute("chat_filelist");
+			
 	%>
 <body>
 	<!-- Header -->
@@ -91,14 +97,21 @@
 									<th class="filelist_table_header">다운로드</th>
 									<th class="filelist_table_header">삭제</th>
 								</tr>
+								<%
+									if(chat_filelist != null){
+								%>
+									<%
+										for(int i = 0; i < chat_filelist.size(); i++){
+									%>
 										<tr class="second_fileblock">
-											<td class="chatfile_original_filename"></td>
-											<td class="fileusername"></td>
-											<td class="chatfile_time"></td>
+											<td class="chatfile_original_filename"><%=chat_filelist.get(i).getChat_filelist_original_filename() %></td>
+											<td class="fileusername"><%=chat_filelist.get(i).getMember().getMember_id() %></td>
+											<td class="chatfile_time"><%=chat_filelist.get(i).getChat_filelist_time() %></td>
 										    <form method="POST" action="/download">
-										    	<input type="hidden" name="chatroom_no" value="">
-										    	<input type="hidden" name="chatfile_original_filename" value="">
-												<input type="hidden" name="chatfile_filename" value="">
+												<input type="hidden" name="download_member_no" value="<%=chat_filelist.get(i).getMember_no() %>">
+												<input type="hidden" name="download_chatroom_no" value="<%=chat_filelist.get(i).getChatroom_no() %>">
+												<input type="hidden" name="download_filelist_time" value="<%=chat_filelist.get(i).getChat_filelist_time() %>">
+												<input type="hidden" name="download_filelist_original_filename" value="<%=chat_filelist.get(i).getChat_filelist_original_filename() %>">
 											    <td><input type="submit" id="downloadbtn" value="다운로드" class="downloadbtn"></td>	
 											</form>
 											<form method="POST" action="filedelete">
@@ -107,10 +120,26 @@
 											    <td><input type="submit" id="filedeletebtn" value="삭제" class="filedeletebtn"></td>										
 											</form>
 										</tr>
+									<%
+										}
+									%>
+								 <%
+								 	 }else{
+								 %>
+								 
+								 <%
+								 	 }
+								 %>
 								</table>
 								<div class="chatlistpage">
-											 <a href="chat?chatroom_noPK=&page=">[]</a>
+									<%
+										for(int i = 1; i <= count; i++){
+									%>
+											 <a href="chat?chatroom_no=<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>&page=<%=i %>">[<%=i %>]</a>
 											<%-- <a><input type="button" id="page" name="page" value="<%=i %>" onclick="page()"></a> --%>
+									<%
+										}
+									%>
 								</div>
 					</dialog>
 					
@@ -486,6 +515,39 @@
 </script>
 
 <script type="text/javascript">
+	var downloadFile = document.getElementById('downloadFile');
+	function openfilelist() {
+		<%
+			if(request.getParameter("page") == null){
+		%>
+				history.scrollRestoration = "auto";
+				location.href="chat?chatroom_no=<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>&page=1";	
+		<%
+			}else if(request.getParameter("page").equals("1")){
+		%>
+				console.log("sdsdcsdcsdfsdfsdf");
+				history.scrollRestoration = "auto";
+				window.location.reload();
+		<%
+			}
+		%>
+				if(typeof downloadFile.showModal === "function") {
+					downloadFile.showModal();
+				}else{
+					alert("The <dialog> API is not supported by this browser");
+				}
+	}
+</script>
+
+<script type="text/javascript">
+	<%
+		if(request.getParameter("page") != null){
+	%>
+			history.scrollRestoration = "auto";
+			downloadFile.showModal();
+	<%
+		}
+	%>
 </script>
 
 <script src="/js/AjaxController.js" type="text/javascript" charset="UTF-8"></script>

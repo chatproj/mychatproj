@@ -10,7 +10,7 @@
 		where member_id=#{member_id}			
 	</select>
 	
-		<resultMap id="JoinChatroom_MemberRM" type="com.example.mychatproj.model.Chatroom_Member">
+	<resultMap id="JoinChatroom_MemberRM" type="com.example.mychatproj.model.Chatroom_Member">
 		<id property="chatroom_member_no" column="chatroom_member_no" />
 		<result property="chatroom_no" column="chatroom_no" />
 		<result property="member_no" column="member_no" />
@@ -193,5 +193,47 @@
 		
 		where chatroom_no=#{chatroom_no} and member_no=#{member_no} and chat_filelist_time=#{chat_filelist_time} and 
 		      chat_filelist_original_filename=#{chat_filelist_original_filename} 
+	</select>
+	
+	<select id="getTotal_filelist" resultType="int">
+		select count(*)
+		
+		from chat_filelist
+		
+		where chatroom_no=#{chatroom_no}
+	</select> 
+
+	<resultMap id="JoingetchatfilelistRM" type="com.example.mychatproj.model.Chat_filelist">
+		<id property="chat_filelist_no" column="chat_filelist_no" />
+		<result property="chatroom_no" column="chatroom_no" />
+		<result property="member_no" column="member_no" />
+		<result property="chat_filelist_filename" column="chat_filelist_filename" />
+		<result property="chat_filelist_original_filename" column="chat_filelist_original_filename" />
+		<result property="chat_filelist_time" column="chat_filelist_time" />
+		<result property="chat_filelist_url" column="chat_filelist_url" />
+		
+        <!-- 1 : 1 -->
+		<collection javaType="Member" property="member">
+			<id property="member_no" column="member_no" />
+			<result property="member_id" column="member_id" />
+			<result property="member_pwd" column="member_pwd" />
+			<result property="member_name" column="member_name" />
+			<result property="member_email" column="member_email" />
+			<result property="member_phone" column="member_phone" />
+		</collection>
+	</resultMap>	
+	<select id="getchatfilelist" resultMap="JoingetchatfilelistRM">
+		select chat_filelist_no, m.chatroom_no, m.member_no, chat_filelist_filename, chat_filelist_original_filename,
+		       chat_filelist_time, chat_filelist_url, member_id
+		
+		from chat_filelist as m
+		
+		left join member as n
+		on m.member_no = n.member_no
+		
+		where chatroom_no=#{chatroom_no}
+		
+		order by chat_filelist_no desc
+		limit #{startPage}, #{onePageCnt}	
 	</select>
 </mapper>

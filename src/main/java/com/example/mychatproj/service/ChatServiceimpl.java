@@ -170,4 +170,16 @@ public class ChatServiceimpl implements ChatService{
 		return chatmapper.getchatlist_filename(member_no, chatroom_no, chat_filelist_original_filename, chat_filelist_time);
 	}
 	
+	@Override
+	public int getTotal_filelist(int chatroom_no) {
+		
+		return chatmapper.getTotal_filelist(chatroom_no);
+	}
+	
+	@Override
+	public List<Chat_filelist> getchatfilelist(int chatroom_no, int startPage, int onePageCnt) {
+		
+		return chatmapper.getchatfilelist(chatroom_no, startPage, onePageCnt);
+	}
+	
 }
