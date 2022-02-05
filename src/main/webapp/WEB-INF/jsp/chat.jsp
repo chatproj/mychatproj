@@ -115,8 +115,8 @@
 											    <td><input type="submit" id="downloadbtn" value="다운로드" class="downloadbtn"></td>	
 											</form>
 											<form method="POST" action="filedelete">
-												<input type="hidden" id="text" name="chatroom_no" value="">
-												<input type="hidden" name="chatfile_filename" value="">
+												<input type="hidden" name="chatroom_no" value="<%=chat_filelist.get(i).getChatroom_no() %>">
+												<input type="hidden" name="chat_filelist_filename" value="<%=chat_filelist.get(i).getChat_filelist_filename() %>">
 											    <td><input type="submit" id="filedeletebtn" value="삭제" class="filedeletebtn"></td>										
 											</form>
 										</tr>
@@ -167,6 +167,9 @@
 							<%
 								}else if(chatlog.get(i).getChatlog_division().equals("file")) {
 							%>
+								<%
+									if(chatlog.get(i).getChat_filelist().getChat_filelist_filename() != null){
+								%>
 								<form method='POST' action='/download' id="upfile" class="upfile">
 									<input type="hidden"           name="download_member_no" value="<%=chatlog.get(i).getMember_no() %>">
 									<input type="hidden"           name="download_chatroom_no" value="<%=chatlog.get(i).getChatroom_no() %>">
@@ -176,6 +179,13 @@
 									<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>
 								</form>
 								<div class="mytime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>	
+								<%
+									}else{
+								%>
+									<div class="mytime">삭제된 파일입니다.</div>
+								<%
+									}
+								%>
 							<%
 								}
 							%>							

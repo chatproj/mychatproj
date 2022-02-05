@@ -369,4 +369,20 @@ public class ChatController {
 
     }
 	
+	@PostMapping("filedelete")
+	public String filedelete(RedirectAttributes redirectAttributes, Chat_filelist form) {
+		
+		chatservice.deletefile(form.getChat_filelist_filename());
+		
+		String url = "/uploadfile";
+		String deletefilepath = application.getRealPath(url) + form.getChat_filelist_filename();
+		
+		File file = new File(deletefilepath);
+		file.delete();
+		
+		redirectAttributes.addAttribute("chatroom_no", form.getChatroom_no());
+		return "redirect:chat";
+		
+	}
+	
 }
