@@ -41,4 +41,6 @@ public interface ChatMapper {
 	int getTotal_filelist(@Param("chatroom_no") int chatroom_no);
 	
 	List<Chat_filelist> getchatfilelist(@Param("chatroom_no") int chatroom_no, @Param("startPage") int startPage, @Param("onePageCnt") int onePageCnt);
+
+	void deletefile(@Param("filename") String filename);
 }

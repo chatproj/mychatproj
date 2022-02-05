@@ -236,4 +236,10 @@
 		order by chat_filelist_no desc
 		limit #{startPage}, #{onePageCnt}	
 	</select>
+	
+	<delete id="deletefile" parameterType="com.example.mychatproj.model.Chat_filelist">
+		delete from chat_filelist
+		
+		where chat_filelist_filename=#{filename}
+	</delete>
 </mapper>

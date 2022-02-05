@@ -115,8 +115,8 @@
 											    <td><input type="submit" id="downloadbtn" value="다운로드" class="downloadbtn"></td>	
 											</form>
 											<form method="POST" action="filedelete">
-												<input type="hidden" id="text" name="chatroom_no" value="">
-												<input type="hidden" name="chatfile_filename" value="">
+												<input type="hidden" name="chatroom_no" value="<%=chat_filelist.get(i).getChatroom_no() %>">
+												<input type="hidden" name="chat_filelist_filename" value="<%=chat_filelist.get(i).getChat_filelist_filename() %>">
 											    <td><input type="submit" id="filedeletebtn" value="삭제" class="filedeletebtn"></td>										
 											</form>
 										</tr>

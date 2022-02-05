@@ -182,4 +182,10 @@ public class ChatServiceimpl implements ChatService{
 		return chatmapper.getchatfilelist(chatroom_no, startPage, onePageCnt);
 	}
 	
+	@Override
+	public void deletefile(String filename) {
+		
+		chatmapper.deletefile(filename);
+	}
+	
 }

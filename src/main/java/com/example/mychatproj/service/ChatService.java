@@ -48,4 +48,7 @@ public interface ChatService {
 	int getTotal_filelist(int chatroom_no);
 	// getchatfilelist
 	List<Chat_filelist> getchatfilelist(int chatroom_no, int startPage, int onePageCnt);
+	
+	// delete file
+	void deletefile(String filename);
 }
