@@ -69,11 +69,14 @@ public class ChatServiceimpl implements ChatService{
 	public String member_valid_check(int chatroom_no, int member_no) {
 		String res = null;
 		
-		chatmapper.member_valid_check(chatroom_no, member_no)
-		.ifPresent(m -> {
-			throw new IllegalStateException("이미 존재하는 멤버입니다.");
-		});
-		res = "이미 존재하는 멤버입니다.";
+			try {
+				Optional<Chatroom_Member> member_valid_check = chatmapper.member_valid_check(chatroom_no, member_no);
+				member_valid_check.get().getMember_no();
+				
+				res = "이미 존재하는 멤버입니다.";
+			}catch(NoSuchElementException e) {
+				res = "체크 완료";
+			}
 
 		return res;
 	}
