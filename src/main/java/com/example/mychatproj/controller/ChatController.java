@@ -397,19 +397,17 @@ public class ChatController {
 				System.out.println("member valid check : " + member_valid_check);
 				System.out.println("m no : " + invite_no);
 				System.out.println("c no : " + chatroom_no);
-				
-				try {
-					// chatroom member insert	
+							
+				if(member_valid_check.equals("이미 존재하는 멤버입니다.")) {
+					redirectAttributes.addAttribute("chatroom_no", chatroom_no);
+					return "redirect:chat?message=FAILURE_include";					
+				}else if(member_valid_check.equals("체크 완료")) {
+				// chatroom member insert	
 					Chatroom_Member chatroom_member = new Chatroom_Member();
 					chatroom_member.setMember_no(invite_no);
 					chatroom_member.setChatroom_no(chatroom_no);
 				
-					chatservice.insertChatroom_Member(chatroom_member);						
-				}catch(IllegalStateException e) {
-					if(e.getMessage().equals("이미 존재하는 멤버입니다.")) {
-						redirectAttributes.addAttribute("chatroom_no", chatroom_no);
-						return "redirect:chat?message=FAILURE_include";							
-					}
+					chatservice.insertChatroom_Member(chatroom_member);					
 				}
 				
 			}
