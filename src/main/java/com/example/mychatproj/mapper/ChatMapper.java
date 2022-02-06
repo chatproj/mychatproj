@@ -14,7 +14,7 @@ import com.example.mychatproj.model.Member;
 
 @Mapper
 public interface ChatMapper {
-	Optional<Member> getSession_no(@Param("member_id") String member_id);
+	Optional<Member> getmember_no(@Param("member_id") String member_id);
 	
 	List<Chatroom_Member> getchatroomlist(@Param("member_no") int member_no);
 	
@@ -43,4 +43,6 @@ public interface ChatMapper {
 	List<Chat_filelist> getchatfilelist(@Param("chatroom_no") int chatroom_no, @Param("startPage") int startPage, @Param("onePageCnt") int onePageCnt);
 
 	void deletefile(@Param("filename") String filename);
+	
+	Optional<Chatroom_Member> member_valid_check(@Param("chatroom_no") int chatroom_no, @Param("member_no") int member_no);
 }
