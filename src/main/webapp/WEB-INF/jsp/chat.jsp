@@ -279,29 +279,42 @@
 			console.log(msg);
 			
 			var msgarr = msg.split(",");
-			console.log(msgarr[0]);
-			console.log(msgarr[1]);
-			console.log(msgarr[2]);
-			console.log(msgarr[3]);
-			console.log(msgarr[4]);
-			console.log(msgarr[5]);
-			console.log(msgarr[6]);
-			console.log(msgarr[7]);
+			console.log(msgarr[0]);  // member_no
+			console.log(msgarr[1]);  // 구분
+			console.log(msgarr[2]);  // member_name
+			console.log(msgarr[3]);  // msg or sockfilename
+			console.log(msgarr[4]);  // member img
+			console.log(msgarr[5]);  // nowTimes
+			console.log(msgarr[6]);  // chatroom_no
+			console.log(msgarr[7]);  // filelistTimes
+		
+			if(msgarr[6] == chatroom_no){
 			
-			console.log(chatroom_no);
-			
-		if(msgarr[5] == chatroom_no){
-			
-			if(msgarr[7] == "file") {
+			if(msgarr[1] == "exit"){
+				if( msgarr[0] == member_no){
+					console.log("dds : " + msgarr[3]);
+					var msgTemp = "<div>"
+						msgTemp += msgarr[3];
+						msgTemp += "</div>"
+						$("#chatform").append(msgTemp);
+				}else{
+					console.log("dds : " + msgarr[3]);
+					var msgTemp = "<div>"
+						msgTemp += msgarr[3];
+						msgTemp += "</div>"
+						$("#chatform").append(msgTemp);					
+				}
+				
+			}else if(msgarr[1] == "file") {
 				if( msgarr[0] == member_no ){
 					var msgTemp = "<div>"
 						msgTemp = "<div class='myLog'>"
 						msgTemp += "<div class='myprofile'>"
 						msgTemp += "<div class='myname'>"
-						msgTemp += msgarr[1];
+						msgTemp += msgarr[2];
 						msgTemp += "</div>"
 						msgTemp += "<div class='myimg'>"
-						msgTemp += msgarr[3];
+						msgTemp += msgarr[4];
 						msgTemp += "</div>"
 						msgTemp += "</div>"
 						msgTemp += "<form method='POST' action='/download' id='upfile' class='upfile'>"
@@ -309,21 +322,21 @@
 						msgTemp += msgarr[0];
 						msgTemp += "'>";
 						msgTemp += "<input type='hidden' name='download_chatroom_no'   value='";
-						msgTemp += msgarr[5];
+						msgTemp += msgarr[6];
 						msgTemp += "'>";
 						msgTemp += "<input type='hidden' name='download_filelist_time' value='";
-						msgTemp += msgarr[6]; 
+						msgTemp += msgarr[7]; 
 						msgTemp += "'>";
 						msgTemp +="<input type='hidden'  name='download_filelist_original_filename' value='";
-						msgTemp += msgarr[2];
+						msgTemp += msgarr[3];
 						msgTemp += "'>";
 						msgTemp += "<div id='sockoriginalfilename' class='sockoriginalfilename'>파일명 : "
-						msgTemp += msgarr[2];
+						msgTemp += msgarr[3];
 						msgTemp += "</div>"
 						msgTemp += "<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>"
 						msgTemp += "<div class='mytime'>"
 						msgTemp += "time : < "
-						msgTemp += msgarr[4];
+						msgTemp += msgarr[5];
 						msgTemp += " >"
 						msgTemp += "</div>"
 						msgTemp += "</form>"
@@ -335,10 +348,10 @@
 						msgTemp = "<div class='yourLog'>"
 						msgTemp += "<div class='yourprofile'>"
 						msgTemp += "<div class='yourimg'>"
-						msgTemp += msgarr[3];
+						msgTemp += msgarr[4];
 						msgTemp += "</div>"
 						msgTemp += "<div class='yourname'>"
-						msgTemp += msgarr[1];
+						msgTemp += msgarr[2];
 						msgTemp += "</div>"
 						msgTemp += "</div>"
 						msgTemp += "<form method='POST' action='/download' id='upfile' class='upfile'>"
@@ -346,45 +359,45 @@
 						msgTemp += msgarr[0];
 						msgTemp += "'>";
 						msgTemp += "<input type='hidden' name='download_chatroom_no'   value='";
-						msgTemp += msgarr[5];
+						msgTemp += msgarr[6];
 						msgTemp += "'>";
 						msgTemp += "<input type='hidden' name='download_filelist_time' value='";
-						msgTemp += msgarr[6]; 
+						msgTemp += msgarr[7]; 
 						msgTemp += "'>";
 						msgTemp +="<input type='hidden'  name='download_filelist_original_filename' value='";
-						msgTemp += msgarr[2];
+						msgTemp += msgarr[3];
 						msgTemp += "'>";
 						msgTemp += "<div id='sockoriginalfilename' class='sockoriginalfilename'>파일명 : "
-						msgTemp += msgarr[2];
+						msgTemp += msgarr[3];
 						msgTemp += "</div>"
 						msgTemp += "<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>"
 						msgTemp += "<div class='yourtime'>"
 						msgTemp += "time : < "
-						msgTemp += msgarr[4];
+						msgTemp += msgarr[5];
 						msgTemp += " >"
 						msgTemp += "</div>"
 						msgTemp += "</form>"
 						msgTemp += "</div>"						
 					$("#chatform").append(msgTemp);	
 				   }
-			}else{
+			}else if(msgarr[1] == "text"){
 				if( msgarr[0] == member_no ){
 				var msgTemp = "<div>"
 					msgTemp = "<div class='myLog'>"
 					msgTemp += "<div class='myprofile'>"
 					msgTemp += "<div class='myname'>"
-					msgTemp += msgarr[1];
+					msgTemp += msgarr[2];
 					msgTemp += "</div>"
 					msgTemp += "<div class='myimg'>"
-					msgTemp += msgarr[3];
+					msgTemp += msgarr[4];
 					msgTemp += "</div>"
 					msgTemp += "</div>"
 					msgTemp += "<div class='mymsg'>"
-					msgTemp += msgarr[2];
+					msgTemp += msgarr[3];
 					msgTemp += "</div>"
 					msgTemp += "<div class='mytime'>"
 					msgTemp += "time : < "
-					msgTemp += msgarr[4];
+					msgTemp += msgarr[5];
 					msgTemp += " >"
 					msgTemp += "</div>"
 					msgTemp += "</div>"				
@@ -395,18 +408,18 @@
 					msgTemp = "<div class='yourLog'>"
 					msgTemp += "<div class='yourprofile'>"
 					msgTemp += "<div class='yourimg'>"
-					msgTemp += msgarr[3];
+					msgTemp += msgarr[4];
 					msgTemp += "</div>"
 					msgTemp += "<div class='yourname'>"
-					msgTemp += msgarr[1];
+					msgTemp += msgarr[2];
 					msgTemp += "</div>"
 					msgTemp += "</div>"
 					msgTemp += "<div class='yourmsg'>"
-					msgTemp += msgarr[2];
+					msgTemp += msgarr[3];
 					msgTemp += "</div>"
 					msgTemp += "<div class='yourtime'>"
 					msgTemp += "time : < "
-					msgTemp += msgarr[4];
+					msgTemp += msgarr[5];
 					msgTemp += " >"
 					msgTemp += "</div>"
 					msgTemp += "</div>"						
@@ -449,7 +462,7 @@
 		
 		var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>";
 		if(chatinput.value != "") {
-			ws.send(member_no+","+member_name+","+msg+","+img+","+nowTimes+","+chatroom_no);
+			ws.send(member_no+","+"text"+","+member_name+","+msg+","+img+","+nowTimes+","+chatroom_no);
 			$('#chatting').val("");
 			AjaxInsertChatText(msg, nowTimes);
 		}
@@ -517,7 +530,7 @@
 		var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>";
 		
 		setTimeout(function() {
-			ws.send(member_no+","+member_name+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+filelistTimes+","+"file");
+			ws.send(member_no+","+"file"+","+member_name+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+filelistTimes);
 		}, 500);
 		$('#uploadinput').val("");
 		
@@ -528,24 +541,19 @@
 	var downloadFile = document.getElementById('downloadFile');
 	function openfilelist() {
 		<%
-			if(request.getParameter("page") == null){
+			if(request.getParameter("page") == null || request.getParameter("page").equals("1")){
 		%>
 				history.scrollRestoration = "auto";
 				location.href="chat?chatroom_no=<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>&page=1";	
 		<%
-			}else if(request.getParameter("page").equals("1")){
-		%>
-				console.log("sdsdcsdcsdfsdfsdf");
-				history.scrollRestoration = "auto";
-				window.location.reload();
-		<%
 			}
 		%>
-				if(typeof downloadFile.showModal === "function") {
-					downloadFile.showModal();
-				}else{
-					alert("The <dialog> API is not supported by this browser");
-				}
+
+		if(typeof downloadFile.showModal === "function") {
+			downloadFile.showModal();
+		}else{
+			alert("The <dialog> API is not supported by this browser");
+		}
 	}
 </script>
 
@@ -569,6 +577,41 @@
 		}else{
 			alert("The <dialog> API is not supported by this browser");			
 		}
+	}
+	
+</script>
+
+<script type="text/javascript">
+	function  AjaxExitController() {
+		var member_no     =   "<%=mychatroominfo.get(0).getMember().getMember_no() %>";
+		var member_name   =   "<%=mychatroominfo.get(0).getMember().getMember_name() %>";
+		var msg           =   "<%=mychatroominfo.get(0).getMember().getMember_name() %> 님이 퇴장하였습니다.";
+ 	    var img           =   "<img class='img_inner' src='/memberimg/${mychatroominfo.get(0).getMember_profileimg().getMember_profileimg_filename()}' >"; 
+	
+		var today     =  new Date();
+		var hours     =  today.getHours();
+		var minutes   =  today.getMinutes();
+		var seconds   =  today.getSeconds();
+		
+		var nowTimes = (("00"+hours.toString()).slice(-2)) + ":" + (("00"+minutes.toString()).slice(-2)) + ":" + (("00"+seconds.toString()).slice(-2)); 
+		var chatroom_no    =  "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>"
+			
+		
+ 		$.ajax({
+			type: 'POST',
+			url: '/chatexit',
+			data: {
+				chatroom_no: chatroom_no
+			},
+			success: function(data){
+
+				ws.send(member_no+","+"exit"+","+member_name+","+msg+","+img+","+nowTimes+","+chatroom_no);	
+ 				window.location.href="/chatList";  		
+			},
+			error: function(data){
+				console.log("no", data);
+			}
+		}) 
 	}
 	
 </script>

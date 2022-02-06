@@ -1,4 +1,4 @@
-	function AjaxChat(getPkObj, getMsgObj, getNowTimeObj){		
+/*	function AjaxChat(getPkObj, getMsgObj, getNowTimeObj){		
 		$.ajax({
 			type: 'POST',
 			url: "/chat",
@@ -37,4 +37,4 @@
 				console.log("no", data);
 			}
 		}); 		
-	}		
+	}		*/

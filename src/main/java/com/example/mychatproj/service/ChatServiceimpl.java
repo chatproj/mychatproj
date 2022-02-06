@@ -200,4 +200,16 @@ public class ChatServiceimpl implements ChatService{
 		chatmapper.deletefile(filename);
 	}
 	
+	@Override
+	public void exitmember(int chatroom_no, int member_no) {
+		
+		chatmapper.exitmember(chatroom_no, member_no);
+	}
+	
+	@Override
+	public void deletechatroom(int chatroom_no) {
+		
+		chatmapper.deletechatroom(chatroom_no);
+	}
+	
 }

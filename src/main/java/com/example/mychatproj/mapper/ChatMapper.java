@@ -45,4 +45,8 @@ public interface ChatMapper {
 	void deletefile(@Param("filename") String filename);
 	
 	Optional<Chatroom_Member> member_valid_check(@Param("chatroom_no") int chatroom_no, @Param("member_no") int member_no);
+	
+	void exitmember(@Param("chatroom_no") int chatroom_no, @Param("member_no") int member_no);
+	
+	void deletechatroom(@Param("chatroom_no") int chatroom_no);
 }

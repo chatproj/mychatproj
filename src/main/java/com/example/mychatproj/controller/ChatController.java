@@ -212,11 +212,7 @@ public class ChatController {
 				List<Chatroom_Member> memberlist           =   chatservice.getmemberlistinfo(chatroom_no);
 				ArrayList<Chatroom_Member> mychatroominfo  =   new ArrayList<>();
 				ArrayList<Chatroom_Member> memberlistAll   =   new ArrayList<>();
-				
-				System.out.println("my : " + session_no);
-				System.out.println("my : " + memberlist.get(0).getMember().getMember_no());
-				System.out.println("my : " + memberlist.get(1).getMember().getMember_no());
-				
+			
 				for(int i = 0; i<memberlist.size(); i++) {
 					if(session_no == memberlist.get(i).getMember().getMember_no()) {
 						mychatroominfo.add(memberlist.get(i));
@@ -418,4 +414,23 @@ public class ChatController {
 			return "redirect:/";
 		}
 	}
+
+	@PostMapping("chatexit")
+	public String exitbtn(HttpServletRequest request, @RequestParam("chatroom_no") int chatroom_no) throws IOException {
+		HttpSession session   =   request.getSession();
+		String session_id     =   (String) session.getAttribute("session_id");
+		int session_no        =   getmember_no(session_id);
+		
+		chatservice.exitmember(chatroom_no, session_no);
+		
+		List<Chatroom_Member> getmemberinfo = chatservice.getmemberlistinfo(chatroom_no);
+		
+		if(getmemberinfo.size() == 0) {
+			chatservice.deletechatroom(chatroom_no);
+		}
+		
+		return "redirect:chatList";
+		
+	}
+	
 }
