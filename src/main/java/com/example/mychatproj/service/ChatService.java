@@ -10,7 +10,7 @@ import com.example.mychatproj.model.Chatroom_Member;
 import com.example.mychatproj.model.Member;
 
 public interface ChatService {
-	Optional<Member> getSession_no(String member_id);
+	Optional<Member> getmember_no(String member_id);
 	
 	// chatlist
 	List<Chatroom_Member> getchatroomlist(int member_no);
@@ -24,6 +24,8 @@ public interface ChatService {
 		void insertChatroom(Chatroom chatroom);
 		// insert chatroom_member
 		void insertChatroom_Member(Chatroom_Member chatroom_member);
+		// chatroom member include check
+		String member_valid_check(int chatroom_no, int member_no);
 		
 	// chatroom member
 	String getchatroomMemberlistAll(int chatroom_no);
@@ -51,4 +53,5 @@ public interface ChatService {
 	
 	// delete file
 	void deletefile(String filename);
+
 }

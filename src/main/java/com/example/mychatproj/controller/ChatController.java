@@ -51,17 +51,17 @@ public class ChatController {
 	@Autowired
 	ServletContext application;
 	
-	private int getsession_no(String session_id) {
-		Optional<Member> session_no = chatservice.getSession_no(session_id); 
+	private int getmember_no(String session_id) {
+		Optional<Member> member_no = chatservice.getmember_no(session_id); 
 		
-		return session_no.get().getMember_no();
+		return member_no.get().getMember_no();
 	}
 	
 	@RequestMapping("chatList")
 	public String chatlist(HttpServletRequest request, Model model) {
 		HttpSession session  =  request.getSession();
 		String session_id    =  (String) session.getAttribute("session_id");
-		int session_no       =  getsession_no(session_id);
+		int session_no       =  getmember_no(session_id);
 
 		if(session_id != null) {
 			List<Chatroom_Member> chatList   =  chatservice.getchatroomlist(session_no);
@@ -89,65 +89,51 @@ public class ChatController {
 		return "redirect:/chat";
 	}
 	
-	@PostMapping("invitechat")
+	@PostMapping("invitemember")
 	public String invitechat(InviteForm inviteform, HttpServletRequest request) {
 		HttpSession session   =   request.getSession();
 		String session_id     =   (String) session.getAttribute("session_id");
-		int session_no        =   getsession_no(session_id);	
+		int session_no        =   getmember_no(session_id);	
 		
 		if(session_id != null) {
+			// ID 체크
+			String id_check = chatservice.invite_id_check(session_id, inviteform.getMember_id());
 			
-			String id_check       =   chatservice.invite_id_check(session_id, inviteform.getMember_id());
+			System.out.println("id check : " + id_check);
 			
-			if(id_check.equals("존재하지 않는 아이디 입니다.") || id_check.equals("자기 자신 초대 불가능")) {
+			if(id_check.equals("존재하지 않는 아이디 입니다.")) {	
+				return "redirect:chatList?message=FAILURE_noid";
+			}else if(id_check.equals("자기 자신 초대 불가능")) {
+				return "redirect:chatList?message=FAILURE_my";				
+			}else if(id_check.equals("체크 완료")) {
+				// chatroom insert
+				Chatroom chatroom                 =  new Chatroom();
+				chatroom.setChatroom_name(inviteform.getChatroom_name());
 				
-				return "redirect:/chatList?message=FAILURE_noid";
+				chatservice.insertChatroom(chatroom);
+				
+				// chatroom insert get chatroom_no
+				int chatroom_no = chatroom.getChatroom_no();
+				
+				// chatroom member insert
+				int my_no       =  getmember_no(session_id);
+				int invite_no   =  getmember_no(inviteform.getMember_id());
+				
+				List<Integer> insertchatroom_memberforSize = new ArrayList<Integer>();
+				insertchatroom_memberforSize.add(my_no);
+				insertchatroom_memberforSize.add(invite_no);
+				
+				for(int i = 0; i < insertchatroom_memberforSize.size(); i++) {
+					Chatroom_Member chatroom_member = new Chatroom_Member();
+					chatroom_member.setMember_no(insertchatroom_memberforSize.get(i));
+					chatroom_member.setChatroom_no(chatroom_no);
+				
+					chatservice.insertChatroom_Member(chatroom_member);
+				}					
+			}
+			return "redirect:/chatList";
 			
-			}else if (id_check.equals("체크 완료")){
-				if(inviteform.getMember_id() != session_id && !inviteform.getMember_id().equals(session_id)) {
-					
-					List<Chatroom> getChatroom_no       =   chatservice.getChatroom_no();
-					int maxChatroom_no                  =   getChatroom_no.size();
-					
-					Chatroom chatroom                   =  new Chatroom();
-					
-					try {
-					
-						chatroom.setChatroom_no      (maxChatroom_no + 1);
-						chatroom.setChatroom_name    (inviteform.getChatroom_name());
-						chatservice.insertChatroom   (chatroom); 
-						
-					}catch(NoSuchElementException e) {
-						
-						chatroom.setChatroom_no      (1);
-						chatroom.setChatroom_name    (inviteform.getChatroom_name());
-						chatservice.insertChatroom   (chatroom);
-					
-					}
-					
-					int my_no        = getsession_no(session_id);
-					int invite_no    = getsession_no(inviteform.getMember_id());
-					
-					List<Integer> insertchatroom_memberforSize = new ArrayList<Integer>();
-					insertchatroom_memberforSize.add   (my_no);
-					insertchatroom_memberforSize.add   (invite_no);
-					
-					for(int i=0; i<insertchatroom_memberforSize.size(); i++) {
-						Chatroom_Member chatroom_member   =   new Chatroom_Member();
-						chatroom_member.setMember_no(insertchatroom_memberforSize.get(i));
-					
-						try {
-							chatroom_member.setChatroom_no(maxChatroom_no + 1);	
-						}catch(NoSuchElementException e) {
-							chatroom_member.setChatroom_no(maxChatroom_no);
-						}
-						    chatservice.insertChatroom_Member(chatroom_member);
-					}	
-				}		
-			}	
-				return "redirect:/chatList";
 		}else {
-			
 			return "redirect:/";
 		}
 	}
@@ -165,7 +151,7 @@ public class ChatController {
 		System.out.println(session_id);
 		
 		if(session_id != null) {
-				int session_no             =   getsession_no(session_id);
+				int session_no             =   getmember_no(session_id);
 				
 				// 없는 chatroom_no 매개변수에 대한 redirect
 				String chatroom_no_check   =   chatservice.getchatroomMemberlistAll(chatroom_no);
@@ -385,4 +371,53 @@ public class ChatController {
 		
 	}
 	
+	@PostMapping("invitemember_chat")
+	public String invitemember_chat(InviteForm inviteform, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		HttpSession session   =   request.getSession();
+		String session_id     =   (String) session.getAttribute("session_id");
+		int chatroom_no   =  inviteform.getChatroom_no();
+		
+		if(session_id != null) {
+			// ID 체크
+			String id_check = chatservice.invite_id_check(session_id, inviteform.getMember_id());
+			
+			System.out.println("id check : " + id_check);
+			
+			if(id_check.equals("존재하지 않는 아이디 입니다.")) {	
+				redirectAttributes.addAttribute("chatroom_no", chatroom_no);
+				return "redirect:chat?message=FAILURE_noid";
+			}else if(id_check.equals("자기 자신 초대 불가능")) {
+				redirectAttributes.addAttribute("chatroom_no", chatroom_no);
+				return "redirect:chat?message=FAILURE_my";				
+			}else if(id_check.equals("체크 완료")) {
+				
+				int invite_no     =  getmember_no(inviteform.getMember_id());				
+				String member_valid_check = chatservice.member_valid_check(chatroom_no, invite_no);
+				
+				System.out.println("member valid check : " + member_valid_check);
+				System.out.println("m no : " + invite_no);
+				System.out.println("c no : " + chatroom_no);
+				
+				try {
+					// chatroom member insert	
+					Chatroom_Member chatroom_member = new Chatroom_Member();
+					chatroom_member.setMember_no(invite_no);
+					chatroom_member.setChatroom_no(chatroom_no);
+				
+					chatservice.insertChatroom_Member(chatroom_member);						
+				}catch(IllegalStateException e) {
+					if(e.getMessage().equals("이미 존재하는 멤버입니다.")) {
+						redirectAttributes.addAttribute("chatroom_no", chatroom_no);
+						return "redirect:chat?message=FAILURE_include";							
+					}
+				}
+				
+			}
+			redirectAttributes.addAttribute("chatroom_no", chatroom_no);
+			return "redirect:/chat";
+			
+		}else {
+			return "redirect:/";
+		}
+	}
 }

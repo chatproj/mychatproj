@@ -49,7 +49,7 @@
 							<div class="chatroomuserlist">
 							    <div class="chatuserlist">	
 									<div class="userimg"><img class="img_inner" src='/memberimg/<%=memberlistAll.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
-									<div class="member_name"><a class="username_txt"><%=memberlistAll.get(0).getMember().getMember_id() %></a></div>
+									<div class="member_name"><a class="username_txt"><%=memberlistAll.get(i).getMember().getMember_id() %></a></div>
 								</div>
 							</div>
 						<%
@@ -63,11 +63,11 @@
 					</div>
 					
 					<dialog id="invite" class="invite">
-						<form method="POST" action="/invitechat">
+						<form method="POST" action="/invitemember_chat">
 							<div class="invite-box">
 								<div class="inputlabel">방제목</div>
-								<input type="hidden" name="chatroom_no" id="chatroom_no" value="">
-								<input type="text" name="chatroom_name" id="chatroom_name" value="" readonly>
+								<input type="hidden" name="chatroom_no" id="chatroom_no" value="<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>">
+								<input type="text" name="chatroom_name" id="chatroom_name" value="<%=mychatroominfo.get(0).getChatroom().getChatroom_name() %>" readonly>
 								<div id="chatroom_name_error" class="error"></div>
 							</div>
 							
@@ -558,6 +558,19 @@
 	<%
 		}
 	%>
+</script>
+
+<script type="text/javascript">
+	var invite = document.getElementById('invite');
+	
+	function openinvite() {
+		if(typeof invite.showModal === "function") {
+			invite.showModal();
+		}else{
+			alert("The <dialog> API is not supported by this browser");			
+		}
+	}
+	
 </script>
 
 <script src="/js/AjaxController.js" type="text/javascript" charset="UTF-8"></script>

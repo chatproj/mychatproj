@@ -25,38 +25,15 @@ public class ChatServiceimpl implements ChatService{
 	private ChatMapper chatmapper;
 	
 	@Override
-	public Optional<Member> getSession_no(String member_id) {
+	public Optional<Member> getmember_no(String member_id) {
 		
-		return chatmapper.getSession_no(member_id);
+		return chatmapper.getmember_no(member_id);
 	}
 	
 	@Override
 	public List<Chatroom_Member> getchatroomlist(int member_no) {
 		
 		return chatmapper.getchatroomlist(member_no); 
-	}
-
-	@Override
-	public String invite_id_check(String session_id, String member_id) {
-		
-		return validateDuplicateId(session_id, member_id);
-	}
-	private String validateDuplicateId(String session_id, String member_id) {
-		String res = null;
-		
-		try {
-			Optional<Member> id_check = membermapper.getById(member_id);
-			
-			if(session_id.equals(id_check.get().getMember_id())) {
-				res  =  "자기 자신 초대 불가능";
-			}else {
-				res  =  "체크 완료";
-			}
-		}catch(NoSuchElementException e) {
-			    res  =  "존재하지 않는 아이디 입니다.";
-		}
-		
-		return res;
 	}
 	
 	@Override
@@ -69,6 +46,38 @@ public class ChatServiceimpl implements ChatService{
 		
 		chatmapper.insertChatroom(chatroom);
 	}
+	
+	@Override
+	public String invite_id_check(String session_id, String member_id) {
+		String res = null;
+				
+			try {
+				Optional<Member> id_check = membermapper.getById(member_id);
+				
+				if(session_id.equals(id_check.get().getMember_id())) {
+					res  =  "자기 자신 초대 불가능";
+				}else {
+					res  =  "체크 완료";
+				}
+			}catch(NoSuchElementException e) {
+				    res  =  "존재하지 않는 아이디 입니다.";
+			}
+			
+		return res;		
+	}
+	@Override
+	public String member_valid_check(int chatroom_no, int member_no) {
+		String res = null;
+		
+		chatmapper.member_valid_check(chatroom_no, member_no)
+		.ifPresent(m -> {
+			throw new IllegalStateException("이미 존재하는 멤버입니다.");
+		});
+		res = "이미 존재하는 멤버입니다.";
+
+		return res;
+	}
+	
 	@Override
 	public void insertChatroom_Member(Chatroom_Member chatroom_member) {
 		

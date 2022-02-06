@@ -37,10 +37,9 @@
 				</div>
 				
 				<dialog id="invite" class="invite">
-					<form method="POST" action="/invitechat">
+					<form method="POST" action="/invitemember">
 						<div class="invite-box">
 							<div class="inputlabel">방제목</div>
-							<input type="hidden" name="chatroom_no" id="chatroom_no" value="">
 							<input type="text" name="chatroom_name" id="chatroom_name" value="">
 							<div id="chatroom_name_error" class="error"></div>
 						</div>
