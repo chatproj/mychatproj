@@ -249,4 +249,16 @@
 		
 		where chatroom_no=#{chatroom_no} and member_no=#{member_no}
 	</select> 
+	
+	<delete id="exitmember" parameterType="com.example.mychatproj.model.Chatroom_Member">
+		delete from chatroom_member
+		
+		where chatroom_no=#{chatroom_no} and member_no=#{member_no}
+	</delete>
+	
+	<delete id="deletechatroom" parameterType="com.example.mychatproj.model.Chatroom">
+		delete from chatroom
+		
+		where chatroom_no=#{chatroom_no}
+	</delete>
 </mapper>

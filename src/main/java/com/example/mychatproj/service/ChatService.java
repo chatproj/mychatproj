@@ -53,5 +53,11 @@ public interface ChatService {
 	
 	// delete file
 	void deletefile(String filename);
+	
+	// delete Chatroom_member 
+	void exitmember(int chatroom_no, int member_no);
+	
+	// delete chatroom
+	void deletechatroom(int chatroom_no);
 
 }
