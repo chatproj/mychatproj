@@ -551,11 +551,18 @@
 <script type="text/javascript">
 	var downloadFile = document.getElementById('downloadFile');
 	function openfilelist() {
+		<%
+			if(request.getParameter("page") != null){
+		%>
 		if(typeof downloadFile.showModal === "function") {
+			location.href="chat?chatroom_no=<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>&page=<%=count %>";
 			downloadFile.showModal();
 		}else{
 			alert("The <dialog> API is not supported by this browser");
 		}
+		<%
+			}
+		%>
 	}
 </script>
 
