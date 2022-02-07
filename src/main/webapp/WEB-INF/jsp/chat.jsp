@@ -155,7 +155,7 @@
 					%>
 							<div class="myLog">
 								<div class="myprofile">
-									<div class="myname"><%=chatlog.get(i).getMember().getMember_name() %></div>
+									<div class="myname"><%=chatlog.get(i).getMember().getMember_id() %></div>
 								<div class="myimg"><img class="img_inner" src='memberimg/<%=chatlog.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
 									
 								</div>
@@ -196,7 +196,7 @@
 							<div class="yourLog">
 								<div class="yourprofile">
 									<div class="yourimg"><img class="img_inner" src='memberimg/<%=chatlog.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
-									<div class="yourname"><%=chatlog.get(i).getMember().getMember_name() %></div>
+									<div class="yourname"><%=chatlog.get(i).getMember().getMember_id() %></div>
 								</div>
 							<%
 								if(chatlog.get(i).getChatlog_division().equals("text")) {
@@ -206,6 +206,9 @@
 							<%
 								}else if(chatlog.get(i).getChatlog_division().equals("file")) {
 							%>
+								<%
+									if(chatlog.get(i).getChat_filelist().getChat_filelist_filename() != null){
+								%>
 								<form method='POST' action='/download' id="upfile" class="upfile">
 									<input type="hidden"           name="download_member_no" value="<%=chatlog.get(i).getMember_no() %>">
 									<input type="hidden"           name="download_chatroom_no" value="<%=chatlog.get(i).getChatroom_no() %>">
@@ -215,6 +218,13 @@
 									<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>
 								</form>
 								<div class="yourtime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>
+								<%
+									}else{
+								%>
+								    <div class="yourtime">삭제된 파일입니다.</div>
+								<%
+									}
+								%>
 							<%
 								}
 							%>		
