@@ -389,6 +389,7 @@
 						msgTemp += "</form>"
 						msgTemp += "</div>"						
 					$("#chatform").append(msgTemp);	
+						location.reload();
 				   }
 			}else if(msgarr[1] == "text"){
 				if( msgarr[0] == member_no ){
@@ -550,15 +551,6 @@
 <script type="text/javascript">
 	var downloadFile = document.getElementById('downloadFile');
 	function openfilelist() {
-		<%
-			if(request.getParameter("page") == null || request.getParameter("page").equals("1")){
-		%>
-				history.scrollRestoration = "auto";
-				location.href="chat?chatroom_no=<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>&page=1";	
-		<%
-			}
-		%>
-
 		if(typeof downloadFile.showModal === "function") {
 			downloadFile.showModal();
 		}else{
