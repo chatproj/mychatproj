@@ -352,7 +352,7 @@
 						msgTemp += "</form>"
 						msgTemp += "</div>"					
 					$("#chatform").append(msgTemp);
-
+						location.reload();
 				   }else{
 					var msgTemp = "<div>"
 						msgTemp = "<div class='yourLog'>"
@@ -457,7 +457,7 @@
 	}	
 	function send() {
 		var member_no     =   "<%=mychatroominfo.get(0).getMember().getMember_no() %>";
-		var member_name   =   "<%=mychatroominfo.get(0).getMember().getMember_name() %>";
+		var member_id   =   "<%=mychatroominfo.get(0).getMember().getMember_id() %>";
 		var msg           =   $("#chatting").val();
  	    var img           =   "<img class='img_inner' src='/memberimg/${mychatroominfo.get(0).getMember_profileimg().getMember_profileimg_filename()}' >"; 
 	
@@ -473,7 +473,7 @@
 		
 		var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>";
 		if(chatinput.value != "") {
-			ws.send(member_no+","+"text"+","+member_name+","+msg+","+img+","+nowTimes+","+chatroom_no);
+			ws.send(member_no+","+"text"+","+member_id+","+msg+","+img+","+nowTimes+","+chatroom_no);
 			$('#chatting').val("");
 			AjaxInsertChatText(msg, nowTimes);
 		}
@@ -519,7 +519,7 @@
 		var fileValue = $("#uploadinput").val().split("\\");
 		var fileName = fileValue[fileValue.length-1]; // 파일명
 		var member_no     =   "<%=mychatroominfo.get(0).getMember().getMember_no() %>";
-		var member_name   =   "<%=mychatroominfo.get(0).getMember().getMember_name() %>";
+		var member_id   =   "<%=mychatroominfo.get(0).getMember().getMember_id() %>";
 		
 		var fileValue = $("#uploadinput").val().split("\\");
 		var sockfilename = fileValue[fileValue.length-1]; // 파일명
@@ -541,7 +541,7 @@
 		var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>";
 		
 		setTimeout(function() {
-			ws.send(member_no+","+"file"+","+member_name+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+filelistTimes);
+			ws.send(member_no+","+"file"+","+member_id+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+filelistTimes);
 		}, 500);
 		$('#uploadinput').val("");
 		
@@ -560,6 +560,14 @@
 		}else{
 			alert("The <dialog> API is not supported by this browser");
 		}
+		<%
+			}else{
+		%>
+		if(typeof downloadFile.showModal === "function") {
+			downloadFile.showModal();
+		}else{
+			alert("The <dialog> API is not supported by this browser");
+		}		
 		<%
 			}
 		%>
