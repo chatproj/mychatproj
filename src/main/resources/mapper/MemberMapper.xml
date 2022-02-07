@@ -60,7 +60,9 @@
 		       
 		from member as m inner join member_profileimg as n
 		 
-		on m.member_no = n.member_no		
+		on m.member_no = n.member_no	
+		
+		where m.member_id=#{member_id}	
 	</select>
 	
 	<update id="modifyMember" parameterType="com.example.mychatproj.model.Member">
