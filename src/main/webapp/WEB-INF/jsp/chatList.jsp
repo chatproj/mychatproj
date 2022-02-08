@@ -32,7 +32,7 @@
 				
 				<div class="borderline">
 					<div class="chatList_btn">
-					<button id="create_room" class="submit_btn" onclick="openinvite()">방만들기</button>
+					<button id="create_chatroom" class="submit_btn" onclick="openinvite()">방만들기</button>
 					</div>
 				</div>
 				
@@ -71,6 +71,6 @@
 			}
 		}
 	</script>
-	<script src="/js/account_form.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="/js/chatList.js" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

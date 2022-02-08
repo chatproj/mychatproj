@@ -37,28 +37,36 @@
 						<img class="menuiconimg" src="/memberimg/menu_icon.png">
 						<div id="slideToggle" class="slideToggle">
 						
-							<div class="chatroomuserlist">
-								<div class="chatuserlist">
-									<div class="userimg"><img class="img_inner" src='memberimg/<%=mychatroominfo.get(0).getMember_profileimg().getMember_profileimg_filename() %>'></div>
-									<div class="member_name"><a class="username_txt"><%=mychatroominfo.get(0).getMember().getMember_id() %></a></div>
+							<div class="chatroomlist">
+							
+								<button id="invitebtn" class="invitebtn" onclick="openinvite()">
+									<div class="inviteimg">
+											<span></span>
+											<span></span>
+									</div>
+									<div class="invitetext">친구초대</div>		
+								</button>	
+								
+								<div class="chatmylist">
+									<div class="memberimg"><img class="list_img_inner" src='memberimg/<%=mychatroominfo.get(0).getMember_profileimg().getMember_profileimg_filename() %>'></div>
+									<div class="member_name"><%=mychatroominfo.get(0).getMember().getMember_id() %></div>
 								</div>
-							</div>
 						<%
 							for(int i = 0; i < memberlistAll.size(); i++){
 						%>							
-							<div class="chatroomuserlist">
-							    <div class="chatuserlist">	
-									<div class="userimg"><img class="img_inner" src='/memberimg/<%=memberlistAll.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
-									<div class="member_name"><a class="username_txt"><%=memberlistAll.get(i).getMember().getMember_id() %></a></div>
+							    <div class="chatmemberlist">	
+									<div class="memberimg"><img class="list_img_inner" src='/memberimg/<%=memberlistAll.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
+									<div class="member_name"><%=memberlistAll.get(i).getMember().getMember_id() %></div>
 								</div>
-							</div>
 						<%
 							}
 						%>
+							</div>
 							
-							<button id="invitebtn" class="invitebtn" onclick="openinvite()">친구초대</button>
-							<button id="filelistbtn" class="filelistbtn" onclick="openfilelist()">파일</button>
-							<input type="submit" id="exitbtn" value="나가기" class="exitbtn" onclick="AjaxExitController()">
+							<div class="menu_footer">
+								<button id="filelistbtn" class="filelistbtn" onclick="openfilelist()">파일</button>
+								<input type="submit" id="exitbtn" value="나가기" class="exitbtn" onclick="AjaxExitController()">
+							</div>
 						</div>
 					</div>
 					
@@ -105,7 +113,7 @@
 									%>
 										<tr class="second_fileblock">
 											<td class="chatfile_original_filename"><%=chat_filelist.get(i).getChat_filelist_original_filename() %></td>
-											<td class="fileusername"><%=chat_filelist.get(i).getMember().getMember_id() %></td>
+											<td class="filemembername"><%=chat_filelist.get(i).getMember().getMember_id() %></td>
 											<td class="chatfile_time"><%=chat_filelist.get(i).getChat_filelist_time() %></td>
 										    <form method="POST" action="/download">
 												<input type="hidden" name="download_member_no" value="<%=chat_filelist.get(i).getMember_no() %>">
@@ -258,6 +266,8 @@
 		</div>
 	</div>
 </body>
+
+	<!-- Script -->
 	
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -555,7 +565,6 @@
 			if(request.getParameter("page") != null){
 		%>
 		if(typeof downloadFile.showModal === "function") {
-			location.href="chat?chatroom_no=<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>&page=<%=count %>";
 			downloadFile.showModal();
 		}else{
 			alert("The <dialog> API is not supported by this browser");
@@ -632,6 +641,5 @@
 	}
 	
 </script>
-
 <script src="/js/AjaxController.js" type="text/javascript" charset="UTF-8"></script>
 </html>
