@@ -1,4 +1,4 @@
-/* 梨꾪똿諛� div */
+/* 筌�袁る샒獄쏉옙 div */
 
 #main_container1{
 /*     padding-top: 100px; */
@@ -46,7 +46,7 @@
 }
 
 .menu_btn .slideToggle {
-	width: 120px;
+	width: 150px;
 	background-color: white;
 	z-index: 1;
 	position: absolute;
@@ -57,65 +57,108 @@
 
 .chatheader .slideToggle:hover {
 	outline: none;
-
 }
 
-.chatheader .chatroomuserlist {
-	height: 150px;
+.chatheader .chatroomlist {
+	height: 200px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
 
-.chatroomuserlist .chatuserlist {
-	width: 100px;
-	display: flex;
-  	justify-content: center;
-}
-
-.chatheader .userimg {
-	width: 40px;
-	hegiht: 40px;
-}
-
-.chatuserlist .member_name {
-	width: 60px;
-	height: 40px;
-	text-align: center;
-	line-height: 40px;
-}
-
 .chatheader .invitebtn {
-	width: 120px;
-	background: lightgray;
-	border: none;
+	cursor: pointer;
+	background: none;
+	display: flex;
 	padding: 5px;
-	font-weight: bold;
-	border-bottom: 1px solid black;
+	border: none;
 }
 
-.chatheader .filelistbtn {
-	width: 120px;
+.invitebtn .inviteimg {
+	width: 30px;
+	height: 30px;
+	border: 1px solid black;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.inviteimg span {
+	display: block;
+	width: 1px;
+	height: 15px;
+	background: black;
+}
+
+.inviteimg span:nth-child(2) {
+	transform: rotate(90deg);
+}
+
+.invitebtn .invitetext {
+	margin-left: 5px;
+	height: 30px;
+	line-height: 35px;	
+}
+
+.chatroomlist .chatmylist {
+	display: flex;
+	padding: 5px;
+}
+
+
+.chatroomlist .chatmemberlist {
+	display: flex;
+	padding: 5px;
+}
+
+.chatheader .memberimg {
+	width: 30px;
+	height: 30px;
+	border: 1px solid black;
+	border-radius: 50%;
+}
+
+.chatroomlist .list_img_inner {
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;	
+}
+
+.chatroomlist .member_name {
+	margin-left: 10px;
+	height: 30px;
+	line-height: 30px;	
+}
+
+.chatheader .menu_footer {
+	padding: 10px;
+	border-top: 1px solid black;
+	display: flex;
+	justify-content: space-between;
+}
+
+ .menu_footer .filelistbtn {
+ 	border-radius: 10px;
 	background: lightgray;
 	border: none;
-	padding: 5px;
 	font-weight: bold;
-	border-bottom: 1px solid black;
+	padding: 5px;
 }
 
 .chatheader .filelistbtn:hover {
+	border-radius: 10px;
 	outline: none;
-	background: lightgray;
+	background: #8bbbbd;
 }
 
-.chatheader .exitbtn {
-	width: 120px;
+.menu_footer .exitbtn {
+	border-radius: 10px;
 	background: red;
 	border: none;
 	color: white;
-	padding: 5px;
 	font-weight: bold;
-	
-}
+	padding: 5px;	
+} 
 
 .chatheader .downloadFile {
 	width: 500px;
