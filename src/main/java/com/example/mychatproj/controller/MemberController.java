@@ -208,7 +208,9 @@ public class MemberController {
 		}	
 	}
 	@PostMapping("/modify")
-	public String modifyMember(Member member_form, Member_profileimg member_profileimg_form) throws Exception {
+	public String modifyMember(Member member_form, Member_profileimg member_profileimg_form, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();	
+		
 		Member member = new Member();
 		member.setMember_id          (member_form.getMember_id());
 		member.setMember_pwd         (member_form.getMember_pwd());
@@ -227,6 +229,8 @@ public class MemberController {
 			Member_profileimg memberimg = updateimg(memberPK, member_profileimg_form.getMemberimg());
 			memberservice.updatememberimg(memberimg);
 		}
+		
+		session.invalidate();
 		
 		return "redirect:/signin";
 	}

@@ -48,38 +48,38 @@
 					<input type="hidden" name="member_no" value="<%=member_no %>">
 					<div class="input-box">
 						<div class="inputlabel">아이디</div>
-						<input type="text" name="member_id" id="uid" maxlength="15" value="<%=member_id %>" readonly>
-						<div id="uid_error" class="error"></div>
+						<input type="text" name="member_id" id="member_id" maxlength="15" value="<%=member_id %>" readonly>
+						<div id="member_id_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">이름</div>
-						<input type="text" name="member_name" id="uname" maxlength="10" value="<%=member_name %>">
-						<div id="uname_error" class="error"></div>
+						<input type="text" name="member_name" id="member_name" maxlength="10" value="<%=member_name %>">
+						<div id="member_name_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">이메일</div>
-						<input type="email" name="member_email" id="email" maxlength="30" value="<%=member_email %>">
-						<div id="email_error" class="error"></div>
+						<input type="email" name="member_email" id="member_email" maxlength="30" value="<%=member_email %>">
+						<div id="member_email_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">비밀번호</div>
-						<input type="password" name="member_pwd" id="upw" maxlength="20">
-						<div id="upw_error" class="error"></div>
+						<input type="password" name="member_pwd" id="member_pwd" maxlength="20">
+						<div id="member_pwd_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">비밀번호 재확인</div>
-						<input type="password" name="upw_check" id="upw_check" maxlength="20">
-						<div id="upw_check_error" class="error"></div>
+						<input type="password" name="member_chkpwd" id="member_chkpwd" maxlength="20">
+						<div id="member_chkpwd_error" class="error"></div>
 					</div>
 
 					<div class="input-box">
 						<div class="inputlabel">휴대전화</div>
-						<input type="text" name="member_phone" id="phone_num" maxlength="20" value="<%=member_phone %>">
-						<div id="phone_num_error" class="error"></div>
+						<input type="text" name="member_phone" id="member_phone" maxlength="20" value="<%=member_phone %>">
+						<div id="member_phone_error" class="error"></div>
 					</div>
 					
 					<canvas id="imagecanvas" ></canvas>
@@ -87,7 +87,6 @@
 					<div class="input-box">
 						<div class="inputlabel">프로필이미지</div>
 						<input type="file" name="memberimg" id="userimg" maxlength="40" value="<%=member_profileimg_original_filename %>>">
-						<div id="phone_num_error" class="error"></div>
 					</div>
 
 					<input type="submit" id="submit_btn" value="회원정보변경"
@@ -123,6 +122,6 @@
 	        reader.readAsDataURL(event.target.files[0])
 	    });
     </script>
-	<script src="/js/account_form.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="/js/signup.js" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
