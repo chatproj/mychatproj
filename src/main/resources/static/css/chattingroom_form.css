@@ -37,12 +37,12 @@
 }
 
 .form1 .menu_btn {
-	cursor: pointer;
 }
 
 .menu_btn .menuiconimg {
 	width: 45px;
 	height: 45px;
+	cursor: pointer;
 }
 
 .menu_btn .slideToggle {
@@ -223,7 +223,7 @@
 }
 
 .chatheader .chatroom_name {
-	margin-top: 5px;
+	margin-top: 15px;
 	margin-left: 30px;
 }
 
