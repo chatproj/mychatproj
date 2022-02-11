@@ -19,7 +19,7 @@
 						request.setCharacterEncoding("UTF-8");
 						String findmsg = (String)request.getParameter("findmsg");
 					%>		
-					<div class="finduser_id">
+					<div class="findmember_id">
 					<%
 						if(findmsg.equals("존재하지 않는 ID 입니다.") || findmsg == "존재하지 않는 ID 입니다."){
 					%>
@@ -27,15 +27,15 @@
 					<%
 						}else{
 					%>
-						<a class="finduser_in">고객님의 아이디는</a>
+						<a class="findmember_in">고객님의 아이디는</a>
 						<a class="findinform"><%=findmsg %></a>
-						<a class="finduser_in">입니다.</a>
+						<a class="findmember_in">입니다.</a>
 					<%
 						}
 					%>
 					</div>				
 					
-					<div class="finduser_btn">
+					<div class="findmember_btn">
 					<input type="submit" id="find_submit_btn" value="로그인" class="find_submit_btn" onclick="location.href='/signin'">
 					<input type="submit" id="find_submit_btn" value="패스워드 찾기" class="find_submit_btn" onclick="location.href='/findpw'">
 					</div>
