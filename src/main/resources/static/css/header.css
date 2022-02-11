@@ -9,42 +9,73 @@
 }
 
 #header_form_container .header_form {
-	width: 302px;
+	width: 332px;
 	display: inline-block;
 	border: 1px solid white;
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
 	background: white;
 	box-shadow: 10px 10px 60px #8bbbbd;
-	padding: 30px;
+	padding: 15px;
 }
 
-.header_form .section1 {
+.header_form .section {
 	display: flex;
 	justify-content: space-between;
+	overflow: auto;
 }
 
-.section1 .sessionStatus {
+.section .sessionStatus {
 	font-weight: bold;
-	margin-top: 10px;
-	margin-left: 15px;
+	margin-top: 15px;
+	margin-left: 30px;
 }
 
-.section1 .signout {
-	border-radius: 10px;
+.section .header_menu_btn {
+
+}
+
+.header_menu_btn .menuiconimg {
+	width: 45px;
+	height: 45px;
+	cursor: pointer;
+}
+
+.header_menu_btn .header_slideToggle {
+	width: 100px;
+	background-color: white;
+	z-index: 1;
+	position: absolute;
+	display: none;
+	transform: translateX(-100%);
+	border: 1px solid black;
+}
+
+.header_menu_btn .header_slideToggle:hover {
 	outline: none;
-	font-size: 16px;
-	font: monospace;
-	background: #e1e1e1;
-	color: #4a6363;
-	font-weight: bold;
+}
+
+.header_menu_btn .header_menu_list {
+	border: 1px solid black;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+.header_menu_list .modifyuser {
 	border: none;
-	padding: 10px;
+	background: white;
+	cursor: pointer;
 }
 
-.signout:hover {
-	border-radius: 10px;
-	outline: none;
-	background: #8bbbbd;
-	padding: 10px;
+.header_menu_list .signout {
+	border: none;
+	background: white;	
+	cursor: pointer;
+}
+
+.header_menu_list .deleteuser {
+	border: none;
+	background: white;	
+	cursor: pointer;
 }

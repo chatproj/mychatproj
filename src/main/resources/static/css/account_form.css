@@ -75,7 +75,7 @@ input:focus {
 	background: #8bbbbd;
 }
 
-.nouser {
+.nomember {
 	font-size: 15px;
 	margin-top: 30px;
 	margin-left: 45px;
@@ -83,43 +83,43 @@ input:focus {
 	color: #56b7ba;
 }
 
-.nouser a {
+.nomember a {
 	text-decoration: none;
 	color: red;
 }
 
-.nouser a:hover {
+.nomember a:hover {
 	text-decoration: underline;
 }
 
-.finduser {
+.findmember {
 	font-size: 15px;
 	margin-top: 30px;
 	margin-left: 50px;
 	margin-bottom: 10px;
 }
 
-.finduser a {
+.findmember a {
 	margin-right: 25px;
 	text-decoration: none;
 	color: red;
 }
 
-.finduser a:hover {
+.findmember a:hover {
 	text-decoration: underline;
 }
 
-.finduser_id {
+.findmember_id {
 	color: #56b7ba;
 	margin-bottom: 40px;
 	margin-left: 15px;
 }
 
-.finduser_id .findinform {
+.findmember_id .findinform {
 	color: red;
 }
 
-.finduser_btn {
+.findmember_btn {
     display: flex;	
 }
 
@@ -144,4 +144,12 @@ input:focus {
 	height: 50px;
 	outline: none;
 	background: #8bbbbd;
+}
+
+#imagecanvas {
+	margin-left: 50px;
+	width: 200px;
+	height: 200px;
+	border: 1px solid black;
+	border-radius: 50%;	
 }

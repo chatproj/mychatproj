@@ -11,7 +11,6 @@
 <head>
 <!-- css file -->
 <%@ include file="./common/title.jsp"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 	<%
 			ArrayList<Chatroom_Member> mychatroominfo =  (ArrayList) request.getAttribute("mychatroominfo");
@@ -37,28 +36,36 @@
 						<img class="menuiconimg" src="/memberimg/menu_icon.png">
 						<div id="slideToggle" class="slideToggle">
 						
-							<div class="chatroomuserlist">
-								<div class="chatuserlist">
-									<div class="userimg"><img class="img_inner" src='memberimg/<%=mychatroominfo.get(0).getMember_profileimg().getMember_profileimg_filename() %>'></div>
-									<div class="member_name"><a class="username_txt"><%=mychatroominfo.get(0).getMember().getMember_id() %></a></div>
+							<div class="chatroomlist">
+							
+								<button id="invitebtn" class="invitebtn" onclick="openinvite()">
+									<div class="inviteimg">
+											<span></span>
+											<span></span>
+									</div>
+									<div class="invitetext">친구초대</div>		
+								</button>	
+								
+								<div class="chatmylist">
+									<div class="memberimg"><img class="list_img_inner" src='memberimg/<%=mychatroominfo.get(0).getMember_profileimg().getMember_profileimg_filename() %>'></div>
+									<div class="member_name"><%=mychatroominfo.get(0).getMember().getMember_id() %></div>
 								</div>
-							</div>
 						<%
 							for(int i = 0; i < memberlistAll.size(); i++){
 						%>							
-							<div class="chatroomuserlist">
-							    <div class="chatuserlist">	
-									<div class="userimg"><img class="img_inner" src='/memberimg/<%=memberlistAll.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
-									<div class="member_name"><a class="username_txt"><%=memberlistAll.get(i).getMember().getMember_id() %></a></div>
+							    <div class="chatmemberlist">	
+									<div class="memberimg"><img class="list_img_inner" src='/memberimg/<%=memberlistAll.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
+									<div class="member_name"><%=memberlistAll.get(i).getMember().getMember_id() %></div>
 								</div>
-							</div>
 						<%
 							}
 						%>
+							</div>
 							
-							<button id="invitebtn" class="invitebtn" onclick="openinvite()">친구초대</button>
-							<button id="filelistbtn" class="filelistbtn" onclick="openfilelist()">파일</button>
-							<input type="submit" id="exitbtn" value="나가기" class="exitbtn" onclick="AjaxExitController()">
+							<div class="menu_footer">
+								<button id="filelistbtn" class="filelistbtn" onclick="openfilelist()">파일</button>
+								<input type="submit" id="exitbtn" value="나가기" class="exitbtn" onclick="AjaxExitController()">
+							</div>
 						</div>
 					</div>
 					
@@ -105,7 +112,7 @@
 									%>
 										<tr class="second_fileblock">
 											<td class="chatfile_original_filename"><%=chat_filelist.get(i).getChat_filelist_original_filename() %></td>
-											<td class="fileusername"><%=chat_filelist.get(i).getMember().getMember_id() %></td>
+											<td class="filemembername"><%=chat_filelist.get(i).getMember().getMember_id() %></td>
 											<td class="chatfile_time"><%=chat_filelist.get(i).getChat_filelist_time() %></td>
 										    <form method="POST" action="/download">
 												<input type="hidden" name="download_member_no" value="<%=chat_filelist.get(i).getMember_no() %>">
@@ -155,7 +162,7 @@
 					%>
 							<div class="myLog">
 								<div class="myprofile">
-									<div class="myname"><%=chatlog.get(i).getMember().getMember_name() %></div>
+									<div class="myname"><%=chatlog.get(i).getMember().getMember_id() %></div>
 								<div class="myimg"><img class="img_inner" src='memberimg/<%=chatlog.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
 									
 								</div>
@@ -196,7 +203,7 @@
 							<div class="yourLog">
 								<div class="yourprofile">
 									<div class="yourimg"><img class="img_inner" src='memberimg/<%=chatlog.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
-									<div class="yourname"><%=chatlog.get(i).getMember().getMember_name() %></div>
+									<div class="yourname"><%=chatlog.get(i).getMember().getMember_id() %></div>
 								</div>
 							<%
 								if(chatlog.get(i).getChatlog_division().equals("text")) {
@@ -206,6 +213,9 @@
 							<%
 								}else if(chatlog.get(i).getChatlog_division().equals("file")) {
 							%>
+								<%
+									if(chatlog.get(i).getChat_filelist().getChat_filelist_filename() != null){
+								%>
 								<form method='POST' action='/download' id="upfile" class="upfile">
 									<input type="hidden"           name="download_member_no" value="<%=chatlog.get(i).getMember_no() %>">
 									<input type="hidden"           name="download_chatroom_no" value="<%=chatlog.get(i).getChatroom_no() %>">
@@ -215,6 +225,13 @@
 									<input type='submit' id='downloadbtn' value='다운로드' class='downloadbtn'>
 								</form>
 								<div class="yourtime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>
+								<%
+									}else{
+								%>
+								    <div class="yourtime">삭제된 파일입니다.</div>
+								<%
+									}
+								%>
 							<%
 								}
 							%>		
@@ -248,6 +265,8 @@
 		</div>
 	</div>
 </body>
+
+	<!-- Script -->
 	
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -342,7 +361,7 @@
 						msgTemp += "</form>"
 						msgTemp += "</div>"					
 					$("#chatform").append(msgTemp);
-
+						location.reload();
 				   }else{
 					var msgTemp = "<div>"
 						msgTemp = "<div class='yourLog'>"
@@ -379,6 +398,7 @@
 						msgTemp += "</form>"
 						msgTemp += "</div>"						
 					$("#chatform").append(msgTemp);	
+						location.reload();
 				   }
 			}else if(msgarr[1] == "text"){
 				if( msgarr[0] == member_no ){
@@ -446,7 +466,7 @@
 	}	
 	function send() {
 		var member_no     =   "<%=mychatroominfo.get(0).getMember().getMember_no() %>";
-		var member_name   =   "<%=mychatroominfo.get(0).getMember().getMember_name() %>";
+		var member_id   =   "<%=mychatroominfo.get(0).getMember().getMember_id() %>";
 		var msg           =   $("#chatting").val();
  	    var img           =   "<img class='img_inner' src='/memberimg/${mychatroominfo.get(0).getMember_profileimg().getMember_profileimg_filename()}' >"; 
 	
@@ -462,7 +482,7 @@
 		
 		var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>";
 		if(chatinput.value != "") {
-			ws.send(member_no+","+"text"+","+member_name+","+msg+","+img+","+nowTimes+","+chatroom_no);
+			ws.send(member_no+","+"text"+","+member_id+","+msg+","+img+","+nowTimes+","+chatroom_no);
 			$('#chatting').val("");
 			AjaxInsertChatText(msg, nowTimes);
 		}
@@ -508,7 +528,7 @@
 		var fileValue = $("#uploadinput").val().split("\\");
 		var fileName = fileValue[fileValue.length-1]; // 파일명
 		var member_no     =   "<%=mychatroominfo.get(0).getMember().getMember_no() %>";
-		var member_name   =   "<%=mychatroominfo.get(0).getMember().getMember_name() %>";
+		var member_id   =   "<%=mychatroominfo.get(0).getMember().getMember_id() %>";
 		
 		var fileValue = $("#uploadinput").val().split("\\");
 		var sockfilename = fileValue[fileValue.length-1]; // 파일명
@@ -530,7 +550,7 @@
 		var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>";
 		
 		setTimeout(function() {
-			ws.send(member_no+","+"file"+","+member_name+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+filelistTimes);
+			ws.send(member_no+","+"file"+","+member_id+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+filelistTimes);
 		}, 500);
 		$('#uploadinput').val("");
 		
@@ -541,19 +561,24 @@
 	var downloadFile = document.getElementById('downloadFile');
 	function openfilelist() {
 		<%
-			if(request.getParameter("page") == null || request.getParameter("page").equals("1")){
+			if(request.getParameter("page") != null){
 		%>
-				history.scrollRestoration = "auto";
-				location.href="chat?chatroom_no=<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>&page=1";	
-		<%
-			}
-		%>
-
 		if(typeof downloadFile.showModal === "function") {
 			downloadFile.showModal();
 		}else{
 			alert("The <dialog> API is not supported by this browser");
 		}
+		<%
+			}else{
+		%>
+		if(typeof downloadFile.showModal === "function") {
+			downloadFile.showModal();
+		}else{
+			alert("The <dialog> API is not supported by this browser");
+		}		
+		<%
+			}
+		%>
 	}
 </script>
 
@@ -615,6 +640,5 @@
 	}
 	
 </script>
-
 <script src="/js/AjaxController.js" type="text/javascript" charset="UTF-8"></script>
 </html>

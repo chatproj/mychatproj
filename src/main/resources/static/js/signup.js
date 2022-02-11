@@ -1,5 +1,3 @@
-window.addEventListener("DOMContentLoaded", function(){
-
 	var member_id = document.getElementById("member_id");
 	var member_name = document.getElementById("member_name");
 	var member_email = document.getElementById("member_email");
@@ -209,5 +207,4 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 		
 	});
-	
-});
+

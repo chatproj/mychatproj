@@ -54,8 +54,8 @@
 					<input type="submit" id="submit_btn" value="Log in"
 						class="submit_btn">
 						
-					<div class="nouser">아이디가 없으신가요? <a href="/signup">회원가입</a></div>
-					<div class="finduser">
+					<div class="nomember">아이디가 없으신가요? <a href="/signup">회원가입</a></div>
+					<div class="findmember">
 						<a href="/findId">아이디 찾기</a>
 						<a href="/findpw">패스워드 찾기</a>
 					</div>
@@ -65,6 +65,6 @@
 	</div>
 
 	<!-- Script -->
-<!-- 	<script src="/js/signup.js" type="text/javascript" charset="UTF-8"></script> -->
+	<script src="/js/signin.js" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
