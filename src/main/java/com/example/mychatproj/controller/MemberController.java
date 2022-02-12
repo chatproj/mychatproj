@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.mychatproj.model.Member;
 import com.example.mychatproj.model.Member_profileimg;
+import com.example.mychatproj.service.ChatService;
 import com.example.mychatproj.service.MemberService;
 
 @Controller
@@ -28,6 +29,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberservice;
+	@Autowired
+	private ChatService chatservice;
 	
 	@Autowired
 	ServletContext application;
@@ -56,6 +59,54 @@ public class MemberController {
 //		}
 //		return session_id;
 //	}
+	private int getmember_no(String session_id) {
+		Optional<Member> member_no = chatservice.getmember_no(session_id); 
+		
+		return member_no.get().getMember_no();
+	}
+	
+	
+	private Member_profileimg normalimglogic(int memberPK) {
+		Member_profileimg memberimg = new Member_profileimg();
+		
+		String originalfilename   = "normal_img.png";
+		String fileurl            = "/memberimg/";
+		
+		memberimg.setMember_profileimg_filename            (originalfilename);
+		memberimg.setMember_profileimg_original_filename   (originalfilename);
+		memberimg.setMember_profileimg_url                 (application.getRealPath(fileurl));
+		memberimg.setMember_no                             (memberPK);
+		
+		return memberimg;
+	}
+	private Member_profileimg imglogic(int memberPK, @RequestPart MultipartFile files) throws Exception{
+		Member_profileimg memberimg = new Member_profileimg();
+		
+		String originalfilename            = files.getOriginalFilename();
+		String originalfilenameExtension   = FilenameUtils.getExtension(originalfilename).toLowerCase();
+		File destinationfile;
+		String destinationfilename;
+		String fileurl                     = "/memberimg/";
+		String savePath                    = application.getRealPath(fileurl);
+		
+		do {
+			destinationfilename  = RandomStringUtils.randomAlphanumeric(32) + "." + originalfilenameExtension;
+			destinationfile      = new File(savePath, destinationfilename);
+		}while(destinationfile.exists());
+		
+		try {
+			files.transferTo(destinationfile);
+		} catch(IOException e) {
+			
+		}
+		
+		memberimg.setMember_profileimg_filename           (destinationfilename);
+		memberimg.setMember_profileimg_original_filename  (originalfilename);
+		memberimg.setMember_profileimg_url                (savePath);
+		memberimg.setMember_no                            (memberPK);
+		
+		return memberimg;
+	}
 	
 	@RequestMapping("/")
 	public String main(HttpServletRequest request) {
@@ -97,55 +148,14 @@ public class MemberController {
 		int memberPK = member.getMember_no();
 		
 		if(member_profileimg_form.getMemberimg().getOriginalFilename().equals("")) {
-			Member_profileimg memberimg = normalinsertimg(memberPK);
+			Member_profileimg memberimg = normalimglogic(memberPK);
 			memberservice.insertmemberimg(memberimg);	
 		} else {
-			Member_profileimg memberimg = insertimg(memberPK, member_profileimg_form.getMemberimg());
+			Member_profileimg memberimg = imglogic(memberPK, member_profileimg_form.getMemberimg());
 			memberservice.insertmemberimg(memberimg);
 		}
 			
 		return "redirect:/signin";
-	}
-	private Member_profileimg normalinsertimg(int memberPK) {
-		Member_profileimg memberimg = new Member_profileimg();
-		
-		String originalfilename   = "normal_img.png";
-		String fileurl            = "/memberimg/";
-		
-		memberimg.setMember_profileimg_filename            (originalfilename);
-		memberimg.setMember_profileimg_original_filename   (originalfilename);
-		memberimg.setMember_profileimg_url                 (application.getRealPath(fileurl));
-		memberimg.setMember_no                             (memberPK);
-		
-		return memberimg;
-	}
-	private Member_profileimg insertimg(int memberPK, @RequestPart MultipartFile files) throws Exception{
-		Member_profileimg memberimg = new Member_profileimg();
-		
-		String originalfilename            = files.getOriginalFilename();
-		String originalfilenameExtension   = FilenameUtils.getExtension(originalfilename).toLowerCase();
-		File destinationfile;
-		String destinationfilename;
-		String fileurl                     = "/memberimg/";
-		String savePath                    = application.getRealPath(fileurl);
-		
-		do {
-			destinationfilename  = RandomStringUtils.randomAlphanumeric(32) + "." + originalfilenameExtension;
-			destinationfile      = new File(savePath, destinationfilename);
-		}while(destinationfile.exists());
-		
-		try {
-			files.transferTo(destinationfile);
-		} catch(IOException e) {
-			
-		}
-		
-		memberimg.setMember_profileimg_filename           (destinationfilename);
-		memberimg.setMember_profileimg_original_filename  (originalfilename);
-		memberimg.setMember_profileimg_url                (savePath);
-		memberimg.setMember_no                            (memberPK);
-		
-		return memberimg;
 	}
 	
 	@RequestMapping("/signin")
@@ -223,57 +233,16 @@ public class MemberController {
 		int memberPK = member_form.getMember_no();
 
 		if(member_profileimg_form.getMemberimg().getOriginalFilename().equals("")) {
-			Member_profileimg memberimg = normalupdateimg(memberPK);
+			Member_profileimg memberimg = normalimglogic(memberPK);
 			memberservice.updatememberimg(memberimg);	
 		} else {
-			Member_profileimg memberimg = updateimg(memberPK, member_profileimg_form.getMemberimg());
+			Member_profileimg memberimg = imglogic(memberPK, member_profileimg_form.getMemberimg());
 			memberservice.updatememberimg(memberimg);
 		}
 		
 		session.invalidate();
 		
 		return "redirect:/signin";
-	}
-	private Member_profileimg normalupdateimg(int memberPK) {
-		Member_profileimg memberimg = new Member_profileimg();
-		
-		String originalfilename   = "normal_img.png";
-		String fileurl            = "/memberimg/";
-		
-		memberimg.setMember_profileimg_filename            (originalfilename);
-		memberimg.setMember_profileimg_original_filename   (originalfilename);
-		memberimg.setMember_profileimg_url                 (application.getRealPath(fileurl));
-		memberimg.setMember_no                             (memberPK);
-		
-		return memberimg;
-	}
-	private Member_profileimg updateimg(int memberPK, @RequestPart MultipartFile files) throws Exception{
-		Member_profileimg memberimg = new Member_profileimg();
-		
-		String originalfilename            = files.getOriginalFilename();
-		String originalfilenameExtension   = FilenameUtils.getExtension(originalfilename).toLowerCase();
-		File destinationfile;
-		String destinationfilename;
-		String fileurl                     = "/memberimg/";
-		String savePath                    = application.getRealPath(fileurl);
-		
-		do {
-			destinationfilename  = RandomStringUtils.randomAlphanumeric(32) + "." + originalfilenameExtension;
-			destinationfile      = new File(savePath, destinationfilename);
-		}while(destinationfile.exists());
-		
-		try {
-			files.transferTo(destinationfile);
-		} catch(IOException e) {
-			
-		}
-		
-		memberimg.setMember_profileimg_filename           (destinationfilename);
-		memberimg.setMember_profileimg_original_filename  (originalfilename);
-		memberimg.setMember_profileimg_url                (savePath);
-		memberimg.setMember_no                            (memberPK);
-		
-		return memberimg;
 	}
 	
 	@RequestMapping("findId")
@@ -308,9 +277,13 @@ public class MemberController {
 	@PostMapping("deletemember")
 	public String deletemember(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String session_id   = (String) session.getAttribute("session_id");		
+		String session_id   = (String) session.getAttribute("session_id");
+		int session_no       =  getmember_no(session_id);
 		
 		memberservice.deleteMember(session_id);
+		Member_profileimg memberimg = normalimglogic(session_no);
+		memberservice.insertmemberimg(memberimg);	
+		
 		session.invalidate();
 		
 		return "redirect:/";

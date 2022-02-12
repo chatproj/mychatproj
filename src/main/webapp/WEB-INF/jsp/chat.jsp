@@ -203,7 +203,11 @@
 							<div class="yourLog">
 								<div class="yourprofile">
 									<div class="yourimg"><img class="img_inner" src='memberimg/<%=chatlog.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
-									<div class="yourname"><%=chatlog.get(i).getMember().getMember_id() %></div>
+									<% if(chatlog.get(i).getMember().getMember_id() == null){ %>
+										<div class="yourname">알수 없음</div>
+									<% }else{ %>
+										<div class="yourname"><%=chatlog.get(i).getMember().getMember_id() %></div>
+									<% } %>
 								</div>
 							<%
 								if(chatlog.get(i).getChatlog_division().equals("text")) {
