@@ -282,7 +282,7 @@ public class MemberController {
 		
 		memberservice.deleteMember(session_id);
 		Member_profileimg memberimg = normalimglogic(session_no);
-		memberservice.insertmemberimg(memberimg);	
+		memberservice.updatememberimg(memberimg);	
 		
 		session.invalidate();
 		
