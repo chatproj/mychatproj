@@ -280,9 +280,15 @@ public class MemberController {
 		String session_id   = (String) session.getAttribute("session_id");
 		int session_no       =  getmember_no(session_id);
 		
+		Optional<Member> member_profile_img = memberservice.getId_to_memberinfo(session_id);
+		
+		String url = "/memberimg/";
+		String deletefilepath = application.getRealPath(url) + member_profile_img.get().getMember_profileimg().getMember_profileimg_filename();
+		
+		File file = new File(deletefilepath);
+		file.delete();
+		
 		memberservice.deleteMember(session_id);
-		Member_profileimg memberimg = normalimglogic(session_no);
-		memberservice.updatememberimg(memberimg);	
 		
 		session.invalidate();
 		

@@ -182,7 +182,9 @@
 		left join mychatproj.chat_filelist as p
 		on m.chatlog_log = p.chat_filelist_filename
 		
-		where m.chatroom_no=#{chatroom_no}		
+		where m.chatroom_no=#{chatroom_no}	
+		
+		order by chatlog_no asc	
 	</select>	
 	
 	<select id="getchatlist_filename" resultType="com.example.mychatproj.model.Chat_filelist">
