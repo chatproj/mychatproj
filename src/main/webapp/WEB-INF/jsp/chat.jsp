@@ -190,6 +190,7 @@
 									}else{
 								%>
 									<div class="mytime">삭제된 파일입니다.</div>
+									<div class="mytime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>	
 								<%
 									}
 								%>
@@ -202,10 +203,11 @@
 					%>
 							<div class="yourLog">
 								<div class="yourprofile">
-									<div class="yourimg"><img class="img_inner" src='memberimg/<%=chatlog.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
 									<% if(chatlog.get(i).getMember().getMember_id() == null){ %>
+										<div class="yourimg"><img class="img_inner" src='memberimg/normal_img.png'></div>
 										<div class="yourname">알수 없음</div>
 									<% }else{ %>
+										<div class="yourimg"><img class="img_inner" src='memberimg/<%=chatlog.get(i).getMember_profileimg().getMember_profileimg_filename() %>'></div>
 										<div class="yourname"><%=chatlog.get(i).getMember().getMember_id() %></div>
 									<% } %>
 								</div>
@@ -233,6 +235,7 @@
 									}else{
 								%>
 								    <div class="yourtime">삭제된 파일입니다.</div>
+								    <div class="yourtime">time : < <%=chatlog.get(i).getChatlog_time() %> ></div>
 								<%
 									}
 								%>
@@ -251,7 +254,8 @@
 				<div id="yourMsg" class="yourMsg">
 					<table class="inputTable">	
 							<form id="upload-file-form">
-							    <input type="hidden" id="text" name="member_no" value="<%=mychatroominfo.get(0).getMember().getMember_no() %>">
+								<input type="hidden" id="chat_filelist_time" name="chat_filelist_time" value="" />
+ 							    <input type="hidden" id="text" name="member_no" value="<%=mychatroominfo.get(0).getMember().getMember_no() %>">
 								<input type="hidden" id="text" name="chatroom_no" value="<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>">
 								<th><input id="uploadinput" class="uploadinput" type="file" name="fileupload" accept="*" /></th>
 								<th><button onclick="upload()" type="button" id="uploadBtn" class="sendBtn">업로드</button></th>
@@ -365,7 +369,11 @@
 						msgTemp += "</form>"
 						msgTemp += "</div>"					
 					$("#chatform").append(msgTemp);
-						location.reload();
+						
+						setTimeout(function(){
+							location.reload();							
+						}, 5000);
+						
 				   }else{
 					var msgTemp = "<div>"
 						msgTemp = "<div class='yourLog'>"
@@ -402,7 +410,11 @@
 						msgTemp += "</form>"
 						msgTemp += "</div>"						
 					$("#chatform").append(msgTemp);	
-						location.reload();
+						
+						setTimeout(function(){
+							location.reload();							
+						}, 5000);
+
 				   }
 			}else if(msgarr[1] == "text"){
 				if( msgarr[0] == member_no ){
@@ -513,6 +525,20 @@
 	}
 	
 	function upload() {
+		
+		var today     =  new Date();
+		var years     =  today.getFullYear();
+		var month     =  today.getMonth()+1;
+		var date      =  today.getDate();
+		var hours     =  today.getHours();
+		var minutes   =  today.getMinutes();
+		var seconds   =  today.getSeconds();
+		
+		var nowTimes        =  (("00"+hours.toString()).slice(-2)) + ":" + (("00"+minutes.toString()).slice(-2)) + ":" + (("00"+seconds.toString()).slice(-2)); 
+		var filelistTimes   =  years + "-" + (("00"+month.toString()).slice(-2)) + "-" + (("00"+date.toString()).slice(-2)) + "_" + (("00"+hours.toString()).slice(-2)) + ":" + (("00"+minutes.toString()).slice(-2)) + ":" + (("00"+seconds.toString()).slice(-2)); 
+		
+		document.getElementById('chat_filelist_time').value=filelistTimes;
+		
 		$.ajax({
 			  url: "/uploadFile",
 			  type: "POST",
@@ -539,17 +565,6 @@
 		
  	    var img           =   "<img class='img_inner' src='/memberimg/${mychatroominfo.get(0).getMember_profileimg().getMember_profileimg_filename()}' >"; 
 	
-		var today     =  new Date();
-		var years     =  today.getFullYear();
-		var month     =  today.getMonth()+1;
-		var date      =  today.getDate();
-		var hours     =  today.getHours();
-		var minutes   =  today.getMinutes();
-		var seconds   =  today.getSeconds();
-		
-		var nowTimes        =  (("00"+hours.toString()).slice(-2)) + ":" + (("00"+minutes.toString()).slice(-2)) + ":" + (("00"+seconds.toString()).slice(-2)); 
-		var filelistTimes   =  years + "-" + (("00"+month.toString()).slice(-2)) + "-" + (("00"+date.toString()).slice(-2)) + "_" + (("00"+hours.toString()).slice(-2)) + ":" + (("00"+minutes.toString()).slice(-2)) + ":" + (("00"+seconds.toString()).slice(-2)); 
-		
 		console.log("month : " + month);
 		var chatroom_no = "<%=mychatroominfo.get(0).getChatroom().getChatroom_no() %>";
 		
@@ -557,8 +572,9 @@
 			ws.send(member_no+","+"file"+","+member_id+","+sockfilename+","+img+","+nowTimes+","+chatroom_no+","+filelistTimes);
 		}, 500);
 		$('#uploadinput').val("");
-		
 	}
+	
+	
 </script>
 
 <script type="text/javascript">

@@ -192,14 +192,10 @@ public class ChatController {
 				// log insert File
 				try {
 					if(!sockfilename.equals("") && sockfilename != null) {
-						SimpleDateFormat simpledateformat   =   new SimpleDateFormat("HH:mm:ss");
-						Calendar now                        =   Calendar.getInstance();
-						String time                         =   simpledateformat.format(now.getTime());
-						
 						insertLog.setMember_no(session_no);
 						insertLog.setChatroom_no(chatroom_no);
 						insertLog.setChatlog_log(sockfilename);
-						insertLog.setChatlog_time(time);
+						insertLog.setChatlog_time(nowTimes);
 						insertLog.setChatlog_division("file");
 						
 						chatservice.insertLog(insertLog);
@@ -268,18 +264,14 @@ public class ChatController {
 							  RedirectAttributes redirectAttributes,
 			 			      HttpServletRequest request,
 						      @RequestParam("fileupload") MultipartFile files,
-							  @RequestParam("chatroom_no") int chatroom_no) throws Exception {
+						      @RequestParam("chatroom_no") int chatroon_no,
+							  @RequestParam(value="chat_filelist_time", required=false) String nowTimes) throws Exception {
 		
 		System.out.println("ddd" + files.getOriginalFilename());
 		
 		Chat_filelist fileupload = new Chat_filelist();
 		fileupload.setMember_no(form.getMember_no());
 		fileupload.setChatroom_no(form.getChatroom_no());
-		
-		SimpleDateFormat nowTimes   =   new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-		Calendar now                =   Calendar.getInstance();
-		String time                 =   nowTimes.format(now.getTime());
-		fileupload.setChat_filelist_time(time);
 		
 		String originalfilename           =  files.getOriginalFilename();
 		String originalfilenameExtension  =  FilenameUtils.getExtension(originalfilename).toLowerCase();
@@ -299,12 +291,16 @@ public class ChatController {
 			
 		}
 		
+		fileupload.setChat_filelist_time(nowTimes);
 		fileupload.setChat_filelist_filename(destinationfilename);
 		fileupload.setChat_filelist_original_filename(originalfilename);
 		fileupload.setChat_filelist_url(savePath);
 		
 		chatservice.insertchatfile(fileupload);
 		
+		String[] splitTime = nowTimes.split("_");
+		
+		redirectAttributes.addAttribute("nowTimes", splitTime[1]);
 		redirectAttributes.addAttribute("chatroom_no", form.getChatroom_no());
 		redirectAttributes.addAttribute("sockfilename", destinationfilename);
 		
@@ -356,7 +352,7 @@ public class ChatController {
 		
 		chatservice.deletefile(form.getChat_filelist_filename());
 		
-		String url = "/uploadfile";
+		String url = "/uploadfile/";
 		String deletefilepath = application.getRealPath(url) + form.getChat_filelist_filename();
 		
 		File file = new File(deletefilepath);
