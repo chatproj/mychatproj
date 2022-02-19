@@ -259,7 +259,7 @@ public class MemberController {
 		String findmsg = null;
 		String res = memberservice.getMemberfind(member);
 		if(res.equals("notfound")) {
-			findmsg = "존재하지 않는 ID 입니다.";
+			findmsg = "notfound";
 		}else {
 			findmsg = res;
 		}

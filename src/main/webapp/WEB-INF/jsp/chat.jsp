@@ -24,6 +24,27 @@
 			
 	%>
 <body>
+
+<script type="text/javascript">
+	window.addEventListener("DOMContentLoaded", function(){
+		<%
+			if(request.getParameter("message") != null && request.getParameter("message").equals("FAILURE_my")){
+		%>
+				alert("같은 ID 입니다.");
+		<%
+			}else if(request.getParameter("message") != null && request.getParameter("message").equals("FAILURE_noid")){
+		%>
+				alert("존재하지 않는 ID 입니다.");
+		<%
+			}else if(request.getParameter("message") != null && request.getParameter("message").equals("FAILURE_include")){
+		%>
+				alert("이미 존재하는 멤버입니다.");
+		<%
+			}
+		%>
+	});
+</script>
+
 	<!-- Header -->
 	<%@ include file="./common/header.jsp"%>
 	<div id="main_container1">
