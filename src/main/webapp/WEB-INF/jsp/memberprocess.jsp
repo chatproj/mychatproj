@@ -21,7 +21,7 @@
 					%>		
 					<div class="findmember_id">
 					<%
-						if(findmsg.equals("존재하지 않는 ID 입니다.") || findmsg == "존재하지 않는 ID 입니다."){
+						if(findmsg.equals("notfound") || findmsg == "notfound"){
 					%>
 							<a class="findinform">존재하지 않는 ID 입니다.</a>
 					<%
