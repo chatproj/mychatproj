@@ -11,7 +11,7 @@
  - war 배포
  
 ## 시연
- - 사용자 인증, 채팅방 생성 및 소켓 통한 채팅
+ - 사용자 인증, 채팅방 생성 및 소켓을 통한 통신
  
 <img src="https://user-images.githubusercontent.com/67222557/154832559-f6f9da1d-cd22-46c5-8056-b137072a6459.gif" width="400" height="200"></img>
 <img src="https://user-images.githubusercontent.com/67222557/154832582-c9522630-2f99-4010-8bcb-8d26d4e9a837.gif" width="400" height="200"></img>
